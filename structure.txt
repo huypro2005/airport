@@ -1,0 +1,41 @@
+.
+├── app/
+│   ├── __init__.py          # Khởi tạo ứng dụng Flask
+│   ├── config.py            # Cấu hình ứng dụng
+│   ├── models/              # Chứa các model SQLAlchemy
+│   │   ├── __init__.py      # Khởi tạo thư mục models
+│   │   ├── hanhkhach.py     # Model Hành Khách
+│   │   ├── chuyenbay.py     # Model Chuyến Bay
+│   │   ├── vechuyenbay.py   # Model Vé Chuyến Bay
+│   │   └── ...              # Các model khác
+│   ├── routes/              # Chứa các route (API endpoint)
+│   │   ├── __init__.py      # Khởi tạo thư mục routes
+│   │   ├── hanhkhach.py     # Route liên quan đến hành khách
+│   │   ├── chuyenbay.py     # Route liên quan đến chuyến bay
+│   │   ├── vechuyenbay.py   # Route liên quan đến vé chuyến bay
+│   │   └── ...              # Các route khác
+│   ├── services/            # Chứa các logic nghiệp vụ (service layer)
+│   │   ├── __init__.py      # Khởi tạo thư mục services
+│   │   ├── hanhkhach_service.py  # Xử lý logic liên quan đến hành khách
+│   │   ├── chuyenbay_service.py  # Xử lý logic liên quan đến chuyến bay
+│   │   ├── ve_service.py         # Xử lý logic liên quan đến vé
+│   │   └── ...                   # Các service khác
+│   ├── utils/               # Chứa các hàm tiện ích (helper functions)
+│   │   ├── __init__.py      # Khởi tạo thư mục utils
+│   │   ├── validators.py    # Hàm kiểm tra dữ liệu đầu vào
+│   │   ├── auth.py          # Hàm xử lý xác thực (nếu có)
+│   │   └── ...              # Các tiện ích khác
+│   ├── database.py          # Kết nối cơ sở dữ liệu
+│   └── extensions.py        # Các tiện ích mở rộng (SQLAlchemy, Marshmallow, etc.)
+├── migrations/              # Chứa các file migrate cơ sở dữ liệu
+│   └── ...                  # Tự động sinh bởi Flask-Migrate
+├── tests/                   # Chứa các file test
+│   ├── __init__.py          # Khởi tạo thư mục tests
+│   ├── test_hanhkhach.py    # Test liên quan đến hành khách
+│   ├── test_chuyenbay.py    # Test liên quan đến chuyến bay
+│   ├── test_vechuyenbay.py  # Test liên quan đến vé chuyến bay
+│   └── ...                  # Các file test khác
+├── .env                     # File chứa các biến môi trường (database URL, secret key, etc.)
+├── requirements.txt         # File chứa danh sách thư viện cần cài đặt
+├── run.py                   # File chạy ứng dụng Flask
+└── README.md                # Thông tin về dự án
