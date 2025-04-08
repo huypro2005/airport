@@ -14,7 +14,7 @@ class PhieuDatCho(db.Model):
     hang_ve = db.Column(db.Integer)
     tra_tien = db.Column(db.Float)
 
-    __table_args__ = (db.UniqueConstraint('Ma_cb', 'vi_tri', name = 'uq_mahanhkhach_machuyenbay_vitri'),)
+    # __table_args__ = (db.UniqueConstraint('Ma_cb', 'vi_tri', name = 'uq_mahanhkhach_machuyenbay_vitri'),)
 
     def __repr__(self):
         return f'{self.Ma_hanh_khach} - {self.Ma_vecb} - {self.Ma_chuyen_bay} - {self.Ngay_dat} - {self.Tinh_trang} - {self.Ghi_chu} - {self.tra_tien}'

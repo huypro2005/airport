@@ -5,7 +5,6 @@ from .Maybay import Maybay
 from .PhieuDatCho import PhieuDatCho
 from .SanBay import Sanbay
 from .VeChuyenBay import Vechuyenbay
-from .DoanhThuNam import doanhThuNam
 from .DoanhThuThang import doanhThuThang
 from .HoaDon import Hoadon
 from .NhanVien import Nhanvien

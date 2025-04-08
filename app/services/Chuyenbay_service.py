@@ -1,8 +1,9 @@
 from app.models import Chuyenbay, ChiTietChuyenBay, Sanbay, Maybay, QuyDinh
 from app import db
 from .QuyDinh_service import get_quydinh
-from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio
+from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio, format_NgayGio
 from library import *
+from sqlalchemy import extract
 
 def add_ChuyenBay_service(data):
     '''
@@ -166,7 +167,8 @@ def update_chuyenbay_thoigianbay_service(chuyenbay_id, thoigianbay: int):
         if not chuyenbay:
             raise ValueError("Không tìm thấy chuyến bay")
         validate_NgayGio(thoigianbay)
-        chuyenbay.thoigianbay = thoigianbay
+        # thoigianbay = format_NgayGio(thoigianbay)
+        chuyenbay.ngay_gio = thoigianbay
         db.session.commit()
     except ValueError as e:
         db.session.rollback()
@@ -177,9 +179,10 @@ def update_chuyenbay_thoigianbay_service(chuyenbay_id, thoigianbay: int):
 
 
 
-def get_Chuyenbay_by_thang(thang):
+def get_Chuyenbay_by_thang(thang, nam):
     ds = Chuyenbay.query.filter(
-        Chuyenbay.ngay_gio.month == thang
+        extract('month', Chuyenbay.ngay_gio) == thang,
+        extract('year', Chuyenbay.ngay_gio) == nam
     ).all()
     return ds
 

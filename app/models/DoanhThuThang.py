@@ -8,7 +8,10 @@ class doanhThuThang(db.Model):
     Tong_doanh_thu = db.Column(db.Float)
     month = db.Column(db.Integer)
     year = db.Column(db.Integer)
+    so_chuyen_bay = db.Column(db.Integer)
 
+
+    __table_args__ = (db.UniqueConstraint('month', 'year', name = 'uq_month_year'),)
     
     def __repr__(self):
         return f'{self.Tong_doanh_thu} - {self.month} - {self.year}'

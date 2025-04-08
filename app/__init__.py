@@ -11,6 +11,7 @@ from .routes.Maybay import MAYBAY
 from .routes.PhieuDatCho import PHIEUDATCHO
 from .routes.HoaDon import HOADON
 from .routes.NhanVien import NHANVIEN
+from .routes.DoanhThuThang import DOANHTHUTHANG
 from .routes.QuyDinh import QUYDINH
 
 def create_app(file_config = 'config.py'):
@@ -28,6 +29,7 @@ def create_app(file_config = 'config.py'):
     app.register_blueprint(HOADON, url_prefix='/api')
     app.register_blueprint(NHANVIEN, url_prefix='/api')
     app.register_blueprint(QUYDINH, url_prefix='/api')
+    app.register_blueprint(DOANHTHUTHANG, url_prefix='/api')
     return app
 
 

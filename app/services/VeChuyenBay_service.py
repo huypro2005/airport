@@ -162,7 +162,7 @@ def update_huy_ve_service(vechuyenbay_id):
         vechuyenbay = Vechuyenbay.query.get(vechuyenbay_id)
         if not vechuyenbay:
             raise ValueError("Không tìm thấy vé")
-        vechuyenbay.Tinh_trang = True
+        vechuyenbay.Tinh_trang = False
         hoadon = Hoadon()
         hoadon.Thanh_tien = vechuyenbay.Tien_ve
         create_Hoadon_hoantien_service(vechuyenbay, hoadon)
@@ -171,4 +171,14 @@ def update_huy_ve_service(vechuyenbay_id):
     except Exception as e:
         raise ValueError(f"Lỗi hủy vé: {e}")
     
+
+def get_vecb_by_chuyenbay_service(chuyenbay: Chuyenbay):
+    try:    
+        vecb = chuyenbay.ve_chuyen_bay
+        return vecb
+    except Exception as e:
+        return None
+
+
+
 

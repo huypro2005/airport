@@ -1,4 +1,4 @@
-from app.services.Chuyenbay_service import add_ChuyenBay_service, get_chuyenbay_byID_service, get_dsChuyenBay_follow_time_service
+from app.services.Chuyenbay_service import add_ChuyenBay_service, get_chuyenbay_byID_service, get_dsChuyenBay_follow_time_service, update_chuyenbay_thoigianbay_service
 from flask import Blueprint, request, jsonify
 from app.models.Chuyenbay import Chuyenbay
 from app.models.SanBay import Sanbay
@@ -58,6 +58,18 @@ def get_dsChuyenBay_follow_time():
             item['So_ghe_da_dat'] = cb.tong_so_ghe - cb.so_ghe_hang1 - cb.so_ghe_hang2
             data.append(item)
         return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@CHUYENBAY.route('/chuyenbay/update_thoigianbay/<id>', methods=['PUT'])
+def update_thoigianbay(id):
+    try:
+        thoigianbay = request.args.get('thoigianbay')
+        update_chuyenbay_thoigianbay_service(id, thoigianbay)
+        return jsonify({"message": "Thời gian bay đã được cập nhật thành công!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     except ValueError as e:

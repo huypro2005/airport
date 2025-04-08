@@ -10,7 +10,7 @@ class Vechuyenbay(db.Model):
     Ma_hanh_khach = db.Column(db.Integer, db.ForeignKey('hanh_khach.id'), nullable = True, default = None)
     hang_ve = db.Column(db.Integer)
     Tien_ve = db.Column(db.Float)
-    Tinh_trang = db.Column(db.Boolean, default = False) # 0: da dat, 1: da huy
+    Tinh_trang = db.Column(db.Boolean, default = True) # 1: da dat, 0: da huy
     vi_tri = db.Column(db.String(20))
     
 

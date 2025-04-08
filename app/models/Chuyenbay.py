@@ -11,7 +11,7 @@ class Chuyenbay(db.Model):
     Ma_may_bay = db.Column(db.Integer, db.ForeignKey('may_bay.id'), nullable = False)
     ngay_gio = db.Column(db.DateTime)
     Thoi_gian_bay = db.Column(db.Integer)
-    gia_ve = db.Column(db.Integer)
+    gia_ve = db.Column(db.Float)
     so_ghe_hang1 = db.Column(db.Integer)
     so_ghe_hang2 = db.Column(db.Integer)
     tong_so_ghe = db.Column(db.Integer)
