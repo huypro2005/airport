@@ -4,12 +4,11 @@ from .QuyDinh_service import get_quydinh
 from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio, format_NgayGio
 from library import *
 from sqlalchemy import extract
+from app.utils.auth import is_admin
 
 def add_ChuyenBay_service(data):
-    '''
-    
-    
-    '''
+    if not is_admin():
+        raise ValueError("Bạn không có quyền thực hiện hành động này")
     rule = get_quydinh()
     valadate_ChuyenBay(data, rule)
 

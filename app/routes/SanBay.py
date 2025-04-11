@@ -1,9 +1,12 @@
 from flask import Blueprint, request, jsonify
 from app.services.SanBay_service import add_SanBay_service, get_ds_sanbay_service, get_sanbay_by_id_service, delete_sanbay_service, update_sanbay_service
-
+from flask_jwt_extended import jwt_required
+from app.utils.auth import is_giamdoc
 SANBAY = Blueprint('sanbay', __name__)
 
 @SANBAY.route('/sanbay/add', methods=['POST'])
+@jwt_required()
+@is_giamdoc()
 def add_sanbay():
     try:
         data = request.get_json()
@@ -11,15 +14,19 @@ def add_sanbay():
         add_SanBay_service(data)
 
         return jsonify({"message": "Sân bay đã được thêm thành công!"}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
     
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    
+    
 
 
 @SANBAY.route('/sanbay/get', methods=['GET'])
+@jwt_required()
 def get_ds_sanbay():
     try:
         ds_sanbay = get_ds_sanbay_service()
@@ -36,6 +43,7 @@ def get_ds_sanbay():
         return jsonify({"error": str(e)}), 500
     
 @SANBAY.route('/sanbay/get/<int:id>', methods=['GET'])
+@jwt_required()
 def get_sanbay_by_id(id):
     try:
         sanbay = get_sanbay_by_id_service(id)
@@ -46,6 +54,8 @@ def get_sanbay_by_id(id):
         return jsonify({"error": str(e)}), 500
     
 @SANBAY.route('/sanbay/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
+@is_giamdoc()
 def delete_sanbay(id):
     try:
         delete_sanbay_service(id)

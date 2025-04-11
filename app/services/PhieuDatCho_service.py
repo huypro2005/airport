@@ -135,12 +135,18 @@ def Thanhtoan_phieudatcho_services(id):
         phieudatcho.Tinh_trang = 1
 
         create_ve_through_phieudatcho_service(phieudatcho, vechuyenbay)
-        db.session.add(vechuyenbay)
-        db.session.commit()
+        try:
+            db.session.add(vechuyenbay)
+            db.session.commit()
+        except Exception as e:
+            raise ValueError(f"Lỗi: Không thể thêm vé chuyến bay")
         hoadon = Hoadon()
         create_hoadon_through_vechuyenbay_service(vechuyenbay, hoadon)
-        db.session.add(hoadon)
-        db.session.commit()
+        try:
+            db.session.add(hoadon)
+            db.session.commit()
+        except Exception as e:
+            raise ValueError(f"Lỗi: Không thể thêm hóa đơn, hãy tạo hóa đơn thủ công")
         
     except ValueError as e:
         raise ValueError(f"Lỗi: {e}")
@@ -170,11 +176,11 @@ def get_Phieudatcho_by_Ma_cb(chuyenbay: Chuyenbay):
         ds_phieudatcho = chuyenbay.phieudatcho
         return ds_phieudatcho
     except Exception as e:
-        raise ValueError(f"Lỗi: {e}")
+        raise ValueError(f"Lỗi: Không tìm thấy phiếu đặt chỗ")
     
 def update_Phieudatcho_TinhTrang_Huy(phieudatcho: PhieuDatCho):
     phieudatcho.Tinh_trang = 2
-    db.session.commit()
+    
 
 
 def Huy_phieudatcho_through_chuyenbay_service(chuyenbay):
@@ -182,8 +188,9 @@ def Huy_phieudatcho_through_chuyenbay_service(chuyenbay):
         phieudatcho = get_Phieudatcho_by_Ma_cb(chuyenbay)
         for phieudatcho in phieudatcho:
             update_Phieudatcho_TinhTrang_Huy(phieudatcho)
+        db.session.commit()
     except Exception as e:
-        raise ValueError(f"Lỗi: {e}")
+        raise ValueError(f"Lỗi: Không thể hủy phiếu đặt chỗ")
 
 
 

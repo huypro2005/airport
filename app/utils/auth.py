@@ -3,14 +3,24 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from app.models.NhanVien import Nhanvien
 
+def get_current_user():
+    verify_jwt_in_request()
+    data= get_jwt_identity()
+    id = data['id']
+    user = Nhanvien.query.get(id)
+    return user
+
+def get_current_user_id():
+    verify_jwt_in_request()
+    data= get_jwt_identity()
+    id = data['id']
+    return id
+
 def role_required(allowed_roles):
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
-            verify_jwt_in_request()
-            current_user_id = get_jwt_identity()
-            user = Nhanvien.query.get(current_user_id)
-            
+            user = get_current_user()
             if not user:
                 return jsonify({"msg": "User not found"}), 404
                 
@@ -31,5 +41,3 @@ def is_giamdoc():
 def is_admin():
     return role_required([ROLE_ADMIN])
 
-def is_nhanvien():
-    return role_required([ROLE_NHANVIEN, ROLE_GIAMDOC, ROLE_ADMIN])

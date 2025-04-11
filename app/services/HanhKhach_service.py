@@ -12,7 +12,7 @@ def add_hanh_khach(data):
     gioi_tinh = data.get('gioi_tinh', '')
     # ngaydangky = datetime.utcnow()
     try: 
-        hanh_khach = HanhKhach(Hoten = Hoten, cmnd = cmnd, sdt = sdt, gioi_tinh = gioi_tinh, dia_chi = dia_chi)
+        hanh_khach = HanhKhach(Hoten = Hoten, cmnd = cmnd, sdt = sdt, gioi_tinh = gioi_tinh)
         db.session.add(hanh_khach)
         db.session.commit()
 

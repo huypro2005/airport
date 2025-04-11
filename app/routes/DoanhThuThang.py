@@ -1,9 +1,13 @@
 from flask import Blueprint, request, jsonify
 from app.services.DoanhThuThang_service import create_doanhthu_thang_service, get_doanhthu_thang_service, get_doanh_thu_chuyenbay_all_by_thang_service
-
+from flask_jwt_extended import jwt_required
 DOANHTHUTHANG = Blueprint('doanhthu_thang', __name__)
 
+
+
+# link api: http://localhost:5000/api/doanhthu_thang/add?thang=1&nam=2024
 @DOANHTHUTHANG.route('/doanhthu_thang/add', methods=['POST'])
+@jwt_required()
 def add_doanhthu_thang():
     try:
         thang = request.args.get('thang')
@@ -21,8 +25,9 @@ def add_doanhthu_thang():
         return jsonify({'message': 'Lỗi server'}), 500
 
 
-
-@DOANHTHUTHANG.route('/doanhthu_thang/get', methods=['GET'])
+# link api: http://localhost:5000/api/doanhthu_thang/get?thang=1&nam=2024
+@DOANHTHUTHANG.route('/doanhthu_thang/get', methods=['GET'])    
+@jwt_required()
 def get_doanhthu_thang():
     try:
         thang = request.args.get('thang')
@@ -40,8 +45,9 @@ def get_doanhthu_thang():
         return jsonify({'message': 'Lỗi server'}), 500
     
 
-    
+# link api: http://localhost:5000/api/doanhthu_thang/get/chuyenbay?thang=1&nam=2024
 @DOANHTHUTHANG.route('/doanhthu_thang/get/chuyenbay', methods=['GET'])
+@jwt_required()
 def get_doanhthu_thang_chuyenbay():
     try:
         thang = request.args.get('thang')

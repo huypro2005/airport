@@ -51,15 +51,13 @@ def delete_Maybay(id):
     raise ValueError("Không tìm thấy máy bay")
 
 
-def update_Maybay(id):
+def update_Maybay(id,data):
     maybay = Maybay.query.get(id)
     if maybay:
-        data = request.json
-        if data and 'ten_may_bay' in data:
-            ten_may_bay = data['ten_may_bay']
-            try:
-                maybay.ten_may_bay = ten_may_bay
-                db.session.commit()
-            except Exception as e:
-                raise ValueError(f"Lỗi: {e}")
+        ten_may_bay = data['ten_may_bay']
+        try:
+            maybay.ten_may_bay = ten_may_bay
+            db.session.commit()
+        except Exception as e:
+            raise ValueError(f"Lỗi: {e}")
     raise ValueError("Không tìm thấy máy bay")

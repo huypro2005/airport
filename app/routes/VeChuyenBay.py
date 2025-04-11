@@ -3,10 +3,12 @@ from app.services.VeChuyenBay_service import (add_veChuyenyBay_service,
                                               get_veChuyenBay_byID_service, 
                                               update_ve_Hangve_service,
                                                delete_ve_service)
+from flask_jwt_extended import jwt_required
 
 VECHUYENBAY = Blueprint('vechuyenbay', __name__)
 
 @VECHUYENBAY.route('/vechuyenbay/add', methods=['POST'])
+@jwt_required()
 def add_ve():
     data = request.get_json()
     try:
@@ -28,6 +30,7 @@ def add_ve():
 
 
 @VECHUYENBAY.route('/vechuyenbay/get/<int:id>', methods=['GET'])
+@jwt_required()
 def get_ve_chuyen_bay(id):
     try:
         result = get_veChuyenBay_byID_service(id)
@@ -48,6 +51,7 @@ def get_ve_chuyen_bay(id):
  
 
 @VECHUYENBAY.route('/vechuyenbay/update/hangve', methods=['PUT'])
+@jwt_required()
 def update_hangve():
     try:
         id = request.args.get('id')
@@ -61,6 +65,7 @@ def update_hangve():
         
 
 @VECHUYENBAY.route('/vechuyenbay/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_ve(id):
     try:
         delete_ve_service(id)

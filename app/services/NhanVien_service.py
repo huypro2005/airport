@@ -26,7 +26,10 @@ def add_nhanvien_service(data):
         raise ValueError("Mã nhân viên đã tồn tại")
 
 
-    nhanvien = Nhanvien(id = id, first_name = first_name, last_name = last_name, username = username, password = hash_password, email = email, pos = pos, position = position)
+    nhanvien = Nhanvien(id = id, first_name = first_name,
+                         last_name = last_name, username = username,
+                         password = hash_password, email = email,
+                         pos = pos, position = position)
     try:
         db.session.add(nhanvien)
         db.session.commit()

@@ -4,6 +4,35 @@ from app.models.Chuyenbay import Chuyenbay
 from app.models.SanBay import Sanbay
 CHUYENBAY = Blueprint('chuyennbay', __name__)
 
+# link api: http://localhost:5000/api/chuyenbay/add
+'''
+    {
+    "Ma_chuyen_bay": 6,
+    "Ma_san_bay_di": 1,
+    "Ma_san_bay_den": 2,
+    "Ma_may_bay": 1,
+    "gia_ve": 500000,
+    "ngay_gio": "2024-04-25T10:30:00",
+    "thoi_gian_bay": 30,
+    "so_ghe_hang1": 15,
+    "so_ghe_hang2": 20,
+    "chitiet":[
+        {
+            "Ma_san_bay_trung_gian": 3,
+            "thoigian_dung": 15,
+            "ghichu": "Trung gian 1"
+        },
+        {
+            "Ma_san_bay_trung_gian": 4,
+            "thoigian_dung": 20,
+            "ghichu": "Trung gian 2"
+        }
+    ]
+}    
+
+
+'''
+
 @CHUYENBAY.route('/chuyenbay/add', methods=['POST'])
 # cần payload truyền vào
 def add_chuyenbay():
@@ -18,6 +47,8 @@ def add_chuyenbay():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     
+
+# link api: http://localhost:5000/api/chuyenbay/get/<id>
 
 @CHUYENBAY.route('/chuyenbay/get/<id>', methods=['GET'])
 def get_chuyenbay_byID(id):
@@ -37,6 +68,9 @@ def get_chuyenbay_byID(id):
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
     
+
+# link api: http://localhost:5000/api/chuyenbay/search?start_time=2024-04-25T10:30:00&end_time=2024-04-25T11:30:00
+
 @CHUYENBAY.route('/chuyenbay/search', methods=['GET'])
 def get_dsChuyenBay_follow_time():
     try:
@@ -63,6 +97,8 @@ def get_dsChuyenBay_follow_time():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
+
+# link api: http://localhost:5000/api/chuyenbay/update_thoigianbay/<id>?thoigianbay=30
 
 @CHUYENBAY.route('/chuyenbay/update_thoigianbay/<id>', methods=['PUT'])
 def update_thoigianbay(id):

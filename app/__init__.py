@@ -13,6 +13,7 @@ from .routes.HoaDon import HOADON
 from .routes.NhanVien import NHANVIEN
 from .routes.DoanhThuThang import DOANHTHUTHANG
 from .routes.QuyDinh import QUYDINH
+from .routes.auth import AUTH
 
 def create_app(file_config = 'config.py'):
     app = Flask(__name__)
@@ -30,6 +31,7 @@ def create_app(file_config = 'config.py'):
     app.register_blueprint(NHANVIEN, url_prefix='/api')
     app.register_blueprint(QUYDINH, url_prefix='/api')
     app.register_blueprint(DOANHTHUTHANG, url_prefix='/api')
+    app.register_blueprint(AUTH, url_prefix='/api')
     return app
 
 
