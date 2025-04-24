@@ -3,18 +3,13 @@ from library import *
 from .QuyDinh_service import get_quydinh
 from app.utils.validators import validate_SanBay
 
-def check_soluong_sanbay(quydinh):
-    soluong_sanbay = quydinh.Soluongsanbay
-    so_san_bay = Sanbay.query.count()
-    if so_san_bay >= soluong_sanbay:
-        raise ValueError("Số lượng sân bay đã đạt giới hạn")
+
 
 
 def add_SanBay_service(data):
     validate_SanBay(data)
-    quydinh = get_quydinh()
+    # quydinh = get_quydinh()
 
-    check_soluong_sanbay(quydinh)
 
     ma_san_bay = data['Ma_san_bay']
     ten_san_bay = data['Ten_san_bay']

@@ -22,7 +22,7 @@ def get_doanh_thu_chuyenbay_all_by_thang_service(thang, nam):
                 func.count(Vechuyenbay.id)
             ).filter(
                 Vechuyenbay.Ma_chuyen_bay == chuyenbay.id,
-                Vechuyenbay.Tinh_trang == False
+                Vechuyenbay.Tinh_trang == True
             ).first()
             item['doanh_thu'] = result[0] if result and result[0] is not None else 0
             item['so_ve_ban'] = result[1] if result and result[1] is not None else 0
@@ -56,7 +56,7 @@ def create_doanhthu_thang_service(thang, nam):
             func.sum(Vechuyenbay.Tien_ve),
             func.count(Vechuyenbay.id)
         ).filter(
-            Vechuyenbay.chuyen_bay_id.in_(chuyenbay.id for chuyenbay in ds),
+            Vechuyenbay.Ma_chuyen_bay.in_(chuyenbay.id for chuyenbay in ds),
             Vechuyenbay.Tinh_trang == True
         ).first()
         doanhthu.Tong_doanh_thu = tong_doanh_thu
@@ -66,4 +66,34 @@ def create_doanhthu_thang_service(thang, nam):
         return doanhthu
     except Exception as e:
         raise ValueError(f"Lỗi tạo doanh thu tháng: {e}")
+
+def get_BaoCaoDoanhThuNam_service(nam):
+    try:
+        doanhThuNam = db.session.query(func.sum(doanhThuThang.Tong_doanh_thu)).filter(doanhThuThang.year == nam).scalar()
+        if not doanhThuNam:
+            raise ValueError("Không tìm thấy doanh thu năm")
+        query = db.session.query(
+            doanhThuThang.month,
+            doanhThuThang.Tong_doanh_thu,
+            doanhThuThang.Tong_doanh_thu,
+            (doanhThuThang.Tong_doanh_thu/ doanhThuNam).label('rate')
+        ).filter(
+            doanhThuThang.year == nam
+        )
+        data = query.all()
+        return {
+            'data':[
+                {
+                    'thang': item.month,
+                    'doanh_thu': item.Tong_doanh_thu,
+                    'rate': item.rate
+                }
+                for item in data
+            ],
+            'doanh_thu_nam': doanhThuNam
+        }
+    except Exception as e:
+        raise ValueError(f"Lỗi lấy báo cáo doanh thu năm: {e}")
+    
+
 

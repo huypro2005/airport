@@ -1,14 +1,15 @@
-from .ChiTietChuyenBay import ChiTietChuyenBay
 from .Chuyenbay import Chuyenbay
 from .HanhKhach import HanhKhach
-from .Maybay import Maybay
-from .PhieuDatCho import PhieuDatCho
 from .SanBay import Sanbay
 from .VeChuyenBay import Vechuyenbay
 from .DoanhThuThang import doanhThuThang
-from .HoaDon import Hoadon
+from .HangVe import HangVe
 from .NhanVien import Nhanvien
 from .QuyDinh import QuyDinh
+from .ChiTietDoanhThuThang import ChiTietDoanhThuThang
+from .ChiTietHangVe import ChiTietHangVe
+from .ChiTietSanBayTrungGian import ChiTietSanBayTrungGian
+from .DoangThuNam import DoanhThuNam
 from app import db
 
 

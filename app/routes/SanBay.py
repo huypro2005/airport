@@ -4,9 +4,18 @@ from flask_jwt_extended import jwt_required
 from app.utils.auth import is_giamdoc
 SANBAY = Blueprint('sanbay', __name__)
 
+
+'''
+    {
+        "Ma_san_bay": "HNOI",
+        "Ten_san_bay": "Ha noi"
+    }
+    
+'''
+# link api: http://localhost:5000/api/sanbay/add
 @SANBAY.route('/sanbay/add', methods=['POST'])
-@jwt_required()
-@is_giamdoc()
+# @jwt_required()
+# @is_giamdoc()
 def add_sanbay():
     try:
         data = request.get_json()
@@ -25,8 +34,26 @@ def add_sanbay():
     
 
 
+'''
+    [
+        {
+            "Ma_san_bay": "HNOI",
+            "Ten_san_bay": "Ha noi"
+        },
+        {
+            "Ma_san_bay": "SGON",
+            "Ten_san_bay": "Sai Gon"
+        },
+        {
+            "Ma_san_bay": "DNANG",
+            "Ten_san_bay": "Da Nang"
+        }
+    ]
+
+'''
+# link api: http://localhost:5000/api/sanbay/get
 @SANBAY.route('/sanbay/get', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_ds_sanbay():
     try:
         ds_sanbay = get_ds_sanbay_service()
@@ -36,12 +63,21 @@ def get_ds_sanbay():
                 'Ma_san_bay': sanbay.id,
                 'Ten_san_bay': sanbay.ten_san_bay
             })
-        return jsonify(data)    
+        return jsonify({"message": data})    
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+
+'''
+    {
+        "Ma_san_bay": "HNOI",
+        "Ten_san_bay": "Ha noi"
+    }
+    
+'''
+
 @SANBAY.route('/sanbay/get/<int:id>', methods=['GET'])
 @jwt_required()
 def get_sanbay_by_id(id):

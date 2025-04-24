@@ -12,13 +12,7 @@ def get_quydinh():
     return rule
 
 
-def update_quydinh_soLuongSanBay(data):
-    rule = get_quydinh()
-    if not rule:
-        raise ValueError("Không tìm thấy quy định")
-    rule.Soluongsanbay = data['Soluongsanbay']
-    db.session.commit()
-    
+
 
 def update_quydinh_thoiGianBayToiThieu(data):
     rule = get_quydinh()

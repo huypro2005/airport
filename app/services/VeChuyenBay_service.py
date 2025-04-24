@@ -1,14 +1,28 @@
+from cv2 import add
 from app.models.VeChuyenBay import Vechuyenbay
 from app.models.Chuyenbay import Chuyenbay
 from app.models.HanhKhach import HanhKhach
-from app.models.HoaDon import Hoadon
-from app.models.PhieuDatCho import PhieuDatCho
 from .QuyDinh_service import get_quydinh
 from .Chuyenbay_service import get_sogheconlai, set_sogheconlai
-from .HoaDon_service import create_Hoadon_hoantien_service, create_Hoadon_themtien_service
-from app.utils.validators import validate_VeChuyenBay
+from .HanhKhach_service import add_or_get_HanhKhach_service
+from app.utils.validators import validate_VeChuyenBay,  validate_VeChuyenBay_seat
 from library import *
 
+
+
+'''
+
+    {
+        "Ma_chuyen_bay": 1,
+        "Ma_hang_ve": 1,
+        "vitri": "B4.1",
+        "Ho_ten": "nguyen van a",
+        "cmnd": "116468466314",
+        "sdt": "24544346",
+        "gioi_tinh": "Nam"
+    }
+
+'''
 
 
 def add_veChuyenyBay_service(data):
@@ -22,66 +36,24 @@ def add_veChuyenyBay_service(data):
         cmnd = data['cmnd']
         sdt = data['sdt']
         gioi_tinh = data['gioi_tinh']
-        hang_ve = data['hang_ve']
+        hang_ve = data['Ma_hang_ve']
         vitri = data['vitri']
-        ma_hanh_khach =None
         
-
-        hanhkhach = HanhKhach.query.filter_by(cmnd = cmnd).first()
-        
-        if hanhkhach:
-            ma_hanh_khach = hanhkhach.id
-        else:
-            hanhkhach = HanhKhach(Hoten= Hoten, cmnd = cmnd, sdt = sdt, gioi_tinh = gioi_tinh)
-            try:
-                db.session.add(hanhkhach)
-                db.session.commit()
-            except ValueError as e:
-                db.session.rollback()
-                raise ValueError(f"Lỗi tạo hành khách: {e}")
-            ma_hanh_khach = hanhkhach.id
-        
-        if ma_hanh_khach is None:
-            raise ValueError("Lỗi truy cập hành khách")  
-        giave =0
-        chuyenbay = Chuyenbay.query.filter_by(id = macb).first()
-
-        if not chuyenbay:
-            return jsonify({'message': 'Mã chuyến bay không hợp lệ'}), 400
-        
-        if get_sogheconlai(chuyenbay, hang_ve) == 0:
-            raise ValueError("Hết vé")
-        
-        if hang_ve == 1:
-            giave = chuyenbay.gia_ve * rule.Phantramgia1/100
-        else:
-            giave = chuyenbay.gia_ve * rule.Phantramgia2/100
-        
-        ve = Vechuyenbay(Ma_chuyen_bay = macb, Ma_hanh_khach = ma_hanh_khach, hang_ve = hang_ve, vi_tri = vitri, Tien_ve = giave)
-        try:
-            db.session.add(ve)
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            raise ValueError(f"Đặt vé thất bại: {e}")
-        
-        set_sogheconlai(chuyenbay, hang_ve)
+        validate_VeChuyenBay_seat(vitri, macb)
+        data = {
+            'Hoten': Hoten,
+            'cmnd': cmnd,
+            'sdt': sdt,
+            'gioi_tinh': gioi_tinh
+        }
+        add_or_get_HanhKhach_service(data)
 
 
-        hoadon = Hoadon()
-        try:
-            hoadon.Add_hoadon(ve)
-            db.session.commit()
-            return ve
-        except Exception as e:
-            db.session.rollback()
-            raise ValueError(f"Lỗi tạo hóa đơn khi vé đã được đặt: {e}")
-       
 
+    except:
+        pass
         
-    except Exception as e:
-       raise ValueError(f"Lỗi: {e}")
-    
+
 
 
 {
@@ -106,14 +78,6 @@ def get_veChuyenBay_byID_service(id):
 
 
 
-def create_ve_through_phieudatcho_service(phieudatcho: PhieuDatCho, vechuyenbay: Vechuyenbay):
-    vechuyenbay.Ma_chuyen_bay = phieudatcho.Ma_cb
-    vechuyenbay.Ma_hanh_khach = phieudatcho.Ma_hanh_khach
-    vechuyenbay.hang_ve = phieudatcho.hang_ve
-    vechuyenbay.Tien_ve = phieudatcho.tra_tien
-    vechuyenbay.vi_tri = phieudatcho.vi_tri
-    
-
 
 def delete_ve_service(id):
     ve = Vechuyenbay.query.get(id)
@@ -131,54 +95,4 @@ def giave_chuyenbay_follow_hangve_service(chuyenbay: Chuyenbay, hangve: int):
         return chuyenbay.gia_ve * rule.Phantramgia1/100
     else:
         return chuyenbay.gia_ve * rule.Phantramgia2/100
-
-def update_ve_Hangve_service(vechuyenbay_id, hangve):
-    
-    try:
-        vechuyenbay = Vechuyenbay.query.get(vechuyenbay_id)
-        if not vechuyenbay:
-            raise ValueError("Không tìm thấy vé")
-        vechuyenbay.hang_ve = hangve
-        chuyenbay = vechuyenbay.chuyen_bay
-        giave = giave_chuyenbay_follow_hangve_service(chuyenbay, hangve)
-
-        hoadon = Hoadon()
-        if giave > vechuyenbay.Tien_ve:
-            hoadon.Thanh_tien = giave - vechuyenbay.Tien_ve
-            create_Hoadon_themtien_service(vechuyenbay, hoadon)
-            
-        else:
-            hoadon.Thanh_tien = vechuyenbay.Tien_ve - giave
-            create_Hoadon_hoantien_service(vechuyenbay, hoadon)
-        
-        vechuyenbay.Tien_ve = giave
-        db.session.add(hoadon)
-        db.session.commit()
-    except Exception as e:
-        raise ValueError(f"Lỗi cập nhật vé: {e}")
-
-def update_huy_ve_service(vechuyenbay_id):
-    try:
-        vechuyenbay = Vechuyenbay.query.get(vechuyenbay_id)
-        if not vechuyenbay:
-            raise ValueError("Không tìm thấy vé")
-        vechuyenbay.Tinh_trang = False
-        hoadon = Hoadon()
-        hoadon.Thanh_tien = vechuyenbay.Tien_ve
-        create_Hoadon_hoantien_service(vechuyenbay, hoadon)
-        db.session.add(hoadon)
-        db.session.commit()
-    except Exception as e:
-        raise ValueError(f"Lỗi hủy vé: {e}")
-    
-
-def get_vecb_by_chuyenbay_service(chuyenbay: Chuyenbay):
-    try:    
-        vecb = chuyenbay.ve_chuyen_bay
-        return vecb
-    except Exception as e:
-        return None
-
-
-
 
