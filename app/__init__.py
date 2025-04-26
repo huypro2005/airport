@@ -6,11 +6,11 @@ from .models import create_db
 from .routes.Chuyenbay import CHUYENBAY
 from .routes.SanBay import SANBAY
 from .routes.HangVe import HANGVE
-# from .routes.VeChuyenBay import VECHUYENBAY
-# from .routes.HanhKhach import HANHKHACH
+from .routes.VeChuyenBay import VECHUYENBAY
+from .routes.HanhKhach import HANHKHACH
 # from .routes.NhanVien import NHANVIEN
 # from .routes.DoanhThuThang import DOANHTHUTHANG
-# from .routes.QuyDinh import QUYDINH
+from .routes.QuyDinh import QUYDINH
 # from .routes.ChiTietChuyenBay import CHITIETCHUYENBAY
 # from .routes.auth import AUTH
 
@@ -23,10 +23,10 @@ def create_app(file_config = 'config.py'):
     app.register_blueprint(CHUYENBAY, url_prefix='/api')
     app.register_blueprint(SANBAY, url_prefix='/api')
     app.register_blueprint(HANGVE, url_prefix='/api')
-    # app.register_blueprint(VECHUYENBAY, url_prefix='/api')
-    # app.register_blueprint(HANHKHACH, url_prefix='/api')
+    app.register_blueprint(VECHUYENBAY, url_prefix='/api')
+    app.register_blueprint(HANHKHACH, url_prefix='/api')
     # app.register_blueprint(NHANVIEN, url_prefix='/api')
-    # app.register_blueprint(QUYDINH, url_prefix='/api')
+    app.register_blueprint(QUYDINH, url_prefix='/api')
     # app.register_blueprint(DOANHTHUTHANG, url_prefix='/api')
     # app.register_blueprint(AUTH, url_prefix='/api')
     return app

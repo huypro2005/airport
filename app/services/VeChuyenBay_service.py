@@ -1,11 +1,13 @@
-from cv2 import add
+from tkinter import E
 from app.models.VeChuyenBay import Vechuyenbay
 from app.models.Chuyenbay import Chuyenbay
 from app.models.HanhKhach import HanhKhach
-from .QuyDinh_service import get_quydinh
+from app.models.ChiTietHangVe import ChiTietHangVe
+from .QuyDinh_service import get_quydinh_service
 from .Chuyenbay_service import get_sogheconlai, set_sogheconlai
 from .HanhKhach_service import add_or_get_HanhKhach_service
 from app.utils.validators import validate_VeChuyenBay,  validate_VeChuyenBay_seat
+from .ChiTietHangve_service import get_ChiTietHangVe_service
 from library import *
 
 
@@ -26,7 +28,7 @@ from library import *
 
 
 def add_veChuyenyBay_service(data):
-    rule = get_quydinh()
+    rule = get_quydinh_service()
     if not rule:
         raise ValueError("Lỗi truy cập quy định.")
     try:
@@ -36,22 +38,51 @@ def add_veChuyenyBay_service(data):
         cmnd = data['cmnd']
         sdt = data['sdt']
         gioi_tinh = data['gioi_tinh']
-        hang_ve = data['Ma_hang_ve']
-        vitri = data['vitri']
+        ma_hang_ve = data['Ma_hang_ve']
+        vi_tri = data['vitri']
         
-        validate_VeChuyenBay_seat(vitri, macb)
+
+        chuyenbay = Chuyenbay.query.get(macb)
+        if not chuyenbay:
+            raise ValueError("Chuyến bay không tồn tại")
+        chiTietHangVe = get_ChiTietHangVe_service(macb, ma_hang_ve)
+        if chiTietHangVe is None:
+            raise ValueError("Hạng vé không tồn tại")
+        
+
+        # kiem tra thoi gian dat ve phai nho hon thoi gian khoi hanh, va toi thieu la truoc 24h
+        if datetime.now().date() > chuyenbay.ngay_khoi_hanh:
+            raise ValueError('Chuyến bay đã khởi hành')
+
+        if chuyenbay.ngay_khoi_hanh - datetime.now().date() < timedelta(days=rule.ThoiGianDatVeToiThieu):
+            raise ValueError("Thời gian đặt vé phải trước 24h so với giờ khởi hành")
+
+
+        validate_VeChuyenBay_seat(vi_tri, macb)
         data = {
             'Hoten': Hoten,
             'cmnd': cmnd,
             'sdt': sdt,
             'gioi_tinh': gioi_tinh
         }
-        add_or_get_HanhKhach_service(data)
+        hanhkhach = add_or_get_HanhKhach_service(data)
+        vechuyenbay = Vechuyenbay()
+        vechuyenbay.Ma_chuyen_bay = macb
+        vechuyenbay.Ma_hang_ve = ma_hang_ve
+        vechuyenbay.vi_tri = vi_tri
+        vechuyenbay.Ma_hanh_khach = hanhkhach.id
+        vechuyenbay.Tien_ve = chiTietHangVe.Gia_ve
 
+        chiTietHangVe.So_ve_da_dat += 1
+        chiTietHangVe.So_ve_trong -= 1  
 
-
-    except:
-        pass
+        db.session.add(vechuyenbay)
+        db.session.commit()
+        return vechuyenbay
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi: {e}")
+        
         
 
 
@@ -87,12 +118,12 @@ def delete_ve_service(id):
     else:
         raise ValueError("Không tìm thấy vé")
 
-def giave_chuyenbay_follow_hangve_service(chuyenbay: Chuyenbay, hangve: int):
-    rule = get_quydinh()
-    if not rule:
-        raise ValueError("Lỗi truy cập quy định.")
-    if hangve == 1:
-        return chuyenbay.gia_ve * rule.Phantramgia1/100
-    else:
-        return chuyenbay.gia_ve * rule.Phantramgia2/100
+# def giave_chuyenbay_follow_hangve_service(chuyenbay: Chuyenbay, hangve: int):
+#     rule = get_quydinh_service()
+#     if not rule:
+#         raise ValueError("Lỗi truy cập quy định.")
+#     if hangve == 1:
+#         return chuyenbay.gia_ve * rule.Phantramgia1/100
+#     else:
+#         return chuyenbay.gia_ve * rule.Phantramgia2/100
 

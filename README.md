@@ -38,7 +38,7 @@ dữ liệu trả về:
 
 
 
-2.Xem tất cả hạng vé
+2. Xem tất cả hạng vé
 link api: http://localhost:5000/api/hangve/get
 method = GET
 
@@ -65,7 +65,7 @@ dữ liệu trả về:
 B. Sân bay
 
 
-3. Thêm sân bay mới
+1. Thêm sân bay mới
 http://localhost:5000/api/sanbay/add
 method = POST
  
@@ -81,7 +81,7 @@ dữ liệu trả về:
 - "error": "{Lỗi}", 500
 
 
-4. Xem tất cả các sân bay
+2. Xem tất cả các sân bay
 link api: http://localhost:5000/api/sanbay/get
 method = GET
 
@@ -113,7 +113,7 @@ dữ liệu trả về:
 C. Chuyến Bay
 
 
-5. Thêm chuyến bay mới
+1. Thêm chuyến bay mới
 
 http://localhost:5000/api/chuyenbay/add
 body = {
@@ -156,7 +156,7 @@ dữ liệu trả về:
 - "error" : "{Lỗi}", 500
 
 
-6. Xem chuyến bay theo id chuyến bay
+2. Xem chuyến bay theo id chuyến bay
 http://localhost:5000/api/chuyenbay/get/<id>
 method = POST
 
@@ -181,7 +181,7 @@ Dữ liệu trả về:
 - "error" : "{Lỗi}", 500
 
 
-7. Xem chuyến bay trong khoảng thời gian 
+3. Xem chuyến bay trong khoảng thời gian 
 http://localhost:5000/api/chuyenbay/search?start_time={datetime}&end_time={datetime}
 
 method = GET
@@ -219,5 +219,145 @@ dữ liệu trả về:
 
 
 
+C. Vé chuyến bay
 
+1. Thêm vé chuyến bay 
+http://localhost:5000/api/vechuyenbay/add
+methods = POST
+body = {
+        "Ma_chuyen_bay": 1,
+        "Ma_hang_ve": 1,
+        "vitri": "B4.1",
+        "Ho_ten": "nguyen van a",
+        "cmnd": "116468466314",
+        "sdt": "24544346",
+        "gioi_tinh": "Nam"
+    }
  
+
+dữ liệu trả về:
+
+- {
+    "message": "Đặt vé thành công",
+    "ve": {
+        "Ma_chuyen_bay": 7,
+        "Ma_hanh_khach": 4,
+        "Ma_ve": 2,
+        "Tien_ve": 525000.0,
+        "hang_ve": 1,
+        "vi_tri": "B4.12"
+    }
+}
+
+- {'message' : '{lỗi}'}
+- {'message' : 'Lỗi server: {e}'}
+
+
+2. Xem chuyến bay theo id chuyến bay
+http://localhost:5000/api/vechuyenbay/get/<int:id>
+methods = GET
+ví dụ:
+
+http://localhost:5000/api/vechuyenbay/get/1
+
+dữ liệu trả về:
+- {
+    "data": {
+        "Ma_chuyen_bay": 7,
+        "Ma_hang_ve": 1,
+        "Ma_hanh_khach": 1,
+        "vi_tri": "B4.1"
+    },
+    "message": "Lấy dữ liệu thành công"
+}, 200
+
+- {
+    "message": "Không tìm thấy vé"
+}
+
+- {'message': '{Lỗi}'}
+- {'message': 'Lỗi: {lỗi}'}
+
+
+
+E. Hành Khách
+
+1. Thêm hành khách mới
+http://localhost:5000/api/hanhkhach/add
+methods =POST
+
+body = {
+        "Hoten": "Nguyen Van A",
+        "cmnd": "123456780",
+        "sdt": "0909090909",
+        "gioi_tinh": "Nam"
+    }
+
+dữ liệu trả về: 
+- {
+    "message": "Hanh khach da duoc them"
+}
+- {'message': '{Lỗi}'}
+- {'message': 'Lỗi: {lỗi}'}
+
+
+2. Xem Thông tin hành khách thông qua id
+
+http://localhost:5000/api/hanhkhach/get/<int:id>
+methods = POST
+
+ví dụ:
+
+http://localhost:5000/api/hanhkhach/get/1
+ 
+dữ liệu trả về:
+- {
+    "data": {
+        "Hoten": "nguyen van a",
+        "cmnd": "116468466314",
+        "gioi_tinh": "Nam",
+        "id": 1,
+        "sdt": "24544346"
+    },
+    "message": "Lấy dữ liệu thành công"
+}
+- {'message': '{Lỗi}'}
+- {'message': 'Lỗi: {lỗi}'}
+
+F. Quy định
+
+1. Xem tất cả quy định
+link api: http://localhost:5000/api/quydinh/get
+methods = GET
+
+dữ liệu trả về:
+- {
+    "data": {
+        "soluongsanbaytrunggian": 3,
+        "thoigianbaytoithieu": 10,
+        "thoigiandatvetoithieu": 1,
+        "thoigiandungtoida": 25,
+        "thoigiandungtoithieu": 15
+    },
+    "message": "Lấy quy định thành công"
+}
+- {'message': '{lỗi}'}
+
+2. cập nhật quy định
+link api: http://localhost:5000/api/quydinh/update
+methods = PUT
+
+body = {
+        "soluongsanbaytrunggian": 2,
+        "thoigianbaytoithieu": 30,
+        "thoigiandungtoida": 20,
+        "thoigiandungtoithieu": 10,
+        "thoigianvechuyenbay": 1
+}
+
+NOTE: cần thay đổi dữ liệu nào thì thay đổi dữ liệu đó, các dữ liệu còn lại thì điền mặc định là dữ liệu gốc lấy ở xem tất cả quy định
+
+dữ liệu trả về:
+- 'message': 'Cập nhật quy định thành công'
+- {'message': '{Lỗi}'}
+- {'message': 'Lỗi: {lỗi}'}

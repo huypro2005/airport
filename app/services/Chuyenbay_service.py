@@ -3,7 +3,7 @@ from app.models.ChiTietSanBayTrungGian import ChiTietSanBayTrungGian
 from app.models.SanBay import Sanbay
 from app.models.HangVe import HangVe
 from app import db
-from .QuyDinh_service import get_quydinh
+from .QuyDinh_service import get_quydinh_service
 from .ChiTietHangve_service import add_ChiTietHangVe_service
 from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio, format_NgayGio
 from library import *
@@ -50,7 +50,7 @@ from app.utils.auth import is_admin
 def add_ChuyenBay_service(data):
     if not is_admin():
         raise ValueError("Bạn không có quyền thực hiện hành động này")
-    rule = get_quydinh()
+    rule = get_quydinh_service()
     valadate_ChuyenBay(data, rule)
 
     ma_chuyen_bay = data['Ma_chuyen_bay']

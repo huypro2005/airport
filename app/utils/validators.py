@@ -150,19 +150,33 @@ def Validate_ChiTietChuyenBay(chitiet_list, rule, ma_san_bay_di, ma_san_bay_den)
             raise ValueError(f"Thời gian dừng tại sân bay trung gian phải từ {rule.Thoigiandungtoithieu} đến {rule.Thoigiandungtoida} phút")
         
 
+
+'''
+{
+        "Ma_chuyen_bay": 1,
+        "Ma_hang_ve": 1,
+        "vitri": "B4.1",
+        "Ho_ten": "nguyen van a",
+        "cmnd": "116468466314",
+        "sdt": "24544346",
+        "gioi_tinh": "Nam"
+}
+'''
+
 def validate_VeChuyenBay(data, rule):
-    required_fields = ['Ma_chuyen_bay', 'Ho_ten', 'cmnd', 'sdt', 'gioi_tinh', 'hang_ve', 'vitri']
+    required_fields = ['Ma_chuyen_bay', 'Ho_ten', 'cmnd', 'sdt', 'gioi_tinh', 'Ma_hang_ve', 'vitri']
     for field in required_fields:
         if field not in data:
             raise ValueError(f"Thiếu trường bắt buộc: {field}")
     if (data['Ma_chuyen_bay'] == '' or data['Ho_ten'] == '' or
          data['cmnd'] == '' or data['sdt'] == '' or 
-         data['gioi_tinh'] == '' or data['hang_ve'] == '' or 
+         data['gioi_tinh'] == '' or data['Ma_hang_ve'] == '' or 
          data['vitri'] == ''):
         raise ValueError("Các trường không được để trống")
     
-    if data['hang_ve'] not in [1, 2]:
-        raise ValueError("Hạng vé không hợp lệ")
+    
+
+    
     
 def validate_VeChuyenBay_seat(vitri, Ma_chuyen_bay):
     count = Vechuyenbay.query.filter(

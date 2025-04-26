@@ -45,14 +45,18 @@ def get_hanh_khach_by_id(id):
 def add_or_get_HanhKhach_service(data):
     hanhkhach = HanhKhach.query.filter_by(cmnd=data['cmnd']).first()
     if hanhkhach:
-        return jsonify(hanhkhach.serialize())
+        return hanhkhach
     else:
-        hanhkhach = HanhKhach(
-            Hoten=data['Hoten'],
-            cmnd=data['cmnd'],
-            sdt=data['sdt'],
-            gioi_tinh=data['gioi_tinh']
-        )
-        db.session.add(hanhkhach)
-        db.session.commit()
-        return jsonify(hanhkhach.serialize())
+        try:
+            hanhkhach = HanhKhach(
+                Hoten=data['Hoten'],
+                cmnd=data['cmnd'],
+                sdt=data['sdt'],
+                gioi_tinh=data['gioi_tinh']
+            )
+            db.session.add(hanhkhach)
+            db.session.commit()
+            return hanhkhach
+        except Exception as e:
+            db.session.rollback()
+            raise ValueError(f"Lỗi: {e}")

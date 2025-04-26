@@ -43,7 +43,7 @@ def add_ChiTietHangVe_service(data):
         raise e
     
 
-def get_ChiTietHangVe_servicel(MaChuyenBay, MaHangVe):
+def get_ChiTietHangVe_service(MaChuyenBay, MaHangVe):
     # Kiểm tra xem chi tiết hàng vé đã tồn tại chưa
     existing_record = ChiTietHangVe.query.filter_by(Ma_hang_ve=MaHangVe, Ma_chuyen_bay=MaChuyenBay).first()
     if existing_record:

@@ -1,6 +1,5 @@
 from app.models.SanBay import Sanbay
 from library import *
-from .QuyDinh_service import get_quydinh
 from app.utils.validators import validate_SanBay
 
 
