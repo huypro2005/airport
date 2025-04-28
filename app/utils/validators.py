@@ -233,7 +233,7 @@ def validate_Hoadon(data):
 
 
 def validate_NhanVien(data):
-    required_fields = ['id', 'first_name', 'last_name', 'username', 'password', 'email', 'pos', 'position']
+    required_fields = ['id', 'first_name', 'last_name', 'username', 'password', 'email',  'position']
     for field in required_fields:
         if field not in data:
             raise ValueError(f'Thiếu trường bắt buộc: {field}')

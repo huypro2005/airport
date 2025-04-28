@@ -1,5 +1,9 @@
 SE104
 
+28/4/2025: có thêm tháng, năm ở phần chi tiết doanh thu, mn sửa lại cơ sở dữ liệu bằng cách:
+vào mysql -> drop database airport -> create database airport -> chạy lại code python -> hoàn thành
+
+
 Các api cần thiết:
 - Tạo sân bay
 - Tạo chuyến bay
@@ -23,7 +27,7 @@ Các api đã hoàn thiện:
 A. Hạng vé
 
 1. Tạo hạng vé
-link api: http://localhost:5000/api/hangve/add 
+# link api: http://localhost:5000/api/hangve/add 
 body={
         "Ten_hang_ve": "Hang 1",
         "Ti_le_don_gia": 1.05
@@ -39,7 +43,7 @@ dữ liệu trả về:
 
 
 2. Xem tất cả hạng vé
-link api: http://localhost:5000/api/hangve/get
+# link api: http://localhost:5000/api/hangve/get
 method = GET
 
 dữ liệu trả về:
@@ -62,11 +66,47 @@ dữ liệu trả về:
 - "error": "{Lỗi}", 500
 
 
+3. Cập nhật hạng vé
+
+# link api: http://localhost:5000/api/hangve/update/<id>
+method = PUT
+
+ví dụ: 
+# http://localhost:5000/api/hangve/update/1
+
+body = {
+        "Ten_hang_ve": "Hang 1",
+        "Ti_le_don_gia": 1.1
+    }
+
+NOTE:  dữ liệu nào thay đổi thì gửi lên server. Có thể gửi thế này :
+[   
+    body = {
+        "Ten_hang_ve": "Hang 1"
+    }
+    
+    hoặc
+
+    body = {
+        "Ti_le_don_gia": 1.1
+    }
+
+]
+
+dữ liệu trả về:
+
+- {
+    "message": "Cập nhật hạng vé thành công"
+}
+- "error": "{Lỗi}", 400
+- "error": "{Lỗi}", 500
+
+
 B. Sân bay
 
 
 1. Thêm sân bay mới
-http://localhost:5000/api/sanbay/add
+# http://localhost:5000/api/sanbay/add
 method = POST
  
 body = {
@@ -82,7 +122,7 @@ dữ liệu trả về:
 
 
 2. Xem tất cả các sân bay
-link api: http://localhost:5000/api/sanbay/get
+# link api: http://localhost:5000/api/sanbay/get
 method = GET
 
 dữ liệu trả về:
@@ -115,7 +155,7 @@ C. Chuyến Bay
 
 1. Thêm chuyến bay mới
 
-http://localhost:5000/api/chuyenbay/add
+# http://localhost:5000/api/chuyenbay/add
 body = {
     "Ma_chuyen_bay": 6,
     "Ma_san_bay_di": "HNOI",
@@ -157,11 +197,11 @@ dữ liệu trả về:
 
 
 2. Xem chuyến bay theo id chuyến bay
-http://localhost:5000/api/chuyenbay/get/<id>
+# http://localhost:5000/api/chuyenbay/get/<id>
 method = POST
 
 ví dụ:
-http://localhost:5000/api/chuyenbay/get/6
+# http://localhost:5000/api/chuyenbay/get/6
 
 Dữ liệu trả về:
 - {
@@ -182,14 +222,14 @@ Dữ liệu trả về:
 
 
 3. Xem chuyến bay trong khoảng thời gian 
-http://localhost:5000/api/chuyenbay/search?start_time={datetime}&end_time={datetime}
+# http://localhost:5000/api/chuyenbay/search?start_time={datetime}&end_time={datetime}
 
 method = GET
 
 time ở dạng ISO 8601 
 ví dụ: 2026-04-25T23:59:59
 
-http://localhost:5000/api/chuyenbay/search?start_time=2025-04-20T00:00:00&end_time=2026-04-25T23:59:59
+# http://localhost:5000/api/chuyenbay/search?start_time=2025-04-20T00:00:00&end_time=2026-04-25T23:59:59
 
 dữ liệu trả về:
 - {
@@ -219,10 +259,46 @@ dữ liệu trả về:
 
 
 
+4. Cập nhật chuyến bay
+
+NOTE: chỉ có thể cập nhật ngày giờ bay, thời gian bay trên không và giá vé
+
+# link api: http://localhost:5000/api/chuyenbay/update/<id>
+methods = PUT
+
+ví dụ:
+# http://localhost:5000/api/chuyenbay/update/6
+
+body = {
+    "ngay_khoi_hanh": "2025-04-25",
+    "gio_khoi_hanh": "00:00:00",
+    "gia_ve": 1000000,
+    "Thoi_gian_bay": 40
+}
+
+NOTE: dữ liệu nào thay đổi thì mới gửi lên server. Giả sử không cập nhật giá vé có thể gửi body như này: (
+    body = {
+    "ngay_khoi_hanh": "2025-04-25",
+    "gio_khoi_hanh": "00:00:00",
+    "Thoi_gian_bay": 40
+    }
+). Điều này giúp giảm mức xử lý ở server. Ngày giờ phải được định dạng đúng như ví dụ.
+
+
+dữ liệu trả về: 
+
+- {
+    "message": "Chuyến bay đã được cập nhật thành công!"
+}
+- {'message' : '{lỗi}'}
+- {'message' : 'Lỗi server: {e}'}
+
+
+
 C. Vé chuyến bay
 
 1. Thêm vé chuyến bay 
-http://localhost:5000/api/vechuyenbay/add
+# http://localhost:5000/api/vechuyenbay/add
 methods = POST
 body = {
         "Ma_chuyen_bay": 1,
@@ -254,11 +330,11 @@ dữ liệu trả về:
 
 
 2. Xem chuyến bay theo id chuyến bay
-http://localhost:5000/api/vechuyenbay/get/<int:id>
+# http://localhost:5000/api/vechuyenbay/get/<int:id>
 methods = GET
 ví dụ:
 
-http://localhost:5000/api/vechuyenbay/get/1
+# http://localhost:5000/api/vechuyenbay/get/1
 
 dữ liệu trả về:
 - {
@@ -283,7 +359,7 @@ dữ liệu trả về:
 E. Hành Khách
 
 1. Thêm hành khách mới
-http://localhost:5000/api/hanhkhach/add
+# http://localhost:5000/api/hanhkhach/add
 methods =POST
 
 body = {
@@ -303,12 +379,12 @@ dữ liệu trả về:
 
 2. Xem Thông tin hành khách thông qua id
 
-http://localhost:5000/api/hanhkhach/get/<int:id>
+# http://localhost:5000/api/hanhkhach/get/<int:id>
 methods = POST
 
 ví dụ:
 
-http://localhost:5000/api/hanhkhach/get/1
+# http://localhost:5000/api/hanhkhach/get/1
  
 dữ liệu trả về:
 - {
@@ -327,7 +403,7 @@ dữ liệu trả về:
 F. Quy định
 
 1. Xem tất cả quy định
-link api: http://localhost:5000/api/quydinh/get
+# link api: http://localhost:5000/api/quydinh/get
 methods = GET
 
 dữ liệu trả về:
@@ -344,7 +420,7 @@ dữ liệu trả về:
 - {'message': '{lỗi}'}
 
 2. cập nhật quy định
-link api: http://localhost:5000/api/quydinh/update
+# link api: http://localhost:5000/api/quydinh/update
 methods = PUT
 
 body = {
@@ -361,3 +437,152 @@ dữ liệu trả về:
 - 'message': 'Cập nhật quy định thành công'
 - {'message': '{Lỗi}'}
 - {'message': 'Lỗi: {lỗi}'}
+
+
+
+
+G. Doanh thu tháng
+
+
+1. Thêm doanh thu tháng 
+# http://localhost:5000/api/doanhthuthang/add?thang={month}&nam={year}
+
+methods = POST
+
+NOTE: khi chạy thêm doanh thu tháng, sẽ tạo luôn chi tiết doanh thu tháng (Biểu mẫu 5.1), nhưng chưa tính tỉ lệ của doanh thu tháng trong biểu mẫu 5.2. Để tạo tỉ lệ của doanh thu tháng trong biểu mẫu 5.2 phải tạo doanh thu 5 hoặc update doanh thu năm
+
+ví dụ:
+# http://localhost:5000/api/doanhthuthang/add?thang=4&nam=2025
+
+dữ liệu trả về:
+- {"message": "Thêm doanh thu tháng thành công!"}, 200
+- {'message': '{Lỗi}'}
+
+
+2. Xem danh sách doanh thu tháng (Biểu mẫu 5.2)
+# link api: http://localhost:5000/api/ds_doanhthuthang/get?nam={year}
+methods = GET
+
+ví dụ: 
+# http://localhost:5000/api/ds_doanhthuthang/get?nam=2025
+
+dữ liệu trả về:
+- {
+    "data": [
+        {
+            "Tile": 0.758621,
+            "Tong_doanh_thu": 3300000.0,
+            "month": 4,
+            "so_chuyen_bay": 6,
+            "year": 2025
+        },
+        {
+            "Tile": 0.241379,
+            "Tong_doanh_thu": 1050000.0,
+            "month": 5,
+            "so_chuyen_bay": 2,
+            "year": 2025
+        }
+    ],
+    "message": "Lấy dữ liệu thành công"
+}
+- {"message": "Thiếu thông tin tháng hoặc năm"}
+- {"message": "Không có doanh thu tháng nào!"}
+- {'message': '{lỗi}'}
+
+
+
+3. Xem chi tiết doanh thu tháng (Biểu mẫu 5.1)
+
+# http://localhost:5000/api/chitietdoanhthuthang/get?thang={month}&nam={year}
+
+methods = GET
+
+ví dụ:
+# http://localhost:5000/api/chitietdoanhthuthang/get?thang=4&nam=2025
+dữ liệu trả về:
+
+- {
+    "data": [
+        {
+            "Doanh_thu": 0.0,
+            "Ma_chuyen_bay": 6,
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Ti_le": 0.0,
+            "nam": 2025,
+            "thang": 4
+        },
+        {
+            "Doanh_thu": 1650000.0,
+            "Ma_chuyen_bay": 8,
+            "So_ghe_dat": 3,
+            "So_ghe_trong": 97,
+            "Ti_le": 0.5,
+            "nam": 2025,
+            "thang": 4
+        },
+        {
+            "Doanh_thu": 1650000.0,
+            "Ma_chuyen_bay": 9,
+            "So_ghe_dat": 3,
+            "So_ghe_trong": 97,
+            "Ti_le": 0.5,
+            "nam": 2025,
+            "thang": 4
+        },
+        {
+            "Doanh_thu": 0.0,
+            "Ma_chuyen_bay": 10,
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Ti_le": 0.0,
+            "nam": 2025,
+            "thang": 4
+        },
+        {
+            "Doanh_thu": 0.0,
+            "Ma_chuyen_bay": 11,
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Ti_le": 0.0,
+            "nam": 2025,
+            "thang": 4
+        }
+    ],
+    "message": "Truy cập dữ liệu thành công"
+}
+
+
+- {'message': '{lỗi}'}
+
+
+H. Doanh thu năm
+
+1. Tạo doanh thu năm
+
+# link api: http://localhost:5000/api/doanhthunam/add?nam={year}
+
+methods = POST
+
+ví dụ:
+# link api: http://localhost:5000/api/doanhthunam/add?nam=2025
+
+dữ liệu trả về: 
+
+- {"message": "Thêm doanh thu năm thành công!"}
+- {'message': '{lỗi}'}
+
+2. Cập nhật doanh thu năm
+# link api: http://localhost:5000/api/doanhthunam/update?nam={year}
+
+methods = PUT
+
+
+ví dụ: 
+
+# link api: http://localhost:5000/api/doanhthunam/update?nam=2025
+
+dữ liệu trả về:
+- {"message": "Cập nhật doanh thu năm thành công!"}
+- {'message': '{lỗi}'}

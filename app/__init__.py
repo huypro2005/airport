@@ -9,9 +9,10 @@ from .routes.HangVe import HANGVE
 from .routes.VeChuyenBay import VECHUYENBAY
 from .routes.HanhKhach import HANHKHACH
 # from .routes.NhanVien import NHANVIEN
-# from .routes.DoanhThuThang import DOANHTHUTHANG
+from .routes.DoanhThuThang import DOANHTHUTHANG
 from .routes.QuyDinh import QUYDINH
-# from .routes.ChiTietChuyenBay import CHITIETCHUYENBAY
+from .routes.ChiTiet_BCDTThang import CHITIETDOANHHTHUTHANG
+from .routes.DoanhThuNam import DOANHTHUNAM
 # from .routes.auth import AUTH
 
 def create_app(file_config = 'config.py'):
@@ -27,8 +28,10 @@ def create_app(file_config = 'config.py'):
     app.register_blueprint(HANHKHACH, url_prefix='/api')
     # app.register_blueprint(NHANVIEN, url_prefix='/api')
     app.register_blueprint(QUYDINH, url_prefix='/api')
-    # app.register_blueprint(DOANHTHUTHANG, url_prefix='/api')
+    app.register_blueprint(CHITIETDOANHHTHUTHANG, url_prefix='/api')
+    app.register_blueprint(DOANHTHUTHANG, url_prefix='/api')
     # app.register_blueprint(AUTH, url_prefix='/api')
+    app.register_blueprint(DOANHTHUNAM, url_prefix='/api')
     return app
 
 

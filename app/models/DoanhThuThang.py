@@ -16,3 +16,12 @@ class doanhThuThang(db.Model):
     
     def __repr__(self):
         return f'{self.Tong_doanh_thu} - {self.month} - {self.year}'
+    
+    def serialize(self):
+        return {
+            'Tong_doanh_thu': self.Tong_doanh_thu,
+            'month': self.month,
+            'year': self.year,
+            'so_chuyen_bay': self.so_chuyen_bay,
+            'Tile': self.Tile
+        }

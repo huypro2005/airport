@@ -1,8 +1,9 @@
 from app.services.Chuyenbay_service import (add_ChuyenBay_service, 
                     get_chuyenbay_byID_service, get_dsChuyenBay_follow_time_service, 
                     update_chuyenbay_thoigianbay_service,
-                    Huy_Phieudatcho_of_Chuyenbay_da_bay_service,
-                    update_chuyenbay_ngaygiobay_service)
+                    update_chuyenbay_ngaygiobay_service,
+                    get_Chuyenbay_by_thang_service,
+                    update_chuyenbay_service)
 from flask import Blueprint, request, jsonify
 from app.models.Chuyenbay import Chuyenbay
 from app.models.SanBay import Sanbay
@@ -120,10 +121,37 @@ def update_ngaygiobay(id):
         return jsonify({"error": str(e)}), 500
 
 
-@CHUYENBAY.route('/chuyenbay/huy_phieudatcho_of_chuyenbay_da_bay', methods=['GET'])
-def Huy_Phieudatcho_of_Chuyenbay_da_bay():
+
+# link api: http://localhost:5000/api/chuyenbay/update/<id>
+
+
+@CHUYENBAY.route('/chuyenbay/update/<id>', methods=['PUT'])
+def update_chuyenbay(id):
     try:
-        Huy_Phieudatcho_of_Chuyenbay_da_bay_service()
-        return jsonify({"message": "Phiếu đặt chỗ đã được hủy thành công!"}), 200
+        data = request.get_json()
+        if not data:
+            return jsonify({'message': 'Không có dữ liệu để cập nhật'}), 400
+        update_chuyenbay_service(id, data)
+        
+        return jsonify({"message": "Chuyến bay đã được cập nhật thành công!"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+
+# link api: http://localhost:5000/api/chuyenbay/get/by_month?month=4&year=2025
+@CHUYENBAY.route('/chuyenbay/get/by_month', methods = ['GET'])
+def get_chuyenbay_by_month():
+    try:
+        month = request.args.get('month')
+        year = request.args.get('year')
+        if not month or not year:
+            return jsonify({"error": "Thiếu thông tin tháng hoặc năm"}), 400
+        chuyenbay = get_Chuyenbay_by_thang_service(month, year)
+        if not chuyenbay:
+            return jsonify({"message": "Không có chuyến bay nào trong tháng này"}), 404
+        return jsonify({"message": [cb.serialize() for cb in chuyenbay]}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

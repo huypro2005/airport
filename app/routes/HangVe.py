@@ -1,4 +1,4 @@
-from app.services.HangVe_service import add_hangve_service, get_ds_HangVe_service
+from app.services.HangVe_service import add_hangve_service, get_ds_HangVe_service, update_hangve_service
 from flask import Blueprint, request, jsonify
 
 HANGVE = Blueprint('hangve', __name__)
@@ -15,6 +15,8 @@ HANGVE = Blueprint('hangve', __name__)
 def add_hangve():
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({"error": "Thiếu thông tin hạng vé!"}), 400
         add_hangve_service(data)
         return jsonify({"message": "Thêm hạng vé thành công!"}), 201
     except ValueError as e:
@@ -41,3 +43,26 @@ def get_hangve():
         return jsonify({"message": [hv.serialize() for hv in hangve]}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+
+'''
+        {
+            "Ten_hang_ve": "Hang 1",
+            "Ti_le_don_gia": 1.1
+        }
+
+'''
+
+# link api: http://localhost:5000/api/hangve/update/<id>
+@HANGVE.route('/hangve/update/<id>', methods=['PUT'])
+def update_hangve(id):
+    try:
+        data = request.get_json()
+        # Call the service to update the hang ve
+        update_hangve_service(id, data)
+        return jsonify({'message': 'Cập nhật hạng vé thành công'}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e)}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}'}), 500

@@ -1,3 +1,4 @@
+from app.models.ChiTietHangVe import ChiTietHangVe
 from app.models.Chuyenbay import Chuyenbay
 from app.models.ChiTietSanBayTrungGian import ChiTietSanBayTrungGian
 from app.models.SanBay import Sanbay
@@ -7,8 +8,9 @@ from .QuyDinh_service import get_quydinh_service
 from .ChiTietHangve_service import add_ChiTietHangVe_service
 from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio, format_NgayGio
 from library import *
-from sqlalchemy import extract
+from sqlalchemy import extract, func
 from app.utils.auth import is_admin
+
 
 '''
     {
@@ -227,44 +229,68 @@ def update_chuyenbay_ngaygiobay_service(chuyenbay_id, ngaygiobay):
         raise ValueError(f"Lỗi không xác định: {e}")
 
 
-def get_Chuyenbay_by_thang(thang, nam):
+def get_Chuyenbay_by_thang_service(thang, nam):
     ds = Chuyenbay.query.filter(
-        extract('month', Chuyenbay.ngay_gio) == thang,
-        extract('year', Chuyenbay.ngay_gio) == nam
+        extract('month', Chuyenbay.ngay_khoi_hanh) == thang,
+        extract('year', Chuyenbay.ngay_khoi_hanh) == nam
     ).all()
     return ds
 
-def clear_Chuyenbay_service(chuyenbay: Chuyenbay):
-    '''
-        Hàm cập nhật các phiếu đặt chỗ đã clear
-    '''
+
+
+def update_chuyenbay_service(id, data):
     try:
-        chuyenbay.clear = 1
+        chuyenbay = Chuyenbay.query.get(id)
+        if not chuyenbay:
+            raise ValueError("Không tìm thấy chuyến bay")
+        
+        # Validate dữ liệu đầu vào
+        if 'ngay_khoi_hanh' in data:
+            chuyenbay.ngay_khoi_hanh = data['ngay_khoi_hanh']
+        if 'gio_khoi_hanh' in data:
+            chuyenbay.gio_khoi_hanh = data['gio_khoi_hanh']
+        if 'Thoi_gian_bay' in data:
+            chuyenbay.Thoi_gian_bay = data['Thoi_gian_bay']
+
+        if 'gia_ve' in data:
+            chuyenbay.gia_ve = data['gia_ve']
+            db.session.query(ChiTietHangVe).filter(
+                ChiTietHangVe.Ma_chuyen_bay == chuyenbay.id
+            ).update({
+                ChiTietHangVe.Gia_ve: data['gia_ve']*float(db.session.query(HangVe).filter(
+                    HangVe.id == ChiTietHangVe.Ma_hang_ve
+                ).first().Ti_le_don_gia)
+            })
         db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        raise ValueError(f"{e}")
     except Exception as e:
         db.session.rollback()
-        raise ValueError(f"Lỗi chưa clear chuyến bay {chuyenbay.id}")
-
-
-def check_Chuyenbay_is_flight(chuyenbay: Chuyenbay):
-    '''
-    Hàm kiểm tra chuyến bay có phải là chuyến bay bay hay không
-    Nếu chuyến bay đã bay thì hủy tất cả phiếu đặt chỗ của chuyến bay đó
-    '''
-
-    from .PhieuDatCho_service import Huy_phieudatcho_through_chuyenbay_service
-    Huy_phieudatcho_through_chuyenbay_service(chuyenbay)
-    clear_Chuyenbay_service(chuyenbay)
-
-
-def Huy_Phieudatcho_of_Chuyenbay_da_bay_service():
-    try:
-        ds = Chuyenbay.query.filter(
-            Chuyenbay.ngay_gio < datetime.now(),
-            Chuyenbay.clear == 0
-        ).all()
-        for chuyenbay in ds:
-            check_Chuyenbay_is_flight(chuyenbay)
-    except Exception as e:
         raise ValueError(f"Lỗi không xác định: {e}")
+    
 
+def Tong_soghedat_of_chuyenbay_service(chuyenbay: Chuyenbay):
+    try:
+        
+        # Tính tổng số ghế đã đặt
+        total_so_ve_da_dat = db.session.query(func.sum(ChiTietHangVe.So_ve_da_dat)).filter(
+            ChiTietHangVe.Ma_chuyen_bay == chuyenbay.id
+        ).scalar()
+        
+        return total_so_ve_da_dat or 0
+    except Exception as e:
+        raise ValueError(f"Lỗi khi tính tổng số ghế đã đặt: {str(e)}")
+    
+
+def Tong_soghetrong_of_chuyenbay_service(chuyenbay: Chuyenbay):
+    try:
+        
+        # Tính tổng số ghế đã đặt
+        total_so_ve_trong = db.session.query(func.sum(ChiTietHangVe.So_ve_trong)).filter(
+            ChiTietHangVe.Ma_chuyen_bay == chuyenbay.id
+        ).scalar()
+        
+        return total_so_ve_trong or 0
+    except Exception as e:
+        raise ValueError(f"Lỗi khi tính tổng số ghế trống: {str(e)}")
