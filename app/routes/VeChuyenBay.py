@@ -70,29 +70,29 @@ def get_ve_chuyen_bay(id):
         return jsonify({'message': f'Lỗi: {e}'}), 500
  
 
-@VECHUYENBAY.route('/vechuyenbay/update/hangve', methods=['PUT'])
-# @jwt_required()
-def update_hangve():
-    try:
-        id = request.args.get('id')
-        hangve = request.args.get('hangve')
-        update_ve_Hangve_service(id, hangve)
-        return jsonify({'message': 'Cập nhật hàng vé thành công'}), 200
-    except ValueError as e:
-        return jsonify({'message': str(e)}), 400
-    except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+# @VECHUYENBAY.route('/vechuyenbay/update/hangve', methods=['PUT'])
+# # @jwt_required()
+# def update_hangve():
+#     try:
+#         id = request.args.get('id')
+#         hangve = request.args.get('hangve')
+#         update_ve_Hangve_service(id, hangve)
+#         return jsonify({'message': 'Cập nhật hàng vé thành công'}), 200
+#     except ValueError as e:
+#         return jsonify({'message': str(e)}), 400
+#     except Exception as e:
+#         return jsonify({'message': f'Lỗi: {e}'}), 500
         
 
-@VECHUYENBAY.route('/vechuyenbay/huyve/<id>', methods = ['PUT'])
-def update_huyVeChuyenBay(id):
-    try:
-        update_huy_ve_service(id)
-        return jsonify({'message': 'Hủy vé thành công'}), 200
-    except ValueError as e:
-        return jsonify({'message': str(e)}), 400
-    except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+# @VECHUYENBAY.route('/vechuyenbay/huyve/<id>', methods = ['PUT'])
+# def update_huyVeChuyenBay(id):
+#     try:
+#         update_huy_ve_service(id)
+#         return jsonify({'message': 'Hủy vé thành công'}), 200
+#     except ValueError as e:
+#         return jsonify({'message': str(e)}), 400
+#     except Exception as e:
+#         return jsonify({'message': f'Lỗi: {e}'}), 500
 
 @VECHUYENBAY.route('/vechuyenbay/delete/<int:id>', methods=['DELETE'])
 # @jwt_required()

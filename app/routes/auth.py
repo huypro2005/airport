@@ -7,6 +7,10 @@ AUTH = Blueprint('auth', __name__)
 
 
 '''
+{
+    "username": "john.doe",
+    "password": "password123"
+}
 '''
 # link api: http://localhost:5000/api/auth/login
 @AUTH.route('/auth/login', methods = ['POST'])
