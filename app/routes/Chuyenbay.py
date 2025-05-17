@@ -7,6 +7,8 @@ from app.services.Chuyenbay_service import (add_ChuyenBay_service,
 from flask import Blueprint, request, jsonify
 from app.models.Chuyenbay import Chuyenbay
 from app.models.SanBay import Sanbay
+from flask_jwt_extended import jwt_required
+from app.utils.auth import is_admin
 CHUYENBAY = Blueprint('chuyennbay', __name__)
 
 # link api: http://localhost:5000/api/chuyenbay/add

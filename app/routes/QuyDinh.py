@@ -2,7 +2,7 @@ from app.services.QuyDinh_service import get_quydinh_service, update_quydinh_ser
 from flask import Blueprint
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required
-from app.utils.auth import is_giamdoc
+from app.utils.auth import is_admin
 
 QUYDINH = Blueprint('quydinh', __name__)
 
@@ -48,7 +48,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/thoiGianBayToiThieu', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_thoiGianBayToiThieu():
 #     try:
 #         data = request.get_json()
@@ -62,7 +61,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/soLuongSanBayTrungGian', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_soLuongSanBayTrungGian():
 #     try:
 #         data = request.get_json()
@@ -76,7 +74,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/thoiGianDungToiThieu', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_thoiGianDungToiThieu():
 #     try:
 #         data = request.get_json()
@@ -91,7 +88,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/thoiGianDungToiDa', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_thoiGianDungToiDa():
 #     try:
 #         data = request.get_json()
@@ -106,7 +102,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/phanTramGiaVeHang1', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_phanTramGiaVeHang1():
 #     try:
 #         data = request.get_json()
@@ -121,7 +116,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/phanTramGiaVeHang2', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_phanTramGiaVeHang2():
 #     try:
 #         data = request.get_json()
@@ -137,7 +131,6 @@ def update_quydinh():
 
 # @QUYDINH.route('/quydinh/update/thoiGianDatVeToiDa', methods=['PUT'])
 # # @jwt_required()
-# # @is_giamdoc()
 # def update_thoiGianDatVeToiDa():
 #     try:
 #         data = request.get_json()

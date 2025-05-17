@@ -5,7 +5,11 @@ from app.services.auth_service import login_service, logout_service
 
 AUTH = Blueprint('auth', __name__)
 
-@AUTH.route('/login', methods = ['POST'])
+
+'''
+'''
+# link api: http://localhost:5000/api/auth/login
+@AUTH.route('/auth/login', methods = ['POST'])
 def login():
     try:
         data = request.get_json()
@@ -21,7 +25,7 @@ def login():
     except Exception as e:
         return jsonify({'message': str(e)}), 500
     
-@AUTH.route('/logout', methods = ['POST'])
+@AUTH.route('/auth/logout', methods = ['POST'])
 def logout():
     return logout_service()
 

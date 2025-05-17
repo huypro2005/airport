@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.DoanhThuNam_service import create_doanhthu_nam_service, update_doanhthu_nam_service
+from flask_jwt_extended import jwt_required
+from app.utils.auth import is_admin
 
 DOANHTHUNAM = Blueprint('doanhthu_nam', __name__)
 

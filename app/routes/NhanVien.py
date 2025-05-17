@@ -5,16 +5,17 @@ from flask_jwt_extended import jwt_required
 
 NHANVIEN = Blueprint('nhanvien', __name__)
 
+
+# link api: http://localhost:5000/api/nhanvien/add
 @NHANVIEN.route('/nhanvien/add', methods=['POST'])
-@jwt_required()
-@is_admin()
+# @jwt_required()
+# @is_admin()
 def add_nhanvien_route():
     
     '''
     {
-        "id": 1,
-        "first_name": "John",
-        "last_name": "Doe",
+        "id": 2,
+        "name": "John Doe",
         "username": "john.doe",
         "password": "password123",
         "email": "john.doe@example.com",

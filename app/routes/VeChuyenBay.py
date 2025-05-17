@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.services.VeChuyenBay_service import (add_veChuyenyBay_service, 
                                               get_veChuyenBay_byID_service, 
-                                               delete_ve_service)
+                                               delete_ve_service,
+                                               update_hang_ve_service)
 from flask_jwt_extended import jwt_required
 
 VECHUYENBAY = Blueprint('vechuyenbay', __name__)

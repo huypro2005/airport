@@ -5,6 +5,8 @@ from app.services.ChiTietDoanhThuThang_service import (
     update_tile_Chitietdoanhthu_service,
     get_ds_chitietdoanhthu_service
 )
+from flask_jwt_extended import jwt_required
+from app.utils.auth import is_admin
 
 CHITIETDOANHHTHUTHANG = Blueprint('ChiTietDoanhThuThang', __name__)
 

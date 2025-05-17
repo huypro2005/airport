@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask import jsonify
 
 def authenticate(username, password):
-    user = Nhanvien.query.filter_by(username=username).first()
+    user = Nhanvien.query.filter(Nhanvien.username==username, Nhanvien.tinhtrang == 1).first()
     if not user:
         raise ValueError("Tên tài khoản không tồn tại")
     if not check_password_hash(user.password, password):
@@ -25,7 +25,7 @@ def login_service(username, password):
         'access_token': access_token,
         'refresh_token': refresh_token, 
         'username': user.username,
-        'pos': user.pos,
+        'position': user.position,
         'id': user.id
     }
 

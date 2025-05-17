@@ -31,12 +31,8 @@ def role_required(allowed_roles):
     return decorator
 
 # Constants for roles
-ROLE_NHANVIEN = 0
-ROLE_GIAMDOC = 1
-ROLE_ADMIN = 2
 
-def is_giamdoc():
-    return role_required([ROLE_GIAMDOC])
+ROLE_ADMIN = 'admin'
 
 def is_admin():
     return role_required([ROLE_ADMIN])

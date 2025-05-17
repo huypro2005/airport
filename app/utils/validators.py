@@ -233,11 +233,11 @@ def validate_Hoadon(data):
 
 
 def validate_NhanVien(data):
-    required_fields = ['id', 'first_name', 'last_name', 'username', 'password', 'email',  'position']
+    required_fields = ['id', 'name', 'username', 'password', 'email',  'position']
     for field in required_fields:
         if field not in data:
             raise ValueError(f'Thiếu trường bắt buộc: {field}')
-    if data['id'] == '' or data['first_name'] == '' or data['last_name'] == '' or data['username'] == '' or data['password'] == '' or data['email'] == '' or data['pos'] == '' or data['position'] == '':
+    if data['id'] == '' or data['name'] == '' or data['username'] == '' or data['password'] == '' or data['email'] == '' or data['pos'] == '' or data['position'] == '':
         raise ValueError("Các trường không được để trống")
     if data['pos'] not in [0, 1, 2]:
         raise ValueError("Chức vụ không hợp lệ")

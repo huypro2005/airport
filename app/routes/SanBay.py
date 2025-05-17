@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.SanBay_service import add_SanBay_service, get_ds_sanbay_service, get_sanbay_by_id_service, delete_sanbay_service, update_sanbay_service
 from flask_jwt_extended import jwt_required
-from app.utils.auth import is_giamdoc
+from app.utils.auth import is_admin
 SANBAY = Blueprint('sanbay', __name__)
 
 
@@ -15,7 +15,6 @@ SANBAY = Blueprint('sanbay', __name__)
 # link api: http://localhost:5000/api/sanbay/add
 @SANBAY.route('/sanbay/add', methods=['POST'])
 # @jwt_required()
-# @is_giamdoc()
 def add_sanbay():
     try:
         data = request.get_json()
@@ -90,8 +89,7 @@ def get_sanbay_by_id(id):
         return jsonify({"error": str(e)}), 500
     
 @SANBAY.route('/sanbay/delete/<int:id>', methods=['DELETE'])
-@jwt_required()
-@is_giamdoc()
+@jwt_required
 def delete_sanbay(id):
     try:
         delete_sanbay_service(id)

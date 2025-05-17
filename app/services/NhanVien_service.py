@@ -1,3 +1,4 @@
+from os import name
 from app.models.NhanVien import Nhanvien
 from app.utils.validators import validate_NhanVien
 from library import *
@@ -6,8 +7,7 @@ from library import *
 def add_nhanvien_service(data):
     validate_NhanVien(data)
     id = data['id']
-    first_name = data['first_name']
-    last_name = data['last_name']
+    name = data['name']
     username = data['username']
     password = data['password']
     email = data['email']
@@ -25,8 +25,7 @@ def add_nhanvien_service(data):
         raise ValueError("Mã nhân viên đã tồn tại")
 
 
-    nhanvien = Nhanvien(id = id, first_name = first_name,
-                         last_name = last_name, username = username,
+    nhanvien = Nhanvien(id = id, name= name, username = username,
                          password = hash_password, email = email,
                          position = position)
     try:

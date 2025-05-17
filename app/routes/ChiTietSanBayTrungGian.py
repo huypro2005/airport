@@ -1,5 +1,7 @@
 from airport.app.services.ChiTietSanBayTrungGian_service import get_ds_ChiTietSanBayTrungGian_service, update_Thoigiandung_CTSBTG_service
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
+from airport.app.utils.auth import is_admin
 
 CHITIETCHUYENBAY = Blueprint('ChiTietChuyenBay', __name__)
 

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.DoanhThuThang_service import create_doanhthu_thang_service, get_ds_doanhthuthang_service
 from flask_jwt_extended import jwt_required
+from app.utils.auth import is_admin
 
 DOANHTHUTHANG = Blueprint('doanhthu_thang', __name__)
 
