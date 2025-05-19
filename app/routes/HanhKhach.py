@@ -20,11 +20,11 @@ def add_hanh_khach_route():
     try:
         data = request.get_json()
         add_hanh_khach(data)
-        return jsonify({'message': 'Hanh khach da duoc them'})
+        return jsonify({'message': 'Hanh khach da duoc them', "status": "success"}), 201
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 
 
 # link api: http://localhost:5000/api/hanhkhach/get/<int:id>
@@ -34,11 +34,12 @@ def get_hanh_khach(id):
     try:
         hanh_khach = get_hanh_khach_by_id(id)
         return jsonify({'message': 'Lấy dữ liệu thành công', 
-                            'data': hanh_khach.serialize()}), 200
+                        'data': hanh_khach.serialize(),
+                        "status": "success"}), 200
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 
 
 

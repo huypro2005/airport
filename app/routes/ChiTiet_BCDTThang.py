@@ -19,11 +19,11 @@ def add_chitietdoanhthuthang():
         thang = request.args.get('thang')
         nam = request.args.get('nam')
         if not thang or not nam:
-            return jsonify({"error": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         create_ds_chitietdoanhthu_service(thang, nam)
-        return jsonify({"message": "Thêm chi tiết doanh thu tháng thành công!"}), 200
+        return jsonify({"message": "Thêm chi tiết doanh thu tháng thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     
 
 
@@ -34,14 +34,14 @@ def update_tile_chitietdoanhthuthang():
         thang = request.args.get('thang')
         nam = request.args.get('nam')
         if not thang or not nam:
-            return jsonify({"error": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         
         update_tile_Chitietdoanhthu_service(thang, nam, 3300000, 2)
-        return jsonify({"message": "Cập nhật tỷ lệ chi tiết doanh thu tháng thành công!"}), 200
+        return jsonify({"message": "Cập nhật tỷ lệ chi tiết doanh thu tháng thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 
@@ -55,7 +55,7 @@ def get_chitietdoanhthuthang():
         thang = request.args.get('thang')
         nam = request.args.get('nam')
         if not thang or not nam:
-            return jsonify({"message": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         
         # Call the service to get the data
         ds_chitietdoanhthu = get_ds_chitietdoanhthu_service(thang, nam)
@@ -64,9 +64,10 @@ def get_chitietdoanhthuthang():
         
         
         return jsonify({'message': 'Truy cập dữ liệu thành công',
-                        'data': [ctdt.serialize() for ctdt in ds_chitietdoanhthu]}), 200
+                        'data': [ctdt.serialize() for ctdt in ds_chitietdoanhthu],
+                        'status': 'success'}), 200
     except ValueError as e:
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail" }), 500
 

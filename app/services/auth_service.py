@@ -19,8 +19,8 @@ def login_service(username, password):
         'username': user.username,
         'id': user.id,
     }
-    access_token = create_access_token(identity=data)
-    refresh_token = create_refresh_token(identity=data)
+    access_token = create_access_token(identity=str(user.id), additional_claims=data)
+    refresh_token = create_refresh_token(identity=str(user.id), additional_claims=data)
     return {
         'access_token': access_token,
         'refresh_token': refresh_token, 

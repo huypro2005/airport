@@ -12,3 +12,13 @@ class ChiTietHangVe(db.Model):
 
     def __repr__(self):
         return f'{self.Ma_hang_ve} - {self.Ma_chuyen_bay} - {self.So_ve_trong} - {self.So_ve_da_dat} - {self.Gia_ve}'
+    
+    def serialize(self):
+        return {
+            "Ma_hang_ve": self.Ma_hang_ve,
+            "Ma_chuyen_bay": self.Ma_chuyen_bay,
+            "So_ve_trong": int(self.So_ve_trong),
+            "So_ve_da_dat": int(self.So_ve_da_dat),
+            "Gia_ve": float(self.Gia_ve)
+        }
+    

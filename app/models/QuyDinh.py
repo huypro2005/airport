@@ -1,4 +1,3 @@
-from email.policy import default
 from app import db
 from library import *
 

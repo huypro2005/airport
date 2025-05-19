@@ -11,9 +11,9 @@ CHITIETCHUYENBAY = Blueprint('ChiTietChuyenBay', __name__)
 def get_chitietchuyenbays(chuyenbay_id):
     try:
         ds = get_ds_ChiTietSanBayTrungGian_service(chuyenbay_id)
-        return ds, 200
+        return jsonify({'status': 'success', 'data': ds}) , 200
     except Exception as e:
-        return jsonify({'message': f'Error: {e}'}), 400
+        return jsonify({'message': f'Error: {e}', 'status': 'fail'}), 400
     
 
 
@@ -25,14 +25,14 @@ def update_Thoigiandung(id):
         data = request.args.get('Thoigiandung')
         thoi_gian_dung = int(data) if data else None
         if not thoi_gian_dung:
-            return jsonify({'message': 'Vui lòng nhập thời gian dừng'}), 400
+            return jsonify({'message': 'Vui lòng nhập thời gian dừng', 'status': 'fail'}), 400
         
         # Call the service to update the Thoi_gian_dung
         update_Thoigiandung_CTSBTG_service(id, thoi_gian_dung)
         
-        return jsonify({'message': 'Cập nhật thời gian dừng thành công'}), 200
+        return jsonify({'message': 'Cập nhật thời gian dừng thành công', 'status': 'success'}), 200
     
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
     except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+        return jsonify({'message': f'Lỗi: {e}', 'status': 'fail' }), 500

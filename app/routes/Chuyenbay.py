@@ -14,11 +14,11 @@ CHUYENBAY = Blueprint('chuyennbay', __name__)
 # link api: http://localhost:5000/api/chuyenbay/add
 '''
     {
-    "Ma_chuyen_bay": 6,
+    "Ma_chuyen_bay": 10,
     "Ma_san_bay_di": "HNOI",
     "Ma_san_bay_den": "SGON",
     "gia_ve": 500000,
-    "ngay_khoi_hanh": "2025-04-25",
+    "ngay_khoi_hanh": "2025-05-25",
     "gio_khoi_hanh": "00:00:00",
     "thoi_gian_bay": 30,
     "chitiet":[
@@ -55,11 +55,11 @@ def add_chuyenbay():
         data = request.get_json()
         add_ChuyenBay_service(data)
 
-        return jsonify({"message": "Chuyến bay đã được thêm thành công!"}), 201
+        return jsonify({"message": "Chuyến bay đã được thêm thành công!", "status": "success"}), 201
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
     
     
@@ -71,27 +71,48 @@ def get_chuyenbay_byID(id):
     try:
         chuyenbay = get_chuyenbay_byID_service(id)
         
-        return jsonify({"message": chuyenbay.serialize()}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": chuyenbay.serialize(), "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 404
+        return jsonify({"message": str(e), "status": "fail"}), 404
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500
+    
     
 
-# link api: http://localhost:5000/api/chuyenbay/search?start_time=2025-04-20T00:00:00&end_time=2026-04-25T23:59:59
+# link api: http://localhost:5000/api/chuyenbay/search?start_time=2025-04-20T00:00:00&end_time=2026-04-25T23:59:59&sanbay_di=HAIPHONG&sanbay_den=SGON
 
 @CHUYENBAY.route('/chuyenbay/search', methods=['GET'])
 def get_dsChuyenBay_follow_time():
     try:
         start_time = request.args.get('start_time')
         end_time = request.args.get('end_time')
-        dsChuyenBay = get_dsChuyenBay_follow_time_service(start_time, end_time)
+        sanbay_di = request.args.get('sanbay_di')
+        sanbay_den = request.args.get('sanbay_den')
         
-        return jsonify({'message': [chuyenbay.serialize() for chuyenbay in dsChuyenBay]}), 200
+        if not all([start_time, end_time, sanbay_di, sanbay_den]):
+            return jsonify({
+                "message": "Thiếu thông tin tìm kiếm",
+                "status": "fail"
+            }), 400
+            
+        dsChuyenBay = get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_den)
+        
+        return jsonify({
+            "message": "Lấy danh sách chuyến bay thành công",
+            "status": "success",
+            "data": dsChuyenBay
+        }), 200
+        
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({
+            "message": str(e),
+            "status": "fail"
+        }), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "message": str(e),
+            "status": "fail"
+        }), 500
     
 
 
@@ -102,11 +123,11 @@ def update_thoigianbay(id):
     try:
         thoigianbay = request.args.get('thoigianbay')
         update_chuyenbay_thoigianbay_service(id, thoigianbay)
-        return jsonify({"message": "Thời gian bay đã được cập nhật thành công!"}), 200
+        return jsonify({"message": "Thời gian bay đã được cập nhật thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 # link api: http://localhost:5000/api/chuyenbay/update_thoigianbay/<id>?thoigianbay=2025-04-25T00:00:00
@@ -116,11 +137,11 @@ def update_ngaygiobay(id):
     try:
         ngaygiobay = request.args.get('ngaygiobay')
         update_chuyenbay_ngaygiobay_service(id, ngaygiobay)
-        return jsonify({"message": "Ngày giờ bay đã được cập nhật thành công!"}), 200
+        return jsonify({"message": "Ngày giờ bay đã được cập nhật thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
 
 
 
@@ -135,11 +156,11 @@ def update_chuyenbay(id):
             return jsonify({'message': 'Không có dữ liệu để cập nhật'}), 400
         update_chuyenbay_service(id, data)
         
-        return jsonify({"message": "Chuyến bay đã được cập nhật thành công!"}), 200
+        return jsonify({"message": "Chuyến bay đã được cập nhật thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 
@@ -150,10 +171,10 @@ def get_chuyenbay_by_month():
         month = request.args.get('month')
         year = request.args.get('year')
         if not month or not year:
-            return jsonify({"error": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         chuyenbay = get_Chuyenbay_by_thang_service(month, year)
         if not chuyenbay:
-            return jsonify({"message": "Không có chuyến bay nào trong tháng này"}), 404
-        return jsonify({"message": [cb.serialize() for cb in chuyenbay]}), 200
+            return jsonify({"message": "Không có chuyến bay nào trong tháng này", "status": "fail"}), 404
+        return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500

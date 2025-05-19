@@ -197,6 +197,11 @@ def validate_HanhKhach(data):
         if field not in data:
             raise ValueError(f"Thiếu trường bắt buộc: {field}") 
         
+    if data['Hoten'] == '' or data['cmnd'] == '' or data['sdt'] == '':
+        raise ValueError("Các trường không được để trống")
+    
+
+        
 
 '''
 {

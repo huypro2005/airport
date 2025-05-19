@@ -20,14 +20,14 @@ def login():
         username = data['username']
         password = data['password']
         if not username or not password:
-            return jsonify({'message': 'Vui lòng nhập tên tài khoản và mật khẩu'}), 400
+            return jsonify({'message': 'Vui lòng nhập tên tài khoản và mật khẩu', 'status': 'fail'}), 400
         result = login_service(username, password)
-        return jsonify(result), 200
+        return jsonify({'status': 'success', 'data': result}), 200
         
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
     except Exception as e:
-        return jsonify({'message': str(e)}), 500
+        return jsonify({'message': str(e), 'status': 'fail'}), 500
     
 @AUTH.route('/auth/logout', methods = ['POST'])
 def logout():

@@ -10,6 +10,19 @@ def add_hanh_khach(data):
     cmnd = data['cmnd']
     sdt = data['sdt']
     gioi_tinh = data.get('gioi_tinh', '')
+    try:
+        # Kiểm tra xem hành khách đã tồn tại chưa
+        existing_hanh_khach_cmnd = HanhKhach.query.filter(cmnd==cmnd).first()
+
+        if existing_hanh_khach_cmnd:
+            raise ValueError("Hành khách đã tồn tại với CMND này")
+        
+        existing_hanh_khach_sdt = HanhKhach.query.filter(sdt==sdt).first()
+        if existing_hanh_khach_sdt:
+            raise ValueError("Hành khách đã tồn tại với số điện thoại này")
+    except Exception as e:
+        pass
+        
     # ngaydangky = datetime.utcnow()
     try: 
         hanh_khach = HanhKhach(Hoten = Hoten, cmnd = cmnd, sdt = sdt, gioi_tinh = gioi_tinh)

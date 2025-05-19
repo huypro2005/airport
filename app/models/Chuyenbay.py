@@ -29,6 +29,10 @@ class Chuyenbay(db.Model):
             ).filter(
                 ChiTietHangVe.Ma_chuyen_bay == self.id
             ).first()
+            if so_ghe_dat is None:
+                so_ghe_dat = 0
+            if so_ghe_trong is None:
+                so_ghe_trong = 0
         except Exception as e:
             so_ghe_dat = 0
             so_ghe_trong = 0
@@ -41,10 +45,22 @@ class Chuyenbay(db.Model):
             "gio_khoi_hanh": str(self.gio_khoi_hanh),
             "Thoi_gian_bay": self.Thoi_gian_bay,
             "gia_ve": self.gia_ve,
-            "So_ghe_dat": so_ghe_dat,
-            "So_ghe_trong": so_ghe_trong,
+            "So_ghe_dat": int(so_ghe_dat),
+            "So_ghe_trong": int(so_ghe_trong),
         }
     
+    # def __dict__(self):
+    #     return {
+    #         "Ma_chuyen_bay": self.id,
+    #         "Ma_san_bay_di": self.Ma_san_bay_di,
+    #         "Ma_san_bay_den": self.Ma_san_bay_den,
+    #         "ngay_khoi_hanh": str(self.ngay_khoi_hanh),
+    #         "gio_khoi_hanh": str(self.gio_khoi_hanh),
+    #         "Thoi_gian_bay": self.Thoi_gian_bay,
+    #         "gia_ve": self.gia_ve,
+    #     }
+
+
 
 '''
 select sum(so_ve_da_dat) as Tong_so_ve, sum(So_ve_trong) as Tong_so_ve_trong

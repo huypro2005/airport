@@ -1,8 +1,8 @@
-from tkinter import E
 from app.models.VeChuyenBay import Vechuyenbay
 from app.models.Chuyenbay import Chuyenbay
 from app.models.HanhKhach import HanhKhach
 from app.models.ChiTietHangVe import ChiTietHangVe
+
 from .QuyDinh_service import get_quydinh_service
 from .Chuyenbay_service import get_sogheconlai, set_sogheconlai
 from .HanhKhach_service import add_or_get_HanhKhach_service
@@ -127,3 +127,15 @@ def delete_ve_service(id):
 #     else:
 #         return chuyenbay.gia_ve * rule.Phantramgia2/100
 
+
+
+
+def get_ds_veChuyenBay_by_HanhKhach_service(hk_id):
+    ds_ve = Vechuyenbay.query.filter(
+        Vechuyenbay.Ma_hanh_khach == hk_id # Chỉ lấy vé đã đặt
+        and Vechuyenbay.Ma_hang_ve != None # Chỉ lấy vé có hạng vé
+    ).all()
+    if ds_ve:
+        return ds_ve
+    else:
+        return None

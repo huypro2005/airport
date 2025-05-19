@@ -21,13 +21,13 @@ def add_sanbay():
         
         add_SanBay_service(data)
 
-        return jsonify({"message": "Sân bay đã được thêm thành công!"}), 201
+        return jsonify({"message": "Sân bay đã được thêm thành công!", "status": "success"}), 201
     
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
     
     
@@ -62,11 +62,11 @@ def get_ds_sanbay():
                 'Ma_san_bay': sanbay.id,
                 'Ten_san_bay': sanbay.ten_san_bay
             })
-        return jsonify({"message": data})    
+        return jsonify({"message": data, "status": "success"})    
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 '''
@@ -84,9 +84,9 @@ def get_sanbay_by_id(id):
         sanbay = get_sanbay_by_id_service(id)
         return jsonify(sanbay)
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 @SANBAY.route('/sanbay/delete/<int:id>', methods=['DELETE'])
 @jwt_required
@@ -95,9 +95,9 @@ def delete_sanbay(id):
         delete_sanbay_service(id)
         return jsonify({"message": "Sân bay đã được xóa thành công!"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"messge": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 
@@ -106,11 +106,11 @@ def update_sanbay(id):
     try:
         data = request.get_json()
         update_sanbay_service(id, data)
-        return jsonify({"message": "Sân bay đã được cập nhật thành công!"}), 200
+        return jsonify({"message": "Sân bay đã được cập nhật thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 

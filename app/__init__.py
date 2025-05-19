@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from .extensions import db, migrate, jwt
+from .extensions import db, migrate, jwt, cors
 from .models import create_db
 from .routes.Chuyenbay import CHUYENBAY
 from .routes.SanBay import SANBAY
@@ -21,6 +21,7 @@ def create_app(file_config = 'config.py'):
     create_db(app)
     jwt.init_app(app)
     migrate.init_app(app, db)
+    cors.init_app(app)
     app.register_blueprint(CHUYENBAY, url_prefix='/api')
     app.register_blueprint(SANBAY, url_prefix='/api')
     app.register_blueprint(HANGVE, url_prefix='/api')

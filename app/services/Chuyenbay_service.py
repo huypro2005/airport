@@ -63,7 +63,7 @@ def add_ChuyenBay_service(data):
     gio_khoi_hanh = data['gio_khoi_hanh']
     thoi_gian_bay = data['thoi_gian_bay']
     hangve = data.get('hangve', [])
-    
+    chitiet_list = data.get('chitiet', [])
 
     cb = Chuyenbay.query.get(ma_chuyen_bay)
     if cb:
@@ -97,7 +97,7 @@ def add_ChuyenBay_service(data):
             data['Gia_ve'] = hv.Ti_le_don_gia * gia_ve
             add_ChiTietHangVe_service(data)
 
-        chitiet_list = data.get('chitiet', [])
+        
         if not isinstance(chitiet_list, list):
             raise ValueError("Thông tin chi tiết không hợp lệ")
         Validate_ChiTietChuyenBay(chitiet_list, rule, ma_san_bay_di, ma_san_bay_den)
@@ -110,13 +110,9 @@ def add_ChuyenBay_service(data):
                 chitiet = ChiTietSanBayTrungGian(Ma_chuyen_bay = ma_chuyen_bay, Ma_san_bay_trung_gian = ma_san_bay_trung_gian,
                                         Thoi_gian_dung = thoigian_dung, Ghi_chu = ghichu)
                 db.session.add(chitiet)
-                #
+                db.session.commit()
+                print(chitiet)
         
-        
-        db.session.commit()
-
-
-
     except ValueError as e:
         db.session.rollback()
         raise ValueError(f"{e}")
@@ -176,22 +172,126 @@ def set_sogheconlai(chuyenbay: Chuyenbay, hangve: int):
         
 
 
-def get_dsChuyenBay_follow_time_service(start_time, end_time):
+def get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_den):
     """
     Lấy danh sách chuyến bay trong khoảng thời gian
     
     Args:
         start_time: Thời gian bắt đầu
         end_time: Thời gian kết thúc
+        sanbay_di: Mã sân bay đi
+        sanbay_den: Mã sân bay đến
         
     Returns:
-        List[Chuyenbay]: Danh sách các chuyến bay thỏa điều kiện
+        List[dict]: Danh sách các chuyến bay và thông tin liên quan
     """
     start_time, end_time = validate_timeRange(start_time, end_time)
-    return Chuyenbay.query.filter(
-        Chuyenbay.ngay_khoi_hanh >= start_time,
-        Chuyenbay.ngay_khoi_hanh <= end_time
-    ).all()
+    try:
+        result = Chuyenbay.query.filter(
+            Chuyenbay.Ma_san_bay_di == sanbay_di,
+            Chuyenbay.Ma_san_bay_den == sanbay_den,
+            Chuyenbay.ngay_khoi_hanh >= start_time,
+            Chuyenbay.ngay_khoi_hanh <= end_time
+        ).all()
+        
+        res = []
+        for chuyenbay in result:
+            temp = chuyenbay.serialize()
+            chitiet_hangve = chuyenbay.chi_tiet_hang_ve
+            chitiet_sanbay_trung_gian = chuyenbay.chi_tiet_san_bay_trung_gian
+            # Serialize từng phần tử trong collection
+            temp['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve]
+            temp['chitiet_sanbay_trung_gian'] = [sb.serialize() for sb in chitiet_sanbay_trung_gian]
+            res.append(temp)
+
+      
+        return res
+    except Exception as e:
+        raise ValueError(f"Lỗi khi lấy danh sách chuyến bay: {str(e)}")
+
+
+
+        '''
+
+        result = Chuyenbay.query.filter(
+            Chuyenbay.Ma_san_bay_di == 'HAIPHONG',
+            Chuyenbay.Ma_san_bay_den == 'SGON',
+            Chuyenbay.ngay_khoi_hanh >= '2025-04-20T00:00:00',
+            Chuyenbay.ngay_khoi_hanh <= '2026-04-25T23:59:59',
+            Chuyenbay.id == 18
+        ).all()
+
+    
+        result = db.session.query(
+            Chuyenbay,
+            ChiTietHangVe,
+            ChiTietSanBayTrungGian
+        ).outerjoin(
+            ChiTietHangVe,
+            ChiTietHangVe.Ma_chuyen_bay == Chuyenbay.id
+        ).outerjoin(
+            ChiTietSanBayTrungGian,
+            ChiTietSanBayTrungGian.Ma_chuyen_bay == Chuyenbay.id
+        ).filter(
+            Chuyenbay.Ma_san_bay_di == 'HAIPHONG',
+            Chuyenbay.Ma_san_bay_den == 'SGON',
+            Chuyenbay.ngay_khoi_hanh >= '2025-04-20T00:00:00',
+            Chuyenbay.ngay_khoi_hanh <= '2026-04-25T23:59:59',
+            Chuyenbay.id == 18
+        ).all()
+        for row in result:
+            print(row)
+        '''
+
+    #     # Tạo dictionary để lưu trữ thông tin các chuyến bay
+    #     flights_dict = {}
+        
+    #     for row in result:
+    #         chuyenbay = row[0]
+    #         chitiet_hangve = row[1]
+    #         chitiet_sanbay = row[2]
+            
+    #         # Nếu chuyến bay chưa có trong dictionary
+    #         if chuyenbay.id not in flights_dict:
+    #             chuyenbay_dict = chuyenbay.__dict__
+    #             # Thêm thông tin thời gian bay
+    #             chuyenbay_dict['Thoi_gian_bay'] = chuyenbay.Thoi_gian_bay
+    #             flights_dict[chuyenbay.id] = {
+    #                 'chuyenbay': chuyenbay_dict,
+    #                 'chitiet_hangve': [],
+    #                 'chitiet_sanbay_trunggian': []
+    #             }
+            
+    #         # Thêm thông tin hàng vé nếu có
+    #         if chitiet_hangve:
+    #             # Kiểm tra xem hàng vé đã tồn tại trong danh sách chưa
+    #             if not any(hv['Ma_hang_ve'] == chitiet_hangve.Ma_hang_ve 
+    #                       for hv in flights_dict[chuyenbay.id]['chitiet_hangve']):
+    #                 flights_dict[chuyenbay.id]['chitiet_hangve'].append(chitiet_hangve.__dict__)
+            
+    #         # Thêm thông tin sân bay trung gian nếu có
+    #         if chitiet_sanbay:
+    #             # Kiểm tra xem sân bay trung gian đã tồn tại trong danh sách chưa
+    #             if not any(sb['Ma_san_bay_trung_gian'] == chitiet_sanbay.Ma_san_bay_trung_gian 
+    #                       for sb in flights_dict[chuyenbay.id]['chitiet_sanbay_trunggian']):
+    #                 flights_dict[chuyenbay.id]['chitiet_sanbay_trunggian'].append(chitiet_sanbay.__dict__)
+        
+
+    #     for flight in flights_dict.values():
+    #         print(flight)
+    #     # Chuyển đổi dictionary thành list
+    #     flights_list = list(flights_dict.values())
+        
+    #     if not flights_list:
+    #         raise ValueError("Không tìm thấy chuyến bay nào thỏa mãn điều kiện")
+            
+    #     return flights_list
+        
+    # except Exception as e:
+    #     raise ValueError(f"Lỗi khi lấy danh sách chuyến bay: {str(e)}")
+
+    
+
 
 
 

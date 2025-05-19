@@ -13,13 +13,13 @@ def add_doanhthu_thang():
         thang = request.args.get('thang')
         nam = request.args.get('nam')
         if not thang or not nam:
-            return jsonify({"message": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         create_doanhthu_thang_service(thang, nam)
-        return jsonify({"message": "Thêm doanh thu tháng thành công!"}), 200
+        return jsonify({"message": "Thêm doanh thu tháng thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 
@@ -30,10 +30,10 @@ def get_doanhthu_thang():
     try:
         nam = request.args.get('nam')
         if  not nam:
-            return jsonify({"message": "Thiếu thông tin tháng hoặc năm"}), 400
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
         doanhthu_thang = get_ds_doanhthuthang_service(nam)
         if not doanhthu_thang:
-            return jsonify({"message": "Không có doanh thu tháng nào!"}), 404
-        return jsonify({"message": 'Lấy dữ liệu thành công','data': [dt.serialize() for dt in doanhthu_thang]}), 200
+            return jsonify({"message": "Không có doanh thu tháng nào!", "status": "fail"}), 404
+        return jsonify({"message": 'Lấy dữ liệu thành công','data': [dt.serialize() for dt in doanhthu_thang], "status": "success"}), 200
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500

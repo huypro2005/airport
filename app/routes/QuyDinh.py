@@ -13,9 +13,9 @@ QUYDINH = Blueprint('quydinh', __name__)
 def get_quydinh():
     try:
         quydinh = get_quydinh_service()
-        return jsonify({'message': 'Lấy quy định thành công', 'data': quydinh.serialize()}), 200
+        return jsonify({'message': 'Lấy quy định thành công', 'data': quydinh.serialize(), "status": "success"}), 200
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), "status": "fail"}), 400
     
 
 
@@ -35,11 +35,11 @@ def update_quydinh():
         data = request.get_json()
         # Call the service to update the quy dinh
         update_quydinh_service(data)
-        return jsonify({'message': 'Cập nhật quy định thành công'}), 200
+        return jsonify({'message': 'Cập nhật quy định thành công', "status": "success"}), 200
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 
 
 

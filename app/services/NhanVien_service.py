@@ -1,4 +1,3 @@
-from os import name
 from app.models.NhanVien import Nhanvien
 from app.utils.validators import validate_NhanVien
 from library import *

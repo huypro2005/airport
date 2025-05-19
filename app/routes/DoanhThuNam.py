@@ -11,13 +11,13 @@ def add_doanhthu_nam():
     try:
         nam = request.args.get('nam')
         if not nam:
-            return jsonify({"message": "Thiếu thông tin năm"}), 400
+            return jsonify({"message": "Thiếu thông tin năm", "status": "fail"}), 400
         create_doanhthu_nam_service(nam)
-        return jsonify({"message": "Thêm doanh thu năm thành công!"}), 200
+        return jsonify({"message": "Thêm doanh thu năm thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 # link api: http://localhost:5000/api/doanhthunam/update?nam=2025
@@ -26,10 +26,10 @@ def update_doanhthu_nam():
     try:
         nam = request.args.get('nam')
         if not nam:
-            return jsonify({"message": "Thiếu thông tin năm"}), 400
+            return jsonify({"message": "Thiếu thông tin năm", "status": "fail"}), 400
         update_doanhthu_nam_service(nam)
-        return jsonify({"message": "Cập nhật doanh thu năm thành công!"}), 200
+        return jsonify({"message": "Cập nhật doanh thu năm thành công!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": str(e), "status": "fail"}), 500

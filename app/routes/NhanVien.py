@@ -27,11 +27,11 @@ def add_nhanvien_route():
     try:
         data = request.get_json()
         add_nhanvien_service(data)
-        return jsonify({'message': 'Nhân viên đã được thêm'})
+        return jsonify({'message': 'Nhân viên đã được thêm', "status": "success"}), 201
     except ValueError as e:
-        return jsonify({'message': str(e)}), 400
+        return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:
-        return jsonify({'message': f'Lỗi: {e}'}), 500
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 
 
 
