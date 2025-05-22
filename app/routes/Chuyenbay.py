@@ -49,6 +49,7 @@ CHUYENBAY = Blueprint('chuyennbay', __name__)
 '''
 
 @CHUYENBAY.route('/chuyenbay/add', methods=['POST'])
+# @jwt_required()
 # cần payload truyền vào
 def add_chuyenbay():
     try:
@@ -71,7 +72,7 @@ def get_chuyenbay_byID(id):
     try:
         chuyenbay = get_chuyenbay_byID_service(id)
         
-        return jsonify({"message": chuyenbay.serialize(), "status": "success"}), 200
+        return jsonify({"message": "Lấy dữ liệu thành công", 'data': chuyenbay, "status": "success"}), 200
     except ValueError as e:
         return jsonify({"message": str(e), "status": "fail"}), 404
     except Exception as e:

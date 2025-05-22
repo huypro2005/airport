@@ -1,3 +1,4 @@
+
 from app.models.NhanVien import Nhanvien
 from app.utils.validators import validate_NhanVien
 from library import *
@@ -33,3 +34,15 @@ def add_nhanvien_service(data):
     except Exception as e:
         raise ValueError(f"Lỗi: {e}")
 
+
+
+def update_TinhtrangNghi_service(id):
+    try:
+        nhanvien = Nhanvien.query.filter_by(id = id).first()
+        if not nhanvien:
+            raise ValueError("Nhân viên không tồn tại")
+        nhanvien.tinhtrang = False
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi: {e}")

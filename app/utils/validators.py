@@ -242,8 +242,8 @@ def validate_NhanVien(data):
     for field in required_fields:
         if field not in data:
             raise ValueError(f'Thiếu trường bắt buộc: {field}')
-    if data['id'] == '' or data['name'] == '' or data['username'] == '' or data['password'] == '' or data['email'] == '' or data['pos'] == '' or data['position'] == '':
+    if data['id'] == '' or data['name'] == '' or data['username'] == '' or data['password'] == '' or data['email'] == '' or data['position'] == '':
         raise ValueError("Các trường không được để trống")
-    if data['pos'] not in [0, 1, 2]:
+    if data['position'] not in ['admin', 'stuff']:
         raise ValueError("Chức vụ không hợp lệ")
     

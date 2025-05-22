@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.NhanVien_service import add_nhanvien_service
+from app.services.NhanVien_service import add_nhanvien_service, update_TinhtrangNghi_service
 from app.utils.auth import is_admin
 from flask_jwt_extended import jwt_required
 
@@ -19,7 +19,6 @@ def add_nhanvien_route():
         "username": "john.doe",
         "password": "password123",
         "email": "john.doe@example.com",
-        "pos": 0,
         "position": "admin"
     }
     '''
@@ -35,4 +34,16 @@ def add_nhanvien_route():
 
 
 
+# link api: http://localhost:5000/api/nhanvien/update_tinhtrangnghi/<int:id>
+@NHANVIEN.route('/nhanvien/update_tinhtrangnghi/<int:id>', methods=['PUT'])
+@jwt_required()
+@is_admin()
+def update_tinhtrangnghi_route(id):
+    try:
+        update_TinhtrangNghi_service(id)
+        return jsonify({'message': 'Cập nhật tình trạng nghỉ thành công', "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 

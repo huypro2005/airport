@@ -130,11 +130,18 @@ def delete_ve_service(id):
 
 
 
-def get_ds_veChuyenBay_by_HanhKhach_service(hk_id):
-    ds_ve = Vechuyenbay.query.filter(
-        Vechuyenbay.Ma_hanh_khach == hk_id # Chỉ lấy vé đã đặt
-        and Vechuyenbay.Ma_hang_ve != None # Chỉ lấy vé có hạng vé
+def get_ds_veChuyenBay_by_HanhKhach_service(hk_cmnd):
+    # ds_ve = Vechuyenbay.query.filter(
+    #     Vechuyenbay.Ma_hanh_khach == hk_id # Chỉ lấy vé đã đặt
+    #     and Vechuyenbay.Ma_hang_ve != None # Chỉ lấy vé có hạng vé
+    # ).all()
+
+    ds_ve = db.session.query(Vechuyenbay).join(HanhKhach).filter(
+        HanhKhach.cmnd == hk_cmnd,
+        Vechuyenbay.Ma_hang_ve != None  # Chỉ lấy vé có hạng vé
     ).all()
+
+
     if ds_ve:
         return ds_ve
     else:

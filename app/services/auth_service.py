@@ -1,5 +1,5 @@
 from app import jwt
-from flask_jwt_extended import create_refresh_token, create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_refresh_token, create_access_token, get_jwt_identity, jwt_required, get_jwt
 from app.models.NhanVien import Nhanvien
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import jsonify
@@ -18,6 +18,7 @@ def login_service(username, password):
     data = {
         'username': user.username,
         'id': user.id,
+        'position': user.position,
     }
     access_token = create_access_token(identity=str(user.id), additional_claims=data)
     refresh_token = create_refresh_token(identity=str(user.id), additional_claims=data)

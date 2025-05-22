@@ -153,7 +153,14 @@ def get_chuyenbay_byID_service(id):
     chuyenbay = Chuyenbay.query.get(id)
     if not chuyenbay:
         raise ValueError("Không tìm thấy chuyến bay")
-    return chuyenbay
+    
+    res = chuyenbay.serialize()
+    chitiet_hangve = chuyenbay.chi_tiet_hang_ve
+    chitiet_sanbay_trung_gian = chuyenbay.chi_tiet_san_bay_trung_gian
+    # Serialize từng phần tử trong collection
+    res['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve]
+    res['chitiet_sanbay_trung_gian'] = [sb.serialize() for sb in chitiet_sanbay_trung_gian]
+    return res
 
 
 

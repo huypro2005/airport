@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from library import *
 from app.models.NhanVien import Nhanvien
-from app.services.auth_service import login_service, logout_service
+from app.services.auth_service import login_service, logout_service, jwt_required, get_jwt_identity, get_jwt
 
 AUTH = Blueprint('auth', __name__)
 
@@ -33,3 +33,16 @@ def login():
 def logout():
     return logout_service()
 
+@AUTH.route('/auth/check_login', methods=['GET'])
+@jwt_required()  # Yêu cầu JWT hợp lệ
+def check_login():
+    current_user = get_jwt_identity()
+    # lấy thông tin additional_claims từ JWT
+    claims = get_jwt()
+    
+    user_data = current_user  # Hàm giả định
+    return jsonify({
+        "status": "success",
+        "user": user_data
+        # "additional_claims": claims
+    }), 200
