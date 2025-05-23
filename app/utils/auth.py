@@ -6,14 +6,15 @@ from app.models.NhanVien import Nhanvien
 def get_current_user():
     verify_jwt_in_request()
     data= get_jwt_identity()
-    id = data['id']
+    print(data)
+    id = int(data)
     user = Nhanvien.query.get(id)
     return user
 
 def get_current_user_id():
     verify_jwt_in_request()
     data= get_jwt_identity()
-    id = data['id']
+    id = int(data)
     return id
 
 def role_required(allowed_roles):
@@ -24,7 +25,7 @@ def role_required(allowed_roles):
             if not user:
                 return jsonify({"msg": "User not found"}), 404
                 
-            if user.pos not in allowed_roles:
+            if user.position not in allowed_roles:
                 return jsonify({"msg": "Không có quyền truy cập"}), 403
             return fn(*args, **kwargs)
         return wrapper

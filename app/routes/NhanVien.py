@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.services.NhanVien_service import add_nhanvien_service, update_TinhtrangNghi_service
+from app.services.NhanVien_service import add_nhanvien_service, update_TinhtrangNghi_service, get_all_nhanvien_service
 from app.utils.auth import is_admin
 from flask_jwt_extended import jwt_required
 
@@ -47,3 +47,18 @@ def update_tinhtrangnghi_route(id):
     except Exception as e:
         return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
 
+
+
+
+# link api: http://localhost:5000/api/nhanvien/get_all
+@NHANVIEN.route('/nhanvien/get_all', methods=['GET'])
+@jwt_required()
+@is_admin()
+def get_all_nhanvien_route():
+    try:
+        nhanvien = get_all_nhanvien_service()
+        return jsonify({'message': 'Lấy danh sách nhân viên thành công', "status": "success", "data": [nv.serialize() for nv in nhanvien]}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500

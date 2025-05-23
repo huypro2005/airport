@@ -1,4 +1,3 @@
-from math import e
 from sqlalchemy import func
 from app.models.ChiTietDoanhThuThang import ChiTietDoanhThuThang
 from app.models.DoanhThuThang import doanhThuThang
