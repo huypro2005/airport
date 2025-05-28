@@ -99,3 +99,52 @@ Dữ liệu trả về
     "message": "{Lỗi}",
     "status": "fail"
 }
+
+
+4. Xem tất cả chuyến bay mà hành khách đã đặt qua cmnd
+
+# link api: http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
+methods = GET
+
+
+ví dụ:
+
+http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/11646846614
+
+
+dữ liệu trả về :
+
+- {
+    "data": [
+        {
+            "Ma_chuyen_bay": 7,
+            "Ma_hang_ve": 1,
+            "Ma_ve": 2,
+            "Tien_ve": 525000.0,
+            "vi_tri": "B4.12"
+        },
+       
+        {
+            "Ma_chuyen_bay": 9,
+            "Ma_hang_ve": 1,
+            "Ma_ve": 7,
+            "Tien_ve": 550000.0,
+            "vi_tri": "B4.1"
+        },
+        {
+            "Ma_chuyen_bay": 9,
+            "Ma_hang_ve": 1,
+            "Ma_ve": 8,
+            "Tien_ve": 550000.0,
+            "vi_tri": "B4.15"
+        }
+    ],
+    "id_hanhkhach": 4,
+    "message": "Lấy vé thành công",
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}

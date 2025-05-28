@@ -105,13 +105,13 @@ def delete_ve(id):
 
 
 
-# link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/<int:hk_id>
+# link api: http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 
-@VECHUYENBAY.route('vechuyenbay/get_by_hanhkhach/<string:hk_cccd>', methods=['GET'])
+@VECHUYENBAY.route('vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cmnd>', methods=['GET'])
 # @jwt_required()
-def get_ve_by_hanh_khach(cccd):
+def get_ve_by_hanh_khach(hk_cmnd):
     try:
-        ve_list = get_ds_veChuyenBay_by_HanhKhach_service(cccd)
+        ve_list = get_ds_veChuyenBay_by_HanhKhach_service(hk_cmnd)
         if not ve_list:
             return jsonify({'message': 'Không tìm thấy vé cho hành khách này', "status": "fail"}), 404
         
@@ -125,6 +125,6 @@ def get_ve_by_hanh_khach(cccd):
                 'Tien_ve': ve.Tien_ve   
             })
         
-        return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success"}), 200
+        return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success", 'id_hanhkhach': ve_list[0].Ma_hanh_khach}), 200
     except Exception as e:
         return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
