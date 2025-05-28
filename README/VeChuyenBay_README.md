@@ -103,7 +103,7 @@ Dữ liệu trả về
 
 4. Xem tất cả chuyến bay mà hành khách đã đặt qua cmnd
 
-# link api: http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
+# link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 methods = GET
 
 

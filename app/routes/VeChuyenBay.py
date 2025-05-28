@@ -105,7 +105,7 @@ def delete_ve(id):
 
 
 
-# link api: http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
+# link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 
 @VECHUYENBAY.route('vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cmnd>', methods=['GET'])
 # @jwt_required()
