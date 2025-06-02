@@ -1,3 +1,4 @@
+import inspect
 from .Chuyenbay import Chuyenbay
 from .HanhKhach import HanhKhach
 from .SanBay import Sanbay
@@ -15,28 +16,22 @@ import time
 
 
 def create_db(app):
-    max_retries = 5
-    retry_delay = 5  # seconds
-    for attempt in range(max_retries):
-        try:
+    try:
+        with app.app_context():
+            # Chỉ chạy nếu chưa có bảng nào
+            print("Checking if database tables exist...")
             db.init_app(app)
-            with app.app_context():
-                db.create_all()
-                d = QuyDinh.query.first()
-                if d is None:
-                    quy_dinh = QuyDinh()
-                    db.session.add(quy_dinh)
-                    db.session.commit()
-                else:
-                    pass
-                
-                print("Database connection established and tables created successfully.")
-            break  # If successful, exit the loop
-        except Exception as e:
-            print(f"Attempt {attempt + 1} failed: {e}")
-            if attempt < max_retries - 1:
-                print(f"Retrying in {retry_delay} seconds...")
-                time.sleep(retry_delay)
+            db.create_all()
+            
+            # Tạo dữ liệu mặc định nếu cần
+            if not QuyDinh.query.first():
+                db.session.add(QuyDinh())
+                db.session.commit()
+            
+                print("Created new database tables")
             else:
-                print("Max retries reached. Exiting.")
-                raise   
+                print("Database already initialized")
+            
+    except Exception as e:
+        print(f"Database error: {e}")
+        raise

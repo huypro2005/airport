@@ -1,20 +1,20 @@
 from flask import Blueprint, request, jsonify
-from app.services.DoanhThuThang_service import create_doanhthu_thang_service, get_ds_doanhthuthang_service
+from app.services.DoanhThuThang_service import create_or_update_doanhthu_thang_service, get_ds_doanhthuthang_service
 from flask_jwt_extended import jwt_required
 from app.utils.auth import is_admin
 
 DOANHTHUTHANG = Blueprint('doanhthu_thang', __name__)
 
 
-# link api: http://localhost:5000/api/doanhthuthang/add?thang=4&nam=2025
-@DOANHTHUTHANG.route('/doanhthuthang/add', methods=['POST'])
-def add_doanhthu_thang():
+# link api: http://localhost:5000/api/doanhthuthang/add_or_update?thang=4&nam=2025
+@DOANHTHUTHANG.route('/doanhthuthang/add_or_update', methods=['POST'])
+def add_or_update_doanhthu_thang():
     try:
         thang = request.args.get('thang')
         nam = request.args.get('nam')
         if not thang or not nam:
             return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
-        create_doanhthu_thang_service(thang, nam)
+        create_or_update_doanhthu_thang_service(thang, nam)
         return jsonify({"message": "Thêm doanh thu tháng thành công!", "status": "success"}), 200
     except ValueError as e:
         return jsonify({"message": str(e), "status": "fail"}), 400

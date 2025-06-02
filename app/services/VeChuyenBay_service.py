@@ -57,6 +57,8 @@ def add_veChuyenyBay_service(data):
         if chuyenbay.ngay_khoi_hanh - datetime.now().date() < timedelta(days=rule.ThoiGianDatVeToiThieu):
             raise ValueError("Thời gian đặt vé phải trước 24h so với giờ khởi hành")
 
+        ngay_dat = datetime.now().date()
+        
 
         validate_VeChuyenBay_seat(vi_tri, macb)
         data = {
@@ -72,6 +74,7 @@ def add_veChuyenyBay_service(data):
         vechuyenbay.vi_tri = vi_tri
         vechuyenbay.Ma_hanh_khach = hanhkhach.id
         vechuyenbay.Tien_ve = chiTietHangVe.Gia_ve
+        vechuyenbay.Ngay_dat_ve = ngay_dat
 
         chiTietHangVe.So_ve_da_dat += 1
         chiTietHangVe.So_ve_trong -= 1  

@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify
 from app.services.ChiTietDoanhThuThang_service import (
     create_ds_chitietdoanhthu_service,
     update_tile_Chitietdoanhthu_service,
-    get_ds_chitietdoanhthu_service
+    get_ds_chitietdoanhthu_service,
+    create_or_update_chitietdoanhthuThang_service_bymonth
 )
 from flask_jwt_extended import jwt_required
 from app.utils.auth import is_admin
@@ -70,3 +71,19 @@ def get_chitietdoanhthuthang():
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail" }), 500
 
+
+
+# link api: http://localhost:5000/api/chitietdoanhthuthang/create_or_update_chitietdoanhthuThang?month=4&year=2025
+@CHITIETDOANHHTHUTHANG.route('/chitietdoanhthuthang/create_or_update_chitietdoanhthuThang', methods=['POST'])
+def create_or_update_chitietdoanhthuThang():
+    try:
+        month = request.args.get('month')
+        year = request.args.get('year')
+        if not month or not year:
+            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
+        create_or_update_chitietdoanhthuThang_service_bymonth(month, year)
+        return jsonify({"message": "Tạo hoặc cập nhật chi tiết doanh thu tháng thành công!", "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({"message": str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500

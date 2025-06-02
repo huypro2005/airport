@@ -9,7 +9,6 @@ class ChiTietDoanhThuThang(db.Model):
     nam = db.Column(db.Integer, nullable=False)
     Ma_chuyen_bay = db.Column(db.Integer, db.ForeignKey('CHUYENBAY.id'), nullable=False)
     So_ghe_dat = db.Column(db.Integer, nullable=False)
-    So_ghe_trong = db.Column(db.Integer, nullable=False)
     Ti_le = db.Column(db.Float, nullable=False)
     Doanh_thu = db.Column(db.Float, nullable=False)
 
@@ -22,7 +21,6 @@ class ChiTietDoanhThuThang(db.Model):
             'nam': self.nam,
             'Ma_chuyen_bay': self.Ma_chuyen_bay,
             'So_ghe_dat': self.So_ghe_dat,
-            'So_ghe_trong': self.So_ghe_trong,
             'Ti_le': self.Ti_le,
             'Doanh_thu': self.Doanh_thu,
         }

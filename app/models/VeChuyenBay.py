@@ -11,6 +11,7 @@ class Vechuyenbay(db.Model):
     Ma_hanh_khach = db.Column(db.Integer, db.ForeignKey('HANHKHACH.id'), nullable = True, default = None)
     Ma_hang_ve = db.Column(db.Integer, db.ForeignKey('HANGVE.id'), nullable = False)
     Ma_nhan_vien = db.Column(db.Integer, db.ForeignKey('NHANVIEN.id'), nullable = True, default = None)
+    Ngay_dat_ve = db.Column(db.Date, nullable=True)
     Tien_ve = db.Column(db.Float)
     Tinh_trang = db.Column(db.Boolean, default = True) # 1: da dat, 0: da huy
     vi_tri = db.Column(db.String(20))
