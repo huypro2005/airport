@@ -22,6 +22,10 @@ class Chuyenbay(db.Model):
     
 
     def serialize(self):
+        khoiHanh_datetime = datetime.combine(self.ngay_khoi_hanh, self.gio_khoi_hanh)
+        self.thoiGianToi_datetime = khoiHanh_datetime + timedelta(minutes=self.Thoi_gian_bay)
+        self.ngay_toi = self.thoiGianToi_datetime.date()
+        self.gio_toi = self.thoiGianToi_datetime.time()
         try:
             so_ghe_dat, so_ghe_trong = db.session.query(
                 func.sum(ChiTietHangVe.So_ve_da_dat).label('so_ghe_dat'), 
@@ -44,6 +48,8 @@ class Chuyenbay(db.Model):
             "ngay_khoi_hanh": str(self.ngay_khoi_hanh),
             "gio_khoi_hanh": str(self.gio_khoi_hanh),
             "Thoi_gian_bay": self.Thoi_gian_bay,
+            "ngay_toi": str(self.ngay_toi),
+            "gio_toi": str(self.gio_toi),
             "gia_ve": self.gia_ve,
             "So_ghe_dat": int(so_ghe_dat),
             "So_ghe_trong": int(so_ghe_trong),

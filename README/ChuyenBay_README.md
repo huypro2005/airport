@@ -68,7 +68,7 @@ Dữ liệu trả về:
         "chitiet_hangve": [
             {
                 "Gia_ve": 1100000.0,
-                "Ma_chuyen_bay": 6
+                "Ma_chuyen_bay": 6,
                 "Ma_hang_ve": 1,
                 "So_ve_da_dat": 0,
                 "So_ve_trong": 50
@@ -84,7 +84,9 @@ Dữ liệu trả về:
         "chitiet_sanbay_trung_gian": [],
         "gia_ve": 1000000.0,
         "gio_khoi_hanh": "00:00:00",
-        "ngay_khoi_hanh": "2025-04-25"
+        "gio_toi": "00:40:00",
+        "ngay_khoi_hanh": "2025-04-25",
+        "ngay_toi": "2025-04-25"
     },
     "message": "Lấy dữ liệu thành công",
     "status": "success"
@@ -110,79 +112,53 @@ dữ liệu trả về:
 - {
     "data": [
         {
-            "Ma_chuyen_bay": 8,
+            "Ma_chuyen_bay": 6,
             "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HAIPHONG",
-            "So_ghe_dat": 3,
-            "So_ghe_trong": 97,
-            "Thoi_gian_bay": 30,
+            "Ma_san_bay_di": "HNOI",
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Thoi_gian_bay": 40,
             "chitiet_hangve": [
                 {
                     "Gia_ve": 1100000.0,
-                    "Ma_chuyen_bay": 8,
+                    "Ma_chuyen_bay": 6,
                     "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 3,
-                    "So_ve_trong": 47
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
                 },
                 {
-                    "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 8,
+                    "Gia_ve": 1050000.0,
+                    "Ma_chuyen_bay": 6,
                     "Ma_hang_ve": 2,
                     "So_ve_da_dat": 0,
                     "So_ve_trong": 50
                 }
             ],
             "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 500000.0,
+            "gia_ve": 1000000.0,
             "gio_khoi_hanh": "00:00:00",
-            "ngay_khoi_hanh": "2025-04-28"
+            "gio_toi": "00:40:00",
+            "ngay_khoi_hanh": "2025-04-25",
+            "ngay_toi": "2025-04-25"
         },
         {
-            "Ma_chuyen_bay": 9,
+            "Ma_chuyen_bay": 20,
             "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HAIPHONG",
-            "So_ghe_dat": 3,
-            "So_ghe_trong": 97,
-            "Thoi_gian_bay": 30,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 1100000.0,
-                    "Ma_chuyen_bay": 9,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 3,
-                    "So_ve_trong": 47
-                },
-                {
-                    "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 9,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 500000.0,
-            "gio_khoi_hanh": "00:00:00",
-            "ngay_khoi_hanh": "2025-04-28"
-        },
-        {
-            "Ma_chuyen_bay": 18,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HAIPHONG",
+            "Ma_san_bay_di": "HNOI",
             "So_ghe_dat": 0,
             "So_ghe_trong": 100,
             "Thoi_gian_bay": 30,
             "chitiet_hangve": [
                 {
-                    "Gia_ve": 1100000.0,
-                    "Ma_chuyen_bay": 18,
+                    "Gia_ve": 550000.0,
+                    "Ma_chuyen_bay": 20,
                     "Ma_hang_ve": 1,
                     "So_ve_da_dat": 0,
                     "So_ve_trong": 50
                 },
                 {
                     "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 18,
+                    "Ma_chuyen_bay": 20,
                     "Ma_hang_ve": 2,
                     "So_ve_da_dat": 0,
                     "So_ve_trong": 50
@@ -191,61 +167,142 @@ dữ liệu trả về:
             "chitiet_sanbay_trung_gian": [
                 {
                     "ghi_chu": "Trung gian 1",
-                    "ma_chuyen_bay": 18,
+                    "ma_chuyen_bay": 20,
                     "ma_san_bay_trung_gian": "DNANG",
                     "thoi_gian_dung": 15
                 },
                 {
                     "ghi_chu": "Trung gian 2",
-                    "ma_chuyen_bay": 18,
+                    "ma_chuyen_bay": 20,
                     "ma_san_bay_trung_gian": "Vinh",
                     "thoi_gian_dung": 15
                 }
             ],
             "gia_ve": 500000.0,
             "gio_khoi_hanh": "00:00:00",
-            "ngay_khoi_hanh": "2025-08-28"
+            "gio_toi": "00:30:00",
+            "ngay_khoi_hanh": "2025-04-25",
+            "ngay_toi": "2025-04-25"
         },
         {
-            "Ma_chuyen_bay": 19,
+            "Ma_chuyen_bay": 27,
             "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HAIPHONG",
+            "Ma_san_bay_di": "HNOI",
             "So_ghe_dat": 0,
             "So_ghe_trong": 100,
             "Thoi_gian_bay": 30,
             "chitiet_hangve": [
                 {
-                    "Gia_ve": 1100000.0,
-                    "Ma_chuyen_bay": 19,
+                    "Gia_ve": 550000.0,
+                    "Ma_chuyen_bay": 27,
                     "Ma_hang_ve": 1,
                     "So_ve_da_dat": 0,
                     "So_ve_trong": 50
                 },
                 {
                     "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 19,
+                    "Ma_chuyen_bay": 27,
                     "Ma_hang_ve": 2,
                     "So_ve_da_dat": 0,
                     "So_ve_trong": 50
                 }
             ],
-            "chitiet_sanbay_trung_gian": [
-                {
-                    "ghi_chu": "Trung gian 1",
-                    "ma_chuyen_bay": 19,
-                    "ma_san_bay_trung_gian": "DNANG",
-                    "thoi_gian_dung": 15
-                },
-                {
-                    "ghi_chu": "Trung gian 2",
-                    "ma_chuyen_bay": 19,
-                    "ma_san_bay_trung_gian": "Vinh",
-                    "thoi_gian_dung": 15
-                }
-            ],
+            "chitiet_sanbay_trung_gian": [],
             "gia_ve": 500000.0,
             "gio_khoi_hanh": "00:00:00",
-            "ngay_khoi_hanh": "2025-08-28"
+            "gio_toi": "00:30:00",
+            "ngay_khoi_hanh": "2025-08-25",
+            "ngay_toi": "2025-08-25"
+        },
+        {
+            "Ma_chuyen_bay": 34,
+            "Ma_san_bay_den": "SGON",
+            "Ma_san_bay_di": "HNOI",
+            "So_ghe_dat": 1,
+            "So_ghe_trong": 99,
+            "Thoi_gian_bay": 180,
+            "chitiet_hangve": [
+                {
+                    "Gia_ve": 550000.0,
+                    "Ma_chuyen_bay": 34,
+                    "Ma_hang_ve": 1,
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
+                },
+                {
+                    "Gia_ve": 500000.0,
+                    "Ma_chuyen_bay": 34,
+                    "Ma_hang_ve": 2,
+                    "So_ve_da_dat": 1,
+                    "So_ve_trong": 49
+                }
+            ],
+            "chitiet_sanbay_trung_gian": [],
+            "gia_ve": 500000.0,
+            "gio_khoi_hanh": "08:00:00",
+            "gio_toi": "11:00:00",
+            "ngay_khoi_hanh": "2025-06-01",
+            "ngay_toi": "2025-06-01"
+        },
+        {
+            "Ma_chuyen_bay": 35,
+            "Ma_san_bay_den": "SGON",
+            "Ma_san_bay_di": "HNOI",
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Thoi_gian_bay": 150,
+            "chitiet_hangve": [
+                {
+                    "Gia_ve": 1705000.0,
+                    "Ma_chuyen_bay": 35,
+                    "Ma_hang_ve": 1,
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
+                },
+                {
+                    "Gia_ve": 1550000.0,
+                    "Ma_chuyen_bay": 35,
+                    "Ma_hang_ve": 2,
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
+                }
+            ],
+            "chitiet_sanbay_trung_gian": [],
+            "gia_ve": 1550000.0,
+            "gio_khoi_hanh": "14:30:00",
+            "gio_toi": "17:00:00",
+            "ngay_khoi_hanh": "2025-06-01",
+            "ngay_toi": "2025-06-01"
+        },
+        {
+            "Ma_chuyen_bay": 36,
+            "Ma_san_bay_den": "SGON",
+            "Ma_san_bay_di": "HNOI",
+            "So_ghe_dat": 0,
+            "So_ghe_trong": 100,
+            "Thoi_gian_bay": 200,
+            "chitiet_hangve": [
+                {
+                    "Gia_ve": 2805000.0,
+                    "Ma_chuyen_bay": 36,
+                    "Ma_hang_ve": 1,
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
+                },
+                {
+                    "Gia_ve": 2550000.0,
+                    "Ma_chuyen_bay": 36,
+                    "Ma_hang_ve": 2,
+                    "So_ve_da_dat": 0,
+                    "So_ve_trong": 50
+                }
+            ],
+            "chitiet_sanbay_trung_gian": [],
+            "gia_ve": 2550000.0,
+            "gio_khoi_hanh": "19:15:00",
+            "gio_toi": "22:35:00",
+            "ngay_khoi_hanh": "2025-06-01",
+            "ngay_toi": "2025-06-01"
         }
     ],
     "message": "Lấy danh sách chuyến bay thành công",
