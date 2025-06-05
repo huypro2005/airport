@@ -2,12 +2,12 @@ H. Doanh thu năm
 
 1. Tạo doanh thu năm
 
-# link api: http://localhost:5000/api/doanhthunam/add?nam={year}
+# link api: http://localhost:8000/api/doanhthunam/add_or_update?nam=2025
 
 methods = POST
 
 ví dụ:
-# link api: http://localhost:5000/api/doanhthunam/add?nam=2025
+# link api: http://localhost:8000/api/doanhthunam/add_or_update?nam=2025
 
 dữ liệu trả về: 
 
@@ -18,7 +18,10 @@ dữ liệu trả về:
 }
 
 
-2. Cập nhật doanh thu năm
+
+
+
+2. Cập nhật doanh thu năm (Không cần dùng)
 # link api: http://localhost:5000/api/doanhthunam/update?nam={year}
 
 methods = PUT

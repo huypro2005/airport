@@ -2,14 +2,14 @@ G. Doanh thu tháng
 
 
 1. Thêm doanh thu tháng 
-# http://localhost:5000/api/doanhthuthang/add?thang={month}&nam={year}
+# http://localhost:5000/api/doanhthuthang/add_or_update?thang={month}&nam={year}
 
 methods = POST
 
 NOTE: khi chạy thêm doanh thu tháng, sẽ tạo luôn chi tiết doanh thu tháng (Biểu mẫu 5.1), nhưng chưa tính tỉ lệ của doanh thu tháng trong biểu mẫu 5.2. Để tạo tỉ lệ của doanh thu tháng trong biểu mẫu 5.2 phải tạo doanh thu 5 hoặc update doanh thu năm
 
 ví dụ:
-# http://localhost:5000/api/doanhthuthang/add?thang=4&nam=2025
+# http://localhost:5000/api/doanhthuthang/add_or_update?thang=4&nam=2025
 
 dữ liệu trả về:
 - {"message": "Thêm doanh thu tháng thành công!", "status": "success"}, 200

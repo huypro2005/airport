@@ -88,8 +88,8 @@ def create_or_update_chitietdoanhthuThang_service(vecb: Vechuyenbay):
     try:
         chitietdoanhthu = ChiTietDoanhThuThang.query.filter(
             ChiTietDoanhThuThang.Ma_chuyen_bay == vecb.Ma_chuyen_bay,
-            ChiTietDoanhThuThang.thang == extract('month', vecb.Ngay_dat) ,
-            ChiTietDoanhThuThang.nam == extract('year', vecb.Ngay_dat)
+            ChiTietDoanhThuThang.thang == extract('month', vecb.Ngay_dat_ve) ,
+            ChiTietDoanhThuThang.nam == extract('year', vecb.Ngay_dat_ve)
         ).first()
 
         if chitietdoanhthu:
@@ -99,8 +99,8 @@ def create_or_update_chitietdoanhthuThang_service(vecb: Vechuyenbay):
         else:
             chitietdoanhthu = ChiTietDoanhThuThang()
             chitietdoanhthu.Ma_chuyen_bay = vecb.Ma_chuyen_bay
-            chitietdoanhthu.thang = extract('month', vecb.Ngay_dat)
-            chitietdoanhthu.nam = extract('year', vecb.Ngay_dat)
+            chitietdoanhthu.thang = extract('month', vecb.Ngay_dat_ve)
+            chitietdoanhthu.nam = extract('year', vecb.Ngay_dat_ve)
             chitietdoanhthu.So_ghe_dat = 1
             chitietdoanhthu.Doanh_thu = vecb.Tien_ve
             chitietdoanhthu.Ma_BCDTT = None
@@ -118,8 +118,8 @@ def create_or_update_chitietdoanhthuThang_service(vecb: Vechuyenbay):
 def create_or_update_chitietdoanhthuThang_service_bymonth(month, year):
     try:
         ds_vechuyenbay = Vechuyenbay.query.filter(
-            extract('month', Vechuyenbay.Ngay_dat) == month,
-            extract('year', Vechuyenbay.Ngay_dat) == year
+            extract('month', Vechuyenbay.Ngay_dat_ve) == month,
+            extract('year', Vechuyenbay.Ngay_dat_ve) == year
         ).all()
 
         db.session.query(ChiTietDoanhThuThang).filter(
