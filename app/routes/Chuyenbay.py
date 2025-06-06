@@ -179,3 +179,15 @@ def get_chuyenbay_by_month():
         return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/chuyenbay/get/all
+@CHUYENBAY.route('/chuyenbay/get/all', methods=['GET'])
+def get_all_chuyenbay_service():
+    try:
+        chuyenbay = get_all_chuyenbay_service()
+        if not chuyenbay:
+            return jsonify({"message": "Không có chuyến bay nào", "status": "fail"}), 404
+        return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500
