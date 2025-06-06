@@ -185,7 +185,7 @@ def get_chuyenbay_by_month():
 @CHUYENBAY.route('/chuyenbay/get/all', methods=['GET'])
 def get_all_chuyenbay_service():
     try:
-        chuyenbay = get_all_chuyenbay_service()
+        chuyenbay = Chuyenbay.query.all()
         if not chuyenbay:
             return jsonify({"message": "Không có chuyến bay nào", "status": "fail"}), 404
         return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200
