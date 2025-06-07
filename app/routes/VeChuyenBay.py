@@ -131,7 +131,7 @@ def get_ds_veChuyenBay_da_dat_hom_nay():
     try:
         ds_ve = get_ds_veChuyenBay_da_dat_hom_nay_service()
         if not ds_ve:
-            return jsonify({'message': 'Không có vé nào đã đặt trong ngày hôm nay', "status": "fail"}), 404
+            return jsonify({'message': 'Không có vé nào đã đặt trong ngày hôm nay', "status": "success"}), 200
         
         result = []
         for ve in ds_ve:
