@@ -111,6 +111,9 @@ def valadate_ChuyenBay(data, rule):
     if data['thoi_gian_bay'] < rule.Thoigianbaytoithieu:
         raise ValueError(f"Thời gian bay phải lớn hơn {rule.Thoigianbaytoithieu} phút")
     
+    ngayKhoiHanh = format_Ngay(data['ngay_khoi_hanh'])
+    if ngayKhoiHanh < datetime.date.today():
+        raise ValueError("Ngày khởi hành không được nhỏ hơn ngày hiện tại")
     # Kiểm tra định dạng ngày giờ
     format_Ngay(data['ngay_khoi_hanh'])
     format_Gio(data['gio_khoi_hanh'])

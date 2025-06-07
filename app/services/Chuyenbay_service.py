@@ -6,6 +6,8 @@ from app.models.HangVe import HangVe
 from app import db
 from .QuyDinh_service import get_quydinh_service
 from .ChiTietHangve_service import add_ChiTietHangVe_service
+from .SanBay_service import check_SanBay_Active
+from .HangVe_service import check_hangve_active
 from app.utils.validators import valadate_ChuyenBay, Validate_ChiTietChuyenBay, validate_timeRange, validate_NgayGio, format_NgayGio
 from library import *
 from sqlalchemy import extract, func
@@ -64,6 +66,16 @@ def add_ChuyenBay_service(data):
     thoi_gian_bay = data['thoi_gian_bay']
     hangve = data.get('hangve', [])
     chitiet_list = data.get('chitiet', [])
+    for hang in hangve:
+        if not check_hangve_active(hang.get('Ma_hang_ve')):
+            raise ValueError(f"Hạng vé {hang.get('Ma_hang_ve')} không tồn tại hoặc đã bị xóa")
+    if not check_SanBay_Active(ma_san_bay_di):
+        raise ValueError(f"Sân bay đi {ma_san_bay_di} không tồn tại hoặc đã bị xóa")
+    if not check_SanBay_Active(ma_san_bay_den):
+        raise ValueError(f"Sân bay đến {ma_san_bay_den} không tồn tại hoặc đã bị xóa")
+    for chitiet in chitiet_list:
+        if not check_SanBay_Active(chitiet.get('Ma_san_bay_trung_gian')):
+            raise ValueError(f"Sân bay trung gian {chitiet.get('Ma_san_bay_trung_gian')} không tồn tại hoặc đã bị xóa")
 
     cb = Chuyenbay.query.get(ma_chuyen_bay)
     if cb:
@@ -92,7 +104,7 @@ def add_ChuyenBay_service(data):
             data['Ma_hang_ve'] = hang.get('Ma_hang_ve')
             data['Ma_chuyen_bay'] = ma_chuyen_bay
             data['So_ve_trong'] = hang.get('So_ghe_trong_hang')
-            data['So_ve_da_dat'] = 0
+            data['So_ve_da_dat'] = 0  
             hv = HangVe.query.get(data['Ma_hang_ve'])
             data['Gia_ve'] = hv.Ti_le_don_gia * gia_ve
             add_ChiTietHangVe_service(data)
@@ -156,6 +168,8 @@ def get_chuyenbay_byID_service(id):
     
     res = chuyenbay.serialize()
     chitiet_hangve = chuyenbay.chi_tiet_hang_ve
+    # lấy các chi tiết hạng vé mà hạng vé còn hoạt động
+    chitiet_hangve = [hv for hv in chitiet_hangve if check_hangve_active(hv.Ma_hang_ve)]    
     chitiet_sanbay_trung_gian = chuyenbay.chi_tiet_san_bay_trung_gian
     # Serialize từng phần tử trong collection
     res['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve]
@@ -163,20 +177,6 @@ def get_chuyenbay_byID_service(id):
     return res
 
 
-
-def get_sogheconlai(chuyenbay: Chuyenbay, hangve: int):
-    if hangve == 1:
-        return chuyenbay.so_ghe_hang1
-    else:
-        return chuyenbay.so_ghe_hang2
-    
-    
-def set_sogheconlai(chuyenbay: Chuyenbay, hangve: int):
-    if hangve == 1:
-        chuyenbay.so_ghe_hang1 -= 1
-    else:
-        chuyenbay.so_ghe_hang2 -= 1
-        
 
 
 def get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_den):
@@ -207,7 +207,8 @@ def get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_
             chitiet_hangve = chuyenbay.chi_tiet_hang_ve
             chitiet_sanbay_trung_gian = chuyenbay.chi_tiet_san_bay_trung_gian
             # Serialize từng phần tử trong collection
-            temp['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve]
+            temp['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve if check_hangve_active(hv.Ma_hang_ve)]
+            # Lọc các sân bay trung gian còn hoạt động
             temp['chitiet_sanbay_trung_gian'] = [sb.serialize() for sb in chitiet_sanbay_trung_gian]
             res.append(temp)
 
@@ -218,122 +219,41 @@ def get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_
 
 
 
-        '''
 
-        result = Chuyenbay.query.filter(
-            Chuyenbay.Ma_san_bay_di == 'HAIPHONG',
-            Chuyenbay.Ma_san_bay_den == 'SGON',
-            Chuyenbay.ngay_khoi_hanh >= '2025-04-20T00:00:00',
-            Chuyenbay.ngay_khoi_hanh <= '2026-04-25T23:59:59',
-            Chuyenbay.id == 18
-        ).all()
 
-    
-        result = db.session.query(
-            Chuyenbay,
-            ChiTietHangVe,
-            ChiTietSanBayTrungGian
-        ).outerjoin(
-            ChiTietHangVe,
-            ChiTietHangVe.Ma_chuyen_bay == Chuyenbay.id
-        ).outerjoin(
-            ChiTietSanBayTrungGian,
-            ChiTietSanBayTrungGian.Ma_chuyen_bay == Chuyenbay.id
-        ).filter(
-            Chuyenbay.Ma_san_bay_di == 'HAIPHONG',
-            Chuyenbay.Ma_san_bay_den == 'SGON',
-            Chuyenbay.ngay_khoi_hanh >= '2025-04-20T00:00:00',
-            Chuyenbay.ngay_khoi_hanh <= '2026-04-25T23:59:59',
-            Chuyenbay.id == 18
-        ).all()
-        for row in result:
-            print(row)
-        '''
 
-    #     # Tạo dictionary để lưu trữ thông tin các chuyến bay
-    #     flights_dict = {}
-        
-    #     for row in result:
-    #         chuyenbay = row[0]
-    #         chitiet_hangve = row[1]
-    #         chitiet_sanbay = row[2]
-            
-    #         # Nếu chuyến bay chưa có trong dictionary
-    #         if chuyenbay.id not in flights_dict:
-    #             chuyenbay_dict = chuyenbay.__dict__
-    #             # Thêm thông tin thời gian bay
-    #             chuyenbay_dict['Thoi_gian_bay'] = chuyenbay.Thoi_gian_bay
-    #             flights_dict[chuyenbay.id] = {
-    #                 'chuyenbay': chuyenbay_dict,
-    #                 'chitiet_hangve': [],
-    #                 'chitiet_sanbay_trunggian': []
-    #             }
-            
-    #         # Thêm thông tin hàng vé nếu có
-    #         if chitiet_hangve:
-    #             # Kiểm tra xem hàng vé đã tồn tại trong danh sách chưa
-    #             if not any(hv['Ma_hang_ve'] == chitiet_hangve.Ma_hang_ve 
-    #                       for hv in flights_dict[chuyenbay.id]['chitiet_hangve']):
-    #                 flights_dict[chuyenbay.id]['chitiet_hangve'].append(chitiet_hangve.__dict__)
-            
-    #         # Thêm thông tin sân bay trung gian nếu có
-    #         if chitiet_sanbay:
-    #             # Kiểm tra xem sân bay trung gian đã tồn tại trong danh sách chưa
-    #             if not any(sb['Ma_san_bay_trung_gian'] == chitiet_sanbay.Ma_san_bay_trung_gian 
-    #                       for sb in flights_dict[chuyenbay.id]['chitiet_sanbay_trunggian']):
-    #                 flights_dict[chuyenbay.id]['chitiet_sanbay_trunggian'].append(chitiet_sanbay.__dict__)
-        
-
-    #     for flight in flights_dict.values():
-    #         print(flight)
-    #     # Chuyển đổi dictionary thành list
-    #     flights_list = list(flights_dict.values())
-        
-    #     if not flights_list:
-    #         raise ValueError("Không tìm thấy chuyến bay nào thỏa mãn điều kiện")
-            
-    #     return flights_list
-        
-    # except Exception as e:
-    #     raise ValueError(f"Lỗi khi lấy danh sách chuyến bay: {str(e)}")
-
+# def update_chuyenbay_thoigianbay_service(chuyenbay_id, thoigianbay: int):
+#     try:
+#         chuyenbay = Chuyenbay.query.get(chuyenbay_id)
+#         if not chuyenbay:
+#             raise ValueError("Không tìm thấy chuyến bay")
+#         # validate_NgayGio(thoigianbay)
+#         # thoigianbay = format_NgayGio(thoigianbay)
+#         chuyenbay.Thoi_gian_bay = thoigianbay
+#         db.session.commit()
+#     except ValueError as e:
+#         db.session.rollback()
+#         raise ValueError(f"{e}")
+#     except Exception as e:
+#         db.session.rollback()
+#         raise ValueError(f"Lỗi không xác định: {e}")
     
 
-
-
-
-def update_chuyenbay_thoigianbay_service(chuyenbay_id, thoigianbay: int):
-    try:
-        chuyenbay = Chuyenbay.query.get(chuyenbay_id)
-        if not chuyenbay:
-            raise ValueError("Không tìm thấy chuyến bay")
-        # validate_NgayGio(thoigianbay)
-        # thoigianbay = format_NgayGio(thoigianbay)
-        chuyenbay.Thoi_gian_bay = thoigianbay
-        db.session.commit()
-    except ValueError as e:
-        db.session.rollback()
-        raise ValueError(f"{e}")
-    except Exception as e:
-        db.session.rollback()
-        raise ValueError(f"Lỗi không xác định: {e}")
-    
-
-def update_chuyenbay_ngaygiobay_service(chuyenbay_id, ngaygiobay):
-    try:
-        chuyenbay = Chuyenbay.query.get(chuyenbay_id)
-        if not chuyenbay:
-            raise ValueError("Không tìm thấy chuyến bay")
-        validate_NgayGio(ngaygiobay)
-        # thoigianbay = format_NgayGio(thoigianbay)
-        chuyenbay.ngay_gio = ngaygiobay
-        db.session.commit()
-    except ValueError as e:
-        db.session.rollback()
-        raise ValueError(f"{e}")
-    except Exception as e:
-        db.session.rollback()
-        raise ValueError(f"Lỗi không xác định: {e}")
+# def update_chuyenbay_ngaygiobay_service(chuyenbay_id, ngaygiobay):
+#     try:
+#         chuyenbay = Chuyenbay.query.get(chuyenbay_id)
+#         if not chuyenbay:
+#             raise ValueError("Không tìm thấy chuyến bay")
+#         validate_NgayGio(ngaygiobay)
+#         # thoigianbay = format_NgayGio(thoigianbay)
+#         chuyenbay.ngay_gio = ngaygiobay
+#         db.session.commit()
+#     except ValueError as e:
+#         db.session.rollback()
+#         raise ValueError(f"{e}")
+#     except Exception as e:
+#         db.session.rollback()
+#         raise ValueError(f"Lỗi không xác định: {e}")
 
 
 def get_Chuyenbay_by_thang_service(thang, nam):
@@ -351,9 +271,15 @@ def update_chuyenbay_service(id, data):
         if not chuyenbay:
             raise ValueError("Không tìm thấy chuyến bay")
         
+        if chuyenbay.ngay_khoi_hanh <= (datetime.now().date()):
+            raise ValueError("Chuyến bay đã khởi hành, không thể cập nhật thông tin")
+
         # Validate dữ liệu đầu vào
         if 'ngay_khoi_hanh' in data:
-            chuyenbay.ngay_khoi_hanh = data['ngay_khoi_hanh']
+            ngayKhoiHanh = datetime.strptime(data['ngay_khoi_hanh'], "%Y-%m-%d").date()
+            if ngayKhoiHanh < (datetime.now().date() - timedelta(days=1)):
+                raise ValueError("Ngày khởi hành không được nhỏ hơn ngày hiện tại")
+            chuyenbay.ngay_khoi_hanh = ngayKhoiHanh
         if 'gio_khoi_hanh' in data:
             chuyenbay.gio_khoi_hanh = data['gio_khoi_hanh']
         if 'Thoi_gian_bay' in data:
@@ -401,3 +327,30 @@ def Tong_soghetrong_of_chuyenbay_service(chuyenbay: Chuyenbay):
         return total_so_ve_trong or 0
     except Exception as e:
         raise ValueError(f"Lỗi khi tính tổng số ghế trống: {str(e)}")
+    
+
+def delete_chuyenbay_service(id):
+    try:
+        chuyenbay = Chuyenbay.query.get(id)
+        if not chuyenbay:
+            raise ValueError("Không tìm thấy chuyến bay")
+
+        # Kiểm tra xem chuyến bay đã hoạt động hay chưa
+        vecb = chuyenbay.ve_chuyen_bay
+        if vecb:
+            raise ValueError("Không thể xóa chuyến bay đã có vé đặt")
+        # Xóa các chi tiết hạng vé liên quan
+        ChiTietHangVe.query.filter(ChiTietHangVe.Ma_chuyen_bay == id).delete()
+        
+        # Xóa các chi tiết sân bay trung gian liên quan
+        ChiTietSanBayTrungGian.query.filter(ChiTietSanBayTrungGian.Ma_chuyen_bay == id).delete()
+        
+        db.session.delete(chuyenbay)
+        db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        raise ValueError(f"{e}")
+    
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi không xác định: {e}")

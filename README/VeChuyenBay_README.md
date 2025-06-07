@@ -148,3 +148,55 @@ dữ liệu trả về :
     "message": "{Lỗi}",
     "status": "fail"
 }
+
+
+5. Cập nhật vị trí ghế của vé chuyến bay
+# link api: http://localhost:5000/api/vechuyenbay/update/vitriGhe/<int:id>
+methods = PUT
+
+ví dụ: 
+
+http://localhost:5000/api/vechuyenbay/update/vitriGhe/4
+body = {
+    "vitri": "B4.12"
+}
+
+Dữ liệu trả về:
+- {
+    "message": "Cập nhật vị trí ghế thành công",
+    "status": "success"
+}
+- {
+    "message": "Lỗi cập nhật vị trí ghế: Ghế đã được đặt",
+    "status": "fail"
+}
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}
+
+6. Danh sách các vé đã đặt hôm nay
+# link api: http://localhost:5000/api/vechuyenbay/get/DatHomNay
+methods = GET
+
+Dữ liệu trả về
+
+
+- {
+    "data": [
+        {
+            "Ma_chuyen_bay": 27,
+            "Ma_hang_ve": 1,
+            "Ma_ve": 21,
+            "Tien_ve": 550000.0,
+            "vi_tri": "B4.1"
+        }
+    ],
+    "message": "Lấy vé thành công",
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}

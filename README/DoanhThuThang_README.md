@@ -2,14 +2,14 @@ G. Doanh thu tháng
 
 
 1. Thêm doanh thu tháng 
-# http://localhost:5000/api/doanhthuthang/add_or_update?thang={month}&nam={year}
+# http://localhost:5000/api/doanhthuthang/add?thang={month}&nam={year}
 
 methods = POST
 
 NOTE: khi chạy thêm doanh thu tháng, sẽ tạo luôn chi tiết doanh thu tháng (Biểu mẫu 5.1), nhưng chưa tính tỉ lệ của doanh thu tháng trong biểu mẫu 5.2. Để tạo tỉ lệ của doanh thu tháng trong biểu mẫu 5.2 phải tạo doanh thu 5 hoặc update doanh thu năm
 
 ví dụ:
-# http://localhost:5000/api/doanhthuthang/add_or_update?thang=4&nam=2025
+# http://localhost:5000/api/doanhthuthang/add?thang=4&nam=2025
 
 dữ liệu trả về:
 - {"message": "Thêm doanh thu tháng thành công!", "status": "success"}, 200
@@ -31,17 +31,10 @@ dữ liệu trả về:
 - {
     "data": [
         {
-            "Tile": 0.758621,
-            "Tong_doanh_thu": 3300000.0,
-            "month": 4,
-            "so_chuyen_bay": 6,
-            "year": 2025
-        },
-        {
-            "Tile": 0.241379,
-            "Tong_doanh_thu": 1050000.0,
-            "month": 5,
-            "so_chuyen_bay": 2,
+            "Tile": 0.35,
+            "Tong_doanh_thu": 4425000.0,
+            "month": 6,
+            "so_chuyen_bay": 8,
             "year": 2025
         }
     ],
@@ -68,49 +61,28 @@ dữ liệu trả về:
 - {
     "data": [
         {
-            "Doanh_thu": 0.0,
-            "Ma_chuyen_bay": 6,
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Ti_le": 0.0,
-            "nam": 2025,
-            "thang": 4
-        },
-        {
-            "Doanh_thu": 1650000.0,
-            "Ma_chuyen_bay": 8,
+            "Doanh_thu": 1500000.0,
+            "Ma_chuyen_bay": 21,
             "So_ghe_dat": 3,
-            "So_ghe_trong": 97,
-            "Ti_le": 0.5,
+            "Ti_le": 0.34,
             "nam": 2025,
-            "thang": 4
+            "thang": 6
         },
         {
-            "Doanh_thu": 1650000.0,
-            "Ma_chuyen_bay": 9,
-            "So_ghe_dat": 3,
-            "So_ghe_trong": 97,
-            "Ti_le": 0.5,
+            "Doanh_thu": 2400000.0,
+            "Ma_chuyen_bay": 23,
+            "So_ghe_dat": 4,
+            "Ti_le": 0.54,
             "nam": 2025,
-            "thang": 4
+            "thang": 6
         },
         {
-            "Doanh_thu": 0.0,
-            "Ma_chuyen_bay": 10,
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Ti_le": 0.0,
+            "Doanh_thu": 525000.0,
+            "Ma_chuyen_bay": 7,
+            "So_ghe_dat": 1,
+            "Ti_le": 0.12,
             "nam": 2025,
-            "thang": 4
-        },
-        {
-            "Doanh_thu": 0.0,
-            "Ma_chuyen_bay": 11,
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Ti_le": 0.0,
-            "nam": 2025,
-            "thang": 4
+            "thang": 6
         }
     ],
     "message": "Truy cập dữ liệu thành công",

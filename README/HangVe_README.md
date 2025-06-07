@@ -89,3 +89,20 @@ dữ liệu trả về:
     "message": "{Lỗi}",
     "status": "fail"
 }
+
+
+4. Xóa hạng vé
+# link api: http://localhost:5000/api/hangve/delete/<id>
+methods = DELETE
+
+vi dụ: http://localhost:5000/api/hangve/delete/2
+
+dữ liệu trả về:
+- {
+    "message": "Xóa hạng vé thành công",
+    "status": "success"
+}
+- {
+    "message": "Không tìm thấy hạng vé",
+    "status": "fail"
+}

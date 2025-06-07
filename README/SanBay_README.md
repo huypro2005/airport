@@ -57,3 +57,37 @@ dữ liệu trả về:
     "message": "{Lỗi}",
     "status": "fail"
 }
+
+
+3. Cập nhật tên sân bay
+# link api: http://localhost:5000/api/sanbay/update/<id>
+methods = PUT
+
+ví dụ: http://localhost:5000/api/sanbay/update/UK
+
+Dữ liệu trả về: 
+- {
+    "message": "Sân bay đã được cập nhật thành công!",
+    "status": "success"
+}
+-{
+    "message": "Sân bay không tồn tại",
+    "status": "fail"
+}
+
+
+4. Xóa sân bay
+# link api: http://localhost:5000/api/sanbay/delete/<id>
+methods = DELETE
+
+ví dụ: http://localhost:5000/api/sanbay/delete/UK
+
+Dữ liệu trả về: 
+- {
+    "message": "Sân bay đã ngừng hoạt động!",
+    "status": "success"
+}
+- {
+    "message": "Sân bay không tồn tại",
+    "status": "fail"
+}

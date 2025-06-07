@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from app.services.ChiTietDoanhThuThang_service import (
-    create_ds_chitietdoanhthu_service,
     update_tile_Chitietdoanhthu_service,
     get_ds_chitietdoanhthu_service,
     create_or_update_chitietdoanhthuThang_service_bymonth
@@ -11,20 +10,6 @@ from app.utils.auth import is_admin
 CHITIETDOANHHTHUTHANG = Blueprint('ChiTietDoanhThuThang', __name__)
 
 
-# link api: http://localhost:5000/api/chitietdoanhthuthang/add?thang=4&nam=2025
-@CHITIETDOANHHTHUTHANG.route('/chitietdoanhthuthang/add', methods=['POST'])
-
-def add_chitietdoanhthuthang():
-    try:
-        thang = request.args.get('thang')
-        nam = request.args.get('nam')
-        if not thang or not nam:
-            return jsonify({"message": "Thiếu thông tin tháng hoặc năm", "status": "fail"}), 400
-        create_ds_chitietdoanhthu_service(thang, nam)
-        return jsonify({"message": "Thêm chi tiết doanh thu tháng thành công!", "status": "success"}), 200
-    except ValueError as e:
-        return jsonify({"message": str(e), "status": "fail"}), 400
-    
 
 
 # link api: http://localhost:5000/api/chitietdoanhthuthang/update/tile?thang=4&nam=2025

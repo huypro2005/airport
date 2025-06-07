@@ -77,7 +77,7 @@ def get_ds_sanbay():
     
 '''
 
-@SANBAY.route('/sanbay/get/<int:id>', methods=['GET'])
+@SANBAY.route('/sanbay/get/<string:id>', methods=['GET'])
 @jwt_required()
 def get_sanbay_by_id(id):
     try:
@@ -88,20 +88,24 @@ def get_sanbay_by_id(id):
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500
     
-@SANBAY.route('/sanbay/delete/<int:id>', methods=['DELETE'])
-@jwt_required
+
+
+# link api: http://localhost:5000/api/sanbay/delete/<id>
+@SANBAY.route('/sanbay/delete/<string:id>', methods=['DELETE'])
+# @jwt_required
 def delete_sanbay(id):
     try:
         delete_sanbay_service(id)
-        return jsonify({"message": "Sân bay đã được xóa thành công!"}), 200
+        return jsonify({"message": "Sân bay đã ngừng hoạt động!", "status": "success"}), 200
     except ValueError as e:
-        return jsonify({"messge": str(e), "status": "fail"}), 400
+        return jsonify({"message": str(e), "status": "fail"}), 400
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500
     
 
 
-@SANBAY.route('/sanbay/update/<int:id>', methods=['PUT'])
+# link api: http://localhost:5000/api/sanbay/update/<id>
+@SANBAY.route('/sanbay/update/<string:id>', methods=['PUT'])
 def update_sanbay(id):
     try:
         data = request.get_json()
@@ -112,7 +116,5 @@ def update_sanbay(id):
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500
     
-
-
 
 

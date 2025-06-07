@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from app.services.VeChuyenBay_service import (add_veChuyenyBay_service, 
                                               get_veChuyenBay_byID_service, 
                                                delete_ve_service,
+                                               update_ve_vitri_ghe_service,
+                                                get_ds_veChuyenBay_da_dat_hom_nay_service,
                                                get_ds_veChuyenBay_by_HanhKhach_service)
 from flask_jwt_extended import jwt_required
 
@@ -70,29 +72,8 @@ def get_ve_chuyen_bay(id):
         return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
  
 
-# @VECHUYENBAY.route('/vechuyenbay/update/hangve', methods=['PUT'])
-# # @jwt_required()
-# def update_hangve():
-#     try:
-#         id = request.args.get('id')
-#         hangve = request.args.get('hangve')
-#         update_ve_Hangve_service(id, hangve)
-#         return jsonify({'message': 'Cập nhật hàng vé thành công'}), 200
-#     except ValueError as e:
-#         return jsonify({'message': str(e)}), 400
-#     except Exception as e:
-#         return jsonify({'message': f'Lỗi: {e}'}), 500
-        
-
-# @VECHUYENBAY.route('/vechuyenbay/huyve/<id>', methods = ['PUT'])
-# def update_huyVeChuyenBay(id):
-#     try:
-#         update_huy_ve_service(id)
-#         return jsonify({'message': 'Hủy vé thành công'}), 200
-#     except ValueError as e:
-#         return jsonify({'message': str(e)}), 400
-#     except Exception as e:
-#         return jsonify({'message': f'Lỗi: {e}'}), 500
+ 
+# link api: http://localhost:5000/api/vechuyenbay/delete/<int:id>
 
 @VECHUYENBAY.route('/vechuyenbay/delete/<int:id>', methods=['DELETE'])
 # @jwt_required()
@@ -126,5 +107,42 @@ def get_ve_by_hanh_khach(hk_cmnd):
             })
         
         return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success", 'id_hanhkhach': ve_list[0].Ma_hanh_khach}), 200
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
+
+
+
+# link api: http://localhost:5000/api/vechuyenbay/update/vitriGhe/<int:id>
+@VECHUYENBAY.route('vechuyenbay/update/vitriGhe/<int:id>', methods=['PUT'])
+def update_vitri_ghe(id):
+    data = request.get_json()
+    try:
+        update_ve_vitri_ghe_service(id, data)
+        return jsonify({'message': 'Cập nhật vị trí ghế thành công', 'status': 'success'}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', 'status': 'fail'}), 500
+    
+
+# link api: http://localhost:5000/api/vechuyenbay/get/DatHomNay
+@VECHUYENBAY.route('vechuyenbay/get/DatHomNay', methods=['GET'])
+def get_ds_veChuyenBay_da_dat_hom_nay():
+    try:
+        ds_ve = get_ds_veChuyenBay_da_dat_hom_nay_service()
+        if not ds_ve:
+            return jsonify({'message': 'Không có vé nào đã đặt trong ngày hôm nay', "status": "fail"}), 404
+        
+        result = []
+        for ve in ds_ve:
+            result.append({
+                'Ma_ve': ve.id,
+                'Ma_chuyen_bay': ve.Ma_chuyen_bay,
+                'Ma_hang_ve': ve.Ma_hang_ve,
+                'vi_tri': ve.vi_tri,
+                'Tien_ve': ve.Tien_ve
+            })
+        
+        return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success"}), 200
     except Exception as e:
         return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500

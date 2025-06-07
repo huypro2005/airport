@@ -4,6 +4,15 @@ from app.utils.validators import validate_NhanVien
 from library import *
 
 
+def check_nhanvien_active(id):
+    """
+    Kiểm tra xem nhân viên có đang hoạt động hay không.
+    :param id: ID của nhân viên cần kiểm tra.
+    :return: True nếu nhân viên đang hoạt động, False nếu không.
+    """
+    nhanvien = Nhanvien.query.filter_by(id=id, tinhtrang=True).first()
+    return nhanvien is not None
+
 def add_nhanvien_service(data):
     validate_NhanVien(data)
     id = data['id']

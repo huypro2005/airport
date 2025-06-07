@@ -140,169 +140,6 @@ dữ liệu trả về:
             "gio_toi": "00:40:00",
             "ngay_khoi_hanh": "2025-04-25",
             "ngay_toi": "2025-04-25"
-        },
-        {
-            "Ma_chuyen_bay": 20,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HNOI",
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Thoi_gian_bay": 30,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 550000.0,
-                    "Ma_chuyen_bay": 20,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                },
-                {
-                    "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 20,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [
-                {
-                    "ghi_chu": "Trung gian 1",
-                    "ma_chuyen_bay": 20,
-                    "ma_san_bay_trung_gian": "DNANG",
-                    "thoi_gian_dung": 15
-                },
-                {
-                    "ghi_chu": "Trung gian 2",
-                    "ma_chuyen_bay": 20,
-                    "ma_san_bay_trung_gian": "Vinh",
-                    "thoi_gian_dung": 15
-                }
-            ],
-            "gia_ve": 500000.0,
-            "gio_khoi_hanh": "00:00:00",
-            "gio_toi": "00:30:00",
-            "ngay_khoi_hanh": "2025-04-25",
-            "ngay_toi": "2025-04-25"
-        },
-        {
-            "Ma_chuyen_bay": 27,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HNOI",
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Thoi_gian_bay": 30,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 550000.0,
-                    "Ma_chuyen_bay": 27,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                },
-                {
-                    "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 27,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 500000.0,
-            "gio_khoi_hanh": "00:00:00",
-            "gio_toi": "00:30:00",
-            "ngay_khoi_hanh": "2025-08-25",
-            "ngay_toi": "2025-08-25"
-        },
-        {
-            "Ma_chuyen_bay": 34,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HNOI",
-            "So_ghe_dat": 1,
-            "So_ghe_trong": 99,
-            "Thoi_gian_bay": 180,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 550000.0,
-                    "Ma_chuyen_bay": 34,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                },
-                {
-                    "Gia_ve": 500000.0,
-                    "Ma_chuyen_bay": 34,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 1,
-                    "So_ve_trong": 49
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 500000.0,
-            "gio_khoi_hanh": "08:00:00",
-            "gio_toi": "11:00:00",
-            "ngay_khoi_hanh": "2025-06-01",
-            "ngay_toi": "2025-06-01"
-        },
-        {
-            "Ma_chuyen_bay": 35,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HNOI",
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Thoi_gian_bay": 150,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 1705000.0,
-                    "Ma_chuyen_bay": 35,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                },
-                {
-                    "Gia_ve": 1550000.0,
-                    "Ma_chuyen_bay": 35,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 1550000.0,
-            "gio_khoi_hanh": "14:30:00",
-            "gio_toi": "17:00:00",
-            "ngay_khoi_hanh": "2025-06-01",
-            "ngay_toi": "2025-06-01"
-        },
-        {
-            "Ma_chuyen_bay": 36,
-            "Ma_san_bay_den": "SGON",
-            "Ma_san_bay_di": "HNOI",
-            "So_ghe_dat": 0,
-            "So_ghe_trong": 100,
-            "Thoi_gian_bay": 200,
-            "chitiet_hangve": [
-                {
-                    "Gia_ve": 2805000.0,
-                    "Ma_chuyen_bay": 36,
-                    "Ma_hang_ve": 1,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                },
-                {
-                    "Gia_ve": 2550000.0,
-                    "Ma_chuyen_bay": 36,
-                    "Ma_hang_ve": 2,
-                    "So_ve_da_dat": 0,
-                    "So_ve_trong": 50
-                }
-            ],
-            "chitiet_sanbay_trung_gian": [],
-            "gia_ve": 2550000.0,
-            "gio_khoi_hanh": "19:15:00",
-            "gio_toi": "22:35:00",
-            "ngay_khoi_hanh": "2025-06-01",
-            "ngay_toi": "2025-06-01"
         }
     ],
     "message": "Lấy danh sách chuyến bay thành công",
@@ -332,14 +169,6 @@ body = {
     "Thoi_gian_bay": 40
 }
 
-NOTE: dữ liệu nào thay đổi thì mới gửi lên server. Giả sử không cập nhật giá vé có thể gửi body như này: (
-    body = {
-    "ngay_khoi_hanh": "2025-04-25",
-    "gio_khoi_hanh": "00:00:00",
-    "Thoi_gian_bay": 40
-    }
-). Điều này giúp giảm mức xử lý ở server. Ngày giờ phải được định dạng đúng như ví dụ.
-
 
 dữ liệu trả về: 
 
@@ -349,5 +178,23 @@ dữ liệu trả về:
 }
 - {
     "message": "{Lỗi}",
+    "status": "fail"
+}
+
+
+5. Xóa chuyến bay
+# link api: http://localhost:5000/api/chuyenbay/delete/<id>
+
+methods = DELETE
+
+ví dụ: http://localhost:5000/api/chuyenbay/delete/36
+
+Dũ liệu trả về: 
+- {
+    "message": "Chuyến bay đã được xóa thành công!",
+    "status": "success"
+}
+- {
+    "message": "Không thể xóa chuyến bay đã có vé đặt",
     "status": "fail"
 }

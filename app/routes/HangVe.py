@@ -1,4 +1,4 @@
-from app.services.HangVe_service import add_hangve_service, get_ds_HangVe_service, update_hangve_service
+from app.services.HangVe_service import add_hangve_service, get_ds_HangVe_service, update_hangve_service, delete_hangve_service
 from flask import Blueprint, request, jsonify
 from app.utils.auth import is_admin
 from flask_jwt_extended import jwt_required
@@ -68,6 +68,19 @@ def update_hangve(id):
         # Call the service to update the hang ve
         update_hangve_service(id, data)
         return jsonify({'message': 'Cập nhật hạng vé thành công', "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/hangve/delete/<id>
+@HANGVE.route('/hangve/delete/<id>', methods=['DELETE'])
+def delete_hangve(id):
+    try:
+        # Call the service to delete the hang ve
+        delete_hangve_service(id)
+        return jsonify({'message': 'Xóa hạng vé thành công', "status": "success"}), 200
     except ValueError as e:
         return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:

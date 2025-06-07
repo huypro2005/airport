@@ -1,8 +1,6 @@
 from app.services.Chuyenbay_service import (add_ChuyenBay_service, 
                     get_chuyenbay_byID_service, get_dsChuyenBay_follow_time_service, 
-                    update_chuyenbay_thoigianbay_service,
-                    update_chuyenbay_ngaygiobay_service,
-                    get_Chuyenbay_by_thang_service,
+                    get_Chuyenbay_by_thang_service, delete_chuyenbay_service,
                     update_chuyenbay_service)
 from flask import Blueprint, request, jsonify
 from app.models.Chuyenbay import Chuyenbay
@@ -116,33 +114,8 @@ def get_dsChuyenBay_follow_time():
         }), 500
     
 
-
-# link api: http://localhost:5000/api/chuyenbay/update_thoigianbay/<id>?thoigianbay=30
-
-@CHUYENBAY.route('/chuyenbay/update_thoigianbay/<id>', methods=['PUT'])
-def update_thoigianbay(id):
-    try:
-        thoigianbay = request.args.get('thoigianbay')
-        update_chuyenbay_thoigianbay_service(id, thoigianbay)
-        return jsonify({"message": "Thời gian bay đã được cập nhật thành công!", "status": "success"}), 200
-    except ValueError as e:
-        return jsonify({"message": str(e), "status": "fail"}), 400
-    except Exception as e:
-        return jsonify({"message": str(e), "status": "fail"}), 500
     
 
-# link api: http://localhost:5000/api/chuyenbay/update_thoigianbay/<id>?thoigianbay=2025-04-25T00:00:00
-
-@CHUYENBAY.route('/chuyenbay/update_ngaygiobay/<id>', methods= ['PUT'])
-def update_ngaygiobay(id):
-    try:
-        ngaygiobay = request.args.get('ngaygiobay')
-        update_chuyenbay_ngaygiobay_service(id, ngaygiobay)
-        return jsonify({"message": "Ngày giờ bay đã được cập nhật thành công!", "status": "success"}), 200
-    except ValueError as e:
-        return jsonify({"message": str(e), "status": "fail"}), 400
-    except Exception as e:
-        return jsonify({"message": str(e), "status": "fail"}), 500
 
 
 
@@ -189,5 +162,15 @@ def get_all_chuyenbay_service():
         if not chuyenbay:
             return jsonify({"message": "Không có chuyến bay nào", "status": "fail"}), 404
         return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/chuyenbay/delete/<id>
+@CHUYENBAY.route('/chuyenbay/delete/<int:id>', methods=['DELETE'])
+def delete_chuyenbay(id):
+    try:
+        delete_chuyenbay_service(id)
+        return jsonify({"message": "Chuyến bay đã được xóa thành công!", "status": "success"}), 200
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500

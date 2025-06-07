@@ -4,10 +4,10 @@ from app.models.HanhKhach import HanhKhach
 from app.models.ChiTietHangVe import ChiTietHangVe
 
 from .QuyDinh_service import get_quydinh_service
-from .Chuyenbay_service import get_sogheconlai, set_sogheconlai
 from .HanhKhach_service import add_or_get_HanhKhach_service
 from app.utils.validators import validate_VeChuyenBay,  validate_VeChuyenBay_seat
 from .ChiTietHangve_service import get_ChiTietHangVe_service
+from .ChiTietDoanhThuThang_service import create_or_update_chitietdoanhthuThang_service
 from library import *
 
 
@@ -40,6 +40,10 @@ def add_veChuyenyBay_service(data):
         gioi_tinh = data['gioi_tinh']
         ma_hang_ve = data['Ma_hang_ve']
         vi_tri = data['vitri']
+        if 'ngaydat' in data:
+            ngaydat = datetime.strptime(data['ngaydat'], '%Y-%m-%d').date()
+        else:
+            ngaydat = datetime.now().date()
         
 
         chuyenbay = Chuyenbay.query.get(macb)
@@ -51,14 +55,12 @@ def add_veChuyenyBay_service(data):
         
 
         # kiem tra thoi gian dat ve phai nho hon thoi gian khoi hanh, va toi thieu la truoc 24h
-        if datetime.now().date() > chuyenbay.ngay_khoi_hanh:
+        if ngaydat > chuyenbay.ngay_khoi_hanh:
             raise ValueError('Chuyến bay đã khởi hành')
 
-        if chuyenbay.ngay_khoi_hanh - datetime.now().date() < timedelta(days=rule.ThoiGianDatVeToiThieu):
+        if chuyenbay.ngay_khoi_hanh - ngaydat < timedelta(days=rule.ThoiGianDatVeToiThieu):
             raise ValueError("Thời gian đặt vé phải trước 24h so với giờ khởi hành")
 
-        ngay_dat = datetime.now().date()
-        
 
         validate_VeChuyenBay_seat(vi_tri, macb)
         data = {
@@ -74,13 +76,13 @@ def add_veChuyenyBay_service(data):
         vechuyenbay.vi_tri = vi_tri
         vechuyenbay.Ma_hanh_khach = hanhkhach.id
         vechuyenbay.Tien_ve = chiTietHangVe.Gia_ve
-        vechuyenbay.Ngay_dat_ve = ngay_dat
-
+        vechuyenbay.Ngay_dat_ve = ngaydat
         chiTietHangVe.So_ve_da_dat += 1
         chiTietHangVe.So_ve_trong -= 1  
 
         db.session.add(vechuyenbay)
         db.session.commit()
+        create_or_update_chitietdoanhthuThang_service(vechuyenbay)
         return vechuyenbay
     except Exception as e:
         db.session.rollback()
@@ -145,6 +147,55 @@ def get_ds_veChuyenBay_by_HanhKhach_service(hk_cmnd):
     ).all()
 
 
+    if ds_ve:
+        return ds_ve
+    else:
+        return None
+    
+
+from app.utils.randomDate import random_date
+
+def update_ngaydat_ve_service():
+    try:
+        ds_ve = Vechuyenbay.query.filter(
+            Vechuyenbay.Ngay_dat == None
+        ).all()
+        if not ds_ve:
+            raise ValueError("Không có vé nào cần cập nhật ngày đặt")
+        for ve in ds_ve:
+            ve.Ngay_dat = random_date(datetime(2025, 1, 1), datetime(2025, 12, 31)).date()
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi cập nhật ngày đặt vé: {e}")
+    
+
+
+def update_ve_vitri_ghe_service(id, data):
+    try:
+        ve = Vechuyenbay.query.get(id)
+        if not ve:
+            raise ValueError("Không tìm thấy vé")
+        
+        validate_VeChuyenBay_seat(data['vitri'], ve.Ma_chuyen_bay)
+        
+        ve.vi_tri = data['vitri']
+        db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi cập nhật vị trí ghế: {e}")
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi cập nhật vị trí ghế: {e}")
+    
+
+# trả về danh sách vé chuyến bay đã đặt trong ngày hôm nay
+def get_ds_veChuyenBay_da_dat_hom_nay_service():
+    today = datetime.now().date()
+    ds_ve = Vechuyenbay.query.filter(
+        Vechuyenbay.Ngay_dat_ve == today
+    ).all()
+    
     if ds_ve:
         return ds_ve
     else:

@@ -3,7 +3,7 @@ from app.models.DoanhThuThang import doanhThuThang
 from app.models.Chuyenbay import Chuyenbay
 from app.models.VeChuyenBay import Vechuyenbay
 from app.models.ChiTietDoanhThuThang import ChiTietDoanhThuThang
-from .ChiTietDoanhThuThang_service import create_ds_chitietdoanhthu_service, update_tile_Chitietdoanhthu_service, create_or_update_chitietdoanhthuThang_service_bymonth
+from .ChiTietDoanhThuThang_service import update_tile_Chitietdoanhthu_service, create_or_update_chitietdoanhthuThang_service_bymonth
 from sqlalchemy import func, case
 
 

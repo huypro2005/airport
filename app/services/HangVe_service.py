@@ -3,6 +3,15 @@ from app.models.Chuyenbay import Chuyenbay
 from app.models.HangVe import HangVe
 from library import *
 
+def check_hangve_active(id):
+    """
+    Kiểm tra xem hạng vé có đang hoạt động hay không.
+    :param id: ID của hạng vé cần kiểm tra.
+    :return: True nếu hạng vé đang hoạt động, False nếu không.
+    """
+    hangve = HangVe.query.filter_by(id=id, is_deleted=False).first()
+    return hangve is not None
+
 
 def add_hangve_service(data):
     """
@@ -31,7 +40,9 @@ def get_ds_HangVe_service():
     :return: Danh sách các hạng vé
     """
     try:
-        hang_ve_list = HangVe.query.all()
+        hang_ve_list = HangVe.query.filter_by(is_deleted=False).all()
+        if not hang_ve_list:
+            raise ValueError("Không có hạng vé nào trong cơ sở dữ liệu")
         return hang_ve_list
     except Exception as e:
         raise ValueError(f"Lỗi khi lấy danh sách hạng vé: {str(e)}")
@@ -40,7 +51,7 @@ def get_ds_HangVe_service():
 
 def update_hangve_service(id, data):
     try:
-        hangve = HangVe.query.get(id)
+        hangve = HangVe.query.filter_by(id=id, is_deleted=False).first()
         if not hangve:
             raise ValueError("Không tìm thấy hạng vé")
         
@@ -59,6 +70,22 @@ def update_hangve_service(id, data):
                 )
             })
         
+        db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        raise ValueError(f"{e}")
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi không xác định: {e}")
+    
+
+def delete_hangve_service(id):
+    try:
+        hangve = HangVe.query.filter_by(id=id, is_deleted=False).first()
+        if not hangve:
+            raise ValueError("Không tìm thấy hạng vé")
+
+        hangve.is_deleted = True
         db.session.commit()
     except ValueError as e:
         db.session.rollback()

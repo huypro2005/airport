@@ -13,6 +13,7 @@ class Chuyenbay(db.Model):
     gio_khoi_hanh = db.Column(db.Time)
     Thoi_gian_bay = db.Column(db.Integer)
     gia_ve = db.Column(db.Float)
+    is_deleted = db.Column(db.Boolean, default=False, nullable=False)
     # One to many relationship with ChiTietChuyenBay, PhieuDatCho, Vechuyenbay
     ve_chuyen_bay = db.relationship('Vechuyenbay', backref='chuyen_bay', lazy=True)
     chi_tiet_san_bay_trung_gian = db.relationship('ChiTietSanBayTrungGian', backref='chuyen_bay', lazy=True)
