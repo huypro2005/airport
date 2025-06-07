@@ -140,7 +140,8 @@ def get_ds_veChuyenBay_da_dat_hom_nay():
                 'Ma_chuyen_bay': ve.Ma_chuyen_bay,
                 'Ma_hang_ve': ve.Ma_hang_ve,
                 'vi_tri': ve.vi_tri,
-                'Tien_ve': ve.Tien_ve
+                'Tien_ve': ve.Tien_ve,
+                'Ma_hanh_khach': ve.Ma_hanh_khach
             })
         
         return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success"}), 200
