@@ -166,7 +166,21 @@ body = {
     "ngay_khoi_hanh": "2025-04-25",
     "gio_khoi_hanh": "00:00:00",
     "gia_ve": 1000000,
-    "Thoi_gian_bay": 40
+    "Thoi_gian_bay": 40,
+    "chitiet":[
+        {
+            "Ma_san_bay_trung_gian": "DNANG",
+            "thoigian_dung": 15,
+            "ghichu": "Tg 1",
+            "is_delete": 0
+        },
+        {
+            "Ma_san_bay_trung_gian": "Vinh",
+            "thoigian_dung": 15,
+            "ghichu": "Trung gian 2",
+            "is_delete": 1
+        }
+    ]
 }
 
 

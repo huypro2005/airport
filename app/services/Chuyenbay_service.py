@@ -264,6 +264,28 @@ def get_Chuyenbay_by_thang_service(thang, nam):
     return ds
 
 
+'''
+{
+    "ngay_khoi_hanh": "2025-04-25",
+    "gio_khoi_hanh": "00:00:00",
+    "gia_ve": 1000000,
+    "Thoi_gian_bay": 40,
+    "chitiet":[
+        {
+            "Ma_san_bay_trung_gian": "DNANG",
+            "thoigian_dung": 15,
+            "ghichu": "Tg 1",
+            "is_delete": 0
+        },
+        {
+            "Ma_san_bay_trung_gian": "Vinh",
+            "thoigian_dung": 15,
+            "ghichu": "Trung gian 2",
+            "is_delete": 1
+        }
+    ]
+}
+'''
 
 def update_chuyenbay_service(id, data):
     try:
@@ -284,6 +306,19 @@ def update_chuyenbay_service(id, data):
             chuyenbay.gio_khoi_hanh = data['gio_khoi_hanh']
         if 'Thoi_gian_bay' in data:
             chuyenbay.Thoi_gian_bay = data['Thoi_gian_bay']
+        ds_sbtrunggian = chuyenbay.chi_tiet_san_bay_trung_gian
+        if 'chitiet' in data:
+            ds_chitiet = data['chitiet']
+            for chitiet in ds_chitiet:
+                ct_trunggian = next((ct for ct in ds_sbtrunggian if ct.Ma_san_bay_trung_gian == chitiet['Ma_san_bay_trung_gian']), None)
+                if ct_trunggian:
+                    if chitiet['is_delete'] == 1:
+                        db.session.delete(ct_trunggian)
+                    else:
+                        ct_trunggian.Thoi_gian_dung = chitiet['thoigian_dung']
+                        ct_trunggian.Ghi_chu = chitiet['ghichu']
+                else:
+                    raise ValueError("Sân bay trung gian không tồn tại")
 
         if 'gia_ve' in data:
             chuyenbay.gia_ve = data['gia_ve']
