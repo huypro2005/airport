@@ -23,6 +23,10 @@ def add_hangve_service(data):
     if not data or 'Ten_hang_ve' not in data or 'Ti_le_don_gia' not in data:
         raise ValueError("Thiếu thông tin hạng vé!")
     
+    hangve = HangVe.query.filter(HangVe.Ten_hang_ve == data['Ten_hang_ve']).first()
+    if hangve:
+        raise ValueError("Hạng vé đã tồn tại")
+
     # Tạo đối tượng HangVe mới
     hang_ve = HangVe(data['Ten_hang_ve'], data['Ti_le_don_gia'])
     
