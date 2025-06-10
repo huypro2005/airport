@@ -7,8 +7,6 @@ class Sanbay(db.Model):
     id = db.Column(db.String(20), primary_key=True, index = True)
     ten_san_bay = db.Column(db.String(50), nullable = False, index = True, unique= True)
     is_deleted = db.Column(db.Boolean, default=False, nullable=False)
-    def __init__(self, ten_san_bay):
-        self.ten_san_bay = ten_san_bay
 
     def __repr__(self):
         return self.ten_san_bay

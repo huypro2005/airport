@@ -65,6 +65,11 @@ methods = PUT
 
 ví dụ: http://localhost:5000/api/sanbay/update/UK
 
+body = {
+        "ten_san_bay": "Ha noi galaxy"
+    }
+
+
 Dữ liệu trả về: 
 - {
     "message": "Sân bay đã được cập nhật thành công!",

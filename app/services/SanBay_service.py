@@ -19,9 +19,9 @@ def add_SanBay_service(data):
     ma_san_bay = data['Ma_san_bay']
     ten_san_bay = data['Ten_san_bay']
     
-    sanbay = Sanbay.query.get(ma_san_bay)
+    sanbay = Sanbay.query.filter(Sanbay.id == ma_san_bay or Sanbay.ten_san_bay == ten_san_bay).first()
     if sanbay:
-        raise ValueError("Mã sân bay đã tồn tại")
+        raise ValueError("Mã sân bay hoặc tên sân bay đã tồn tại")
     
     sanbay = Sanbay(id=ma_san_bay, ten_san_bay=ten_san_bay)
     

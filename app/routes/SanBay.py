@@ -104,6 +104,13 @@ def delete_sanbay(id):
     
 
 
+'''
+    {
+        "ten_san_bay": "Ha noi galaxy"
+    }
+    
+'''
+
 # link api: http://localhost:5000/api/sanbay/update/<id>
 @SANBAY.route('/sanbay/update/<string:id>', methods=['PUT'])
 def update_sanbay(id):
