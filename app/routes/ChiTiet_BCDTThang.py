@@ -14,6 +14,7 @@ CHITIETDOANHHTHUTHANG = Blueprint('ChiTietDoanhThuThang', __name__)
 
 # link api: http://localhost:5000/api/chitietdoanhthuthang/update/tile?thang=4&nam=2025
 @CHITIETDOANHHTHUTHANG.route('/chitietdoanhthuthang/update/tile', methods=['PUT'])
+@jwt_required()
 def update_tile_chitietdoanhthuthang():
     try:
         thang = request.args.get('thang')
@@ -35,6 +36,7 @@ def update_tile_chitietdoanhthuthang():
 # link api: http://localhost:5000/api/chitietdoanhthuthang/get?thang=4&nam=2025
 
 @CHITIETDOANHHTHUTHANG.route('/chitietdoanhthuthang/get', methods=['GET'])
+@jwt_required()
 def get_chitietdoanhthuthang():
     try:
         thang = request.args.get('thang')
@@ -60,6 +62,7 @@ def get_chitietdoanhthuthang():
 
 # link api: http://localhost:5000/api/chitietdoanhthuthang/create_or_update_chitietdoanhthuThang?month=4&year=2025
 @CHITIETDOANHHTHUTHANG.route('/chitietdoanhthuthang/create_or_update_chitietdoanhthuThang', methods=['POST'])
+@jwt_required()
 def create_or_update_chitietdoanhthuThang():
     try:
         month = request.args.get('month')

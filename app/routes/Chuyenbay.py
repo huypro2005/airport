@@ -47,7 +47,7 @@ CHUYENBAY = Blueprint('chuyennbay', __name__)
 '''
 
 @CHUYENBAY.route('/chuyenbay/add', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 # cần payload truyền vào
 def add_chuyenbay():
     try:
@@ -123,6 +123,7 @@ def get_dsChuyenBay_follow_time():
 
 
 @CHUYENBAY.route('/chuyenbay/update/<id>', methods=['PUT'])
+@jwt_required()
 def update_chuyenbay(id):
     try:
         data = request.get_json()
@@ -168,6 +169,7 @@ def get_all_chuyenbay_service():
 
 # link api: http://localhost:5000/api/chuyenbay/delete/<id>
 @CHUYENBAY.route('/chuyenbay/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_chuyenbay(id):
     try:
         delete_chuyenbay_service(id)

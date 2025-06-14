@@ -14,7 +14,7 @@ HANGVE = Blueprint('hangve', __name__)
 '''
 
 @HANGVE.route('/hangve/add', methods = ['POST'])
-# @jwt_required()
+@jwt_required()   
 def add_hangve():
     try:
         data = request.get_json()
@@ -61,6 +61,7 @@ def get_hangve():
 
 # link api: http://localhost:5000/api/hangve/update/<id>
 @HANGVE.route('/hangve/update/<id>', methods=['PUT'])
+@jwt_required()
 def update_hangve(id):
     try:
         data = request.get_json()
@@ -76,6 +77,7 @@ def update_hangve(id):
 
 # link api: http://localhost:5000/api/hangve/delete/<id>
 @HANGVE.route('/hangve/delete/<id>', methods=['DELETE'])
+@jwt_required()
 def delete_hangve(id):
     try:
         # Call the service to delete the hang ve

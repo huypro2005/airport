@@ -1,6 +1,6 @@
 D. Vé chuyến bay
 
-1. Thêm vé chuyến bay 
+1. Thêm vé chuyến bay (CẦN ĐĂNG NHẬP)
 # http://localhost:5000/api/vechuyenbay/add
 methods = POST
 body = {
@@ -65,7 +65,7 @@ dữ liệu trả về:
 
 
 
-3. Xem tất cả chuyến bay mà hành khách đã đặt
+3. Xem thông tin hành khách  (CẦN ĐĂNG NHẬP)
 
 # link api: http://localhost:5000/api/hanhkhach/get/<int:id>
 methods = GET
@@ -76,23 +76,14 @@ ví dụ
 Dữ liệu trả về
 
 - {
-    "data": [
-        {
-            "Ma_chuyen_bay": 7,
-            "Ma_hang_ve": 1,
-            "Ma_ve": 1,
-            "Tien_ve": 525000.0,
-            "vi_tri": "B4.1"
-        },
-        {
-            "Ma_chuyen_bay": 15,
-            "Ma_hang_ve": 1,
-            "Ma_ve": 9,
-            "Tien_ve": 1100000.0,
-            "vi_tri": "B4.1"
-        }
-    ],
-    "message": "Lấy vé thành công",
+    "data": {
+        "Hoten": "nguyen van a",
+        "cmnd": "116468466314",
+        "gioi_tinh": "Nam",
+        "id": 1,
+        "sdt": "24544346"
+    },
+    "message": "Lấy dữ liệu thành công",
     "status": "success"
 }
 - {
@@ -101,7 +92,7 @@ Dữ liệu trả về
 }
 
 
-4. Xem tất cả chuyến bay mà hành khách đã đặt qua cmnd
+4. Xem tất cả chuyến bay mà hành khách đã đặt qua cmnd (CẦN ĐĂNG NHẬP)
 
 # link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 methods = GET
@@ -109,7 +100,7 @@ methods = GET
 
 ví dụ:
 
-http://localhost:8000/api/vechuyenbay/get_by_hanhkhach/cmnd/11646846614
+http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/11646846614
 
 
 dữ liệu trả về :
@@ -150,7 +141,7 @@ dữ liệu trả về :
 }
 
 
-5. Cập nhật vị trí ghế của vé chuyến bay
+5. Cập nhật vị trí ghế của vé chuyến bay  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/vechuyenbay/update/vitriGhe/<int:id>
 methods = PUT
 
@@ -175,7 +166,7 @@ Dữ liệu trả về:
     "status": "fail"
 }
 
-6. Danh sách các vé đã đặt hôm nay
+6. Danh sách các vé đã đặt hôm nay  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/vechuyenbay/get/DatHomNay
 methods = GET
 

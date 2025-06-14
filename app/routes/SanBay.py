@@ -14,7 +14,7 @@ SANBAY = Blueprint('sanbay', __name__)
 '''
 # link api: http://localhost:5000/api/sanbay/add
 @SANBAY.route('/sanbay/add', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def add_sanbay():
     try:
         data = request.get_json()
@@ -78,7 +78,7 @@ def get_ds_sanbay():
 '''
 
 @SANBAY.route('/sanbay/get/<string:id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_sanbay_by_id(id):
     try:
         sanbay = get_sanbay_by_id_service(id)
@@ -92,7 +92,7 @@ def get_sanbay_by_id(id):
 
 # link api: http://localhost:5000/api/sanbay/delete/<id>
 @SANBAY.route('/sanbay/delete/<string:id>', methods=['DELETE'])
-# @jwt_required
+@jwt_required
 def delete_sanbay(id):
     try:
         delete_sanbay_service(id)
@@ -113,6 +113,7 @@ def delete_sanbay(id):
 
 # link api: http://localhost:5000/api/sanbay/update/<id>
 @SANBAY.route('/sanbay/update/<string:id>', methods=['PUT'])
+@jwt_required()
 def update_sanbay(id):
     try:
         data = request.get_json()

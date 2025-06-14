@@ -1,6 +1,6 @@
 E. Hành Khách
 
-1. Thêm hành khách mới
+1. Thêm hành khách mới  (CẦN ĐĂNG NHẬP)
 # http://localhost:5000/api/hanhkhach/add
 methods =POST
 
@@ -21,7 +21,7 @@ dữ liệu trả về:
     "status": "fail"
 }
 
-2. Xem Thông tin hành khách thông qua id
+2. Xem Thông tin hành khách thông qua id  (CẦN ĐĂNG NHẬP)
 
 # http://localhost:5000/api/hanhkhach/get/<int:id>
 methods = POST

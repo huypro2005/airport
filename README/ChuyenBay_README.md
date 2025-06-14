@@ -1,7 +1,7 @@
 C. Chuyến Bay
 
 
-1. Thêm chuyến bay mới
+1. Thêm chuyến bay mới  (CẦN ĐĂNG NHẬP)
 
 # http://localhost:5000/api/chuyenbay/add
 body = {
@@ -49,7 +49,7 @@ dữ liệu trả về:
 }
 
 
-2. Xem chuyến bay theo id chuyến bay
+2. Xem chuyến bay theo id chuyến bay  (CẦN ĐĂNG NHẬP)
 # http://localhost:5000/api/chuyenbay/get/<id>
 method = POST
 
@@ -152,7 +152,7 @@ dữ liệu trả về:
 
 
 
-4. Cập nhật chuyến bay
+4. Cập nhật chuyến bay  (CẦN ĐĂNG NHẬP)
 
 NOTE: chỉ có thể cập nhật ngày giờ bay, thời gian bay trên không và giá vé
 
@@ -196,7 +196,7 @@ dữ liệu trả về:
 }
 
 
-5. Xóa chuyến bay
+5. Xóa chuyến bay  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/chuyenbay/delete/<id>
 
 methods = DELETE

@@ -26,7 +26,7 @@ VECHUYENBAY = Blueprint('vechuyenbay', __name__)
 '''
 # link api: http://localhost:5000/api/vechuyenbay/add
 @VECHUYENBAY.route('/vechuyenbay/add', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def add_ve():
     data = request.get_json()
     try:
@@ -89,7 +89,7 @@ def delete_ve(id):
 # link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 
 @VECHUYENBAY.route('vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cmnd>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_ve_by_hanh_khach(hk_cmnd):
     try:
         ve_list = get_ds_veChuyenBay_by_HanhKhach_service(hk_cmnd)
@@ -114,6 +114,7 @@ def get_ve_by_hanh_khach(hk_cmnd):
 
 # link api: http://localhost:5000/api/vechuyenbay/update/vitriGhe/<int:id>
 @VECHUYENBAY.route('vechuyenbay/update/vitriGhe/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_vitri_ghe(id):
     data = request.get_json()
     try:
@@ -127,6 +128,7 @@ def update_vitri_ghe(id):
 
 # link api: http://localhost:5000/api/vechuyenbay/get/DatHomNay
 @VECHUYENBAY.route('vechuyenbay/get/DatHomNay', methods=['GET'])
+@jwt_required()
 def get_ds_veChuyenBay_da_dat_hom_nay():
     try:
         ds_ve = get_ds_veChuyenBay_da_dat_hom_nay_service()

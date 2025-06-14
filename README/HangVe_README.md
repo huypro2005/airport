@@ -1,6 +1,6 @@
 A. Hạng vé
 
-1. Tạo hạng vé
+1. Tạo hạng vé  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/hangve/add 
 body={
         "Ten_hang_ve": "Hang 1",
@@ -52,7 +52,7 @@ dữ liệu trả về:
     "status": "fail"
 }
 
-3. Cập nhật hạng vé
+3. Cập nhật hạng vé  (CẦN ĐĂNG NHẬP)
 
 # link api: http://localhost:5000/api/hangve/update/<id>
 method = PUT
@@ -91,7 +91,7 @@ dữ liệu trả về:
 }
 
 
-4. Xóa hạng vé
+4. Xóa hạng vé  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/hangve/delete/<id>
 methods = DELETE
 

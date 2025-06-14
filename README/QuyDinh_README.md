@@ -1,6 +1,6 @@
 F. Quy định
 
-1. Xem tất cả quy định
+1. Xem tất cả quy định  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/quydinh/get
 methods = GET
 
@@ -21,7 +21,7 @@ dữ liệu trả về:
     "status": "fail"
 }
 
-2. cập nhật quy định
+2. cập nhật quy định  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/quydinh/update
 methods = PUT
 

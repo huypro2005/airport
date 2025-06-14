@@ -10,7 +10,7 @@ VNPAY_BLUEPRINT = Blueprint('vnpay', __name__)
 
 '''
 {
-    "price": 100000
+    "price": 100000,
     "order_id": "1234567890"
 }
 

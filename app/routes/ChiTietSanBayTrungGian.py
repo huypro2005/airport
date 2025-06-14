@@ -20,6 +20,7 @@ def get_chitietchuyenbays(chuyenbay_id):
 
 # link api: http://localhost:5000/api/chuyenbay/chitietchuyenbay/update_Thoigiandung/1?Thoigiandung=20
 @CHITIETCHUYENBAY.route('/chuyenbay/chitietchuyenbay/update_Thoigiandung/<id>', methods=['PUT'])
+@jwt_required()
 def update_Thoigiandung(id):
     try:
         data = request.args.get('Thoigiandung')

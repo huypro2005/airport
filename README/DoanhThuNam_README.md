@@ -1,6 +1,6 @@
 H. Doanh thu năm
 
-1. Tạo doanh thu năm
+1. Tạo doanh thu năm  (CẦN ĐĂNG NHẬP)
 
 # link api: http://localhost:8000/api/doanhthunam/add_or_update?nam=2025
 
@@ -21,7 +21,7 @@ dữ liệu trả về:
 
 
 
-2. Cập nhật doanh thu năm (Không cần dùng)
+2. Cập nhật doanh thu năm (Không cần dùng)  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/doanhthunam/update?nam={year}
 
 methods = PUT

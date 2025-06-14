@@ -1,7 +1,7 @@
 G. Doanh thu tháng
 
 
-1. Thêm doanh thu tháng 
+1. Thêm doanh thu tháng   (CẦN ĐĂNG NHẬP)
 # # link api: http://localhost:5000/api/doanhthuthang/add_or_update?thang={year}&nam={month}
 
 methods = POST
@@ -20,7 +20,7 @@ dữ liệu trả về:
 
 
 
-2. Xem danh sách doanh thu tháng (Biểu mẫu 5.2)
+2. Xem danh sách doanh thu tháng (Biểu mẫu 5.2)  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/ds_doanhthuthang/get?nam={year}
 methods = GET
 
@@ -48,7 +48,7 @@ dữ liệu trả về:
 
 
 
-3. Xem chi tiết doanh thu tháng (Biểu mẫu 5.1)
+3. Xem chi tiết doanh thu tháng (Biểu mẫu 5.1)  (CẦN ĐĂNG NHẬP)
 
 # http://localhost:5000/api/chitietdoanhthuthang/get?thang={month}&nam={year}
 

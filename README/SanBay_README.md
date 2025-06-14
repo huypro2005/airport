@@ -1,8 +1,8 @@
 B. Sân bay
 
 
-1. Thêm sân bay mới
-# http://localhost:5000/api/sanbay/add
+1. Thêm sân bay mới  (CẦN ĐĂNG NHẬP)
+# http://localhost:5000/api/sanbay/add 
 method = POST
  
 body = {
@@ -59,7 +59,7 @@ dữ liệu trả về:
 }
 
 
-3. Cập nhật tên sân bay
+3. Cập nhật tên sân bay  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/sanbay/update/<id>
 methods = PUT
 
@@ -81,7 +81,7 @@ Dữ liệu trả về:
 }
 
 
-4. Xóa sân bay
+4. Xóa sân bay  (CẦN ĐĂNG NHẬP)
 # link api: http://localhost:5000/api/sanbay/delete/<id>
 methods = DELETE
 

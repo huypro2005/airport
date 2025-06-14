@@ -1,6 +1,6 @@
 K. Nhân viên
 
-1. Thêm mới nhân viên
+1. Thêm mới nhân viên  (CẦN ĐĂNG NHẬP)
 
 # link api: http://localhost:5000/api/nhanvien/add
 methods = POST
@@ -28,7 +28,7 @@ dữ liệu trả về:
 
 
 
-2. Cập nhật tình trạng nghỉ việc
+2. Cập nhật tình trạng nghỉ việc  (CẦN ĐĂNG NHẬP)
 
 # http://localhost:5000/api/nhanvien/update_tinhtrangnghi/<int:id>
 

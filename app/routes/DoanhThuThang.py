@@ -8,6 +8,7 @@ DOANHTHUTHANG = Blueprint('doanhthu_thang', __name__)
 
 # link api: http://localhost:5000/api/doanhthuthang/add_or_update?thang=4&nam=2025
 @DOANHTHUTHANG.route('/doanhthuthang/add_or_update', methods=['POST'])
+@jwt_required()
 def add_or_update_doanhthu_thang():
     try:
         thang = request.args.get('thang')
@@ -26,6 +27,7 @@ def add_or_update_doanhthu_thang():
 
 # link api: http://localhost:5000/api/ds_doanhthuthang/get?nam=2025
 @DOANHTHUTHANG.route('/ds_doanhthuthang/get', methods=['GET'])
+@jwt_required()
 def get_doanhthu_thang():
     try:
         nam = request.args.get('nam')

@@ -8,7 +8,7 @@ NHANVIEN = Blueprint('nhanvien', __name__)
 
 # link api: http://localhost:5000/api/nhanvien/add
 @NHANVIEN.route('/nhanvien/add', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 # @is_admin()
 def add_nhanvien_route():
     
@@ -37,7 +37,7 @@ def add_nhanvien_route():
 # link api: http://localhost:5000/api/nhanvien/update_tinhtrangnghi/<int:id>
 @NHANVIEN.route('/nhanvien/update_tinhtrangnghi/<int:id>', methods=['PUT'])
 @jwt_required()
-@is_admin()
+# @is_admin()
 def update_tinhtrangnghi_route(id):
     try:
         update_TinhtrangNghi_service(id)
@@ -53,7 +53,7 @@ def update_tinhtrangnghi_route(id):
 # link api: http://localhost:5000/api/nhanvien/get_all
 @NHANVIEN.route('/nhanvien/get_all', methods=['GET'])
 @jwt_required()
-@is_admin()
+# @is_admin()
 def get_all_nhanvien_route():
     try:
         nhanvien = get_all_nhanvien_service()

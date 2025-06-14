@@ -9,7 +9,7 @@ QUYDINH = Blueprint('quydinh', __name__)
 
 # link api: http://localhost:5000/api/quydinh/get
 @QUYDINH.route('/quydinh/get', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_quydinh():
     try:
         quydinh = get_quydinh_service()
@@ -30,6 +30,7 @@ def get_quydinh():
 '''
 # link api: http://localhost:5000/api/quydinh/update
 @QUYDINH.route('/quydinh/update', methods=['PUT'])
+@jwt_required()
 def update_quydinh():
     try:
         data = request.get_json()
