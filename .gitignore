@@ -1,7 +1,2 @@
-*.yaml
-*.yml
 *.pem
-Dockerfile
-*.dockerignore
-*.Docker.md
 **/db
