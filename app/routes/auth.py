@@ -33,6 +33,9 @@ def login():
 def logout():
     return logout_service()
 
+
+# Kiểm tra trạng thái đăng nhập
+# link api: http://localhost:5000/api/auth/check_login
 @AUTH.route('/auth/check_login', methods=['GET'])
 @jwt_required()  # Yêu cầu JWT hợp lệ
 def check_login():
@@ -40,9 +43,9 @@ def check_login():
     # lấy thông tin additional_claims từ JWT
     claims = get_jwt()
     
-    user_data = current_user  # Hàm giả định
+    user = Nhanvien.query.get(current_user)
     return jsonify({
         "status": "success",
-        "user": user_data
-        # "additional_claims": claims
+        "userID": user.id,
+        "additional_claims": claims
     }), 200

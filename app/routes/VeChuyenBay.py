@@ -4,7 +4,10 @@ from app.services.VeChuyenBay_service import (add_veChuyenyBay_service,
                                                delete_ve_service,
                                                update_ve_vitri_ghe_service,
                                                 get_ds_veChuyenBay_da_dat_hom_nay_service,
-                                               get_ds_veChuyenBay_by_HanhKhach_service)
+                                               get_ds_veChuyenBay_by_HanhKhach_service,
+                                               get_all_tickets_by_flight_id_service,
+                                               get_tickets_by_flight_id_service,
+                                               search_tickets_by_flight_id_service)
 from flask_jwt_extended import jwt_required
 
 VECHUYENBAY = Blueprint('vechuyenbay', __name__)
@@ -26,7 +29,7 @@ VECHUYENBAY = Blueprint('vechuyenbay', __name__)
 '''
 # link api: http://localhost:5000/api/vechuyenbay/add
 @VECHUYENBAY.route('/vechuyenbay/add', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def add_ve():
     data = request.get_json()
     try:
@@ -89,7 +92,7 @@ def delete_ve(id):
 # link api: http://localhost:5000/api/vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cccd>
 
 @VECHUYENBAY.route('vechuyenbay/get_by_hanhkhach/cmnd/<string:hk_cmnd>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_ve_by_hanh_khach(hk_cmnd):
     try:
         ve_list = get_ds_veChuyenBay_by_HanhKhach_service(hk_cmnd)
@@ -114,7 +117,6 @@ def get_ve_by_hanh_khach(hk_cmnd):
 
 # link api: http://localhost:5000/api/vechuyenbay/update/vitriGhe/<int:id>
 @VECHUYENBAY.route('vechuyenbay/update/vitriGhe/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_vitri_ghe(id):
     data = request.get_json()
     try:
@@ -128,7 +130,6 @@ def update_vitri_ghe(id):
 
 # link api: http://localhost:5000/api/vechuyenbay/get/DatHomNay
 @VECHUYENBAY.route('vechuyenbay/get/DatHomNay', methods=['GET'])
-@jwt_required()
 def get_ds_veChuyenBay_da_dat_hom_nay():
     try:
         ds_ve = get_ds_veChuyenBay_da_dat_hom_nay_service()
@@ -149,3 +150,52 @@ def get_ds_veChuyenBay_da_dat_hom_nay():
         return jsonify({'message': 'Lấy vé thành công', 'data': result, "status": "success"}), 200
     except Exception as e:
         return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
+
+# link api: http://localhost:5000/api/vechuyenbay/flight/<int:flight_id>/tickets
+@VECHUYENBAY.route('/vechuyenbay/flight/<int:flight_id>/tickets', methods=['GET'])
+@jwt_required()
+def get_all_tickets_by_flight_id(flight_id):
+    try:
+        result = get_all_tickets_by_flight_id_service(flight_id)
+        return jsonify({
+            'message': 'Lấy danh sách vé thành công',
+            'flight_info': result['flight_info'],
+            'tickets': result['tickets'],
+            'total_tickets': result['total_tickets'],
+            'status': 'success'
+        }), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi server: {e}', 'status': 'fail'}), 500
+
+# link api: http://localhost:5000/api/vechuyenbay/flight/<int:flight_id>
+@VECHUYENBAY.route('/vechuyenbay/flight/<int:flight_id>', methods=['GET'])
+@jwt_required()
+def get_tickets_by_flight_id(flight_id):
+    try:
+        tickets = get_tickets_by_flight_id_service(flight_id)
+        return jsonify({
+            'message': 'Lấy danh sách vé thành công',
+            'tickets': tickets,
+            'status': 'success'
+        }), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi server: {e}', 'status': 'fail'}), 500
+
+# link api: http://localhost:5000/api/vechuyenbay/search/flight/<int:flight_id>
+@VECHUYENBAY.route('/vechuyenbay/search/flight/<int:flight_id>', methods=['GET'])
+def search_tickets_by_flight_id(flight_id):
+    try:
+        tickets = search_tickets_by_flight_id_service(flight_id)
+        return jsonify({
+            'message': 'Tìm kiếm vé thành công',
+            'tickets': tickets,
+            'status': 'success'
+        }), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi server: {e}', 'status': 'fail'}), 500

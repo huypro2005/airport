@@ -200,3 +200,97 @@ def get_ds_veChuyenBay_da_dat_hom_nay_service():
         return ds_ve
     else:
         return None
+
+def get_all_tickets_by_flight_id_service(flight_id):
+    try:
+        # First check if the flight exists
+        flight = Chuyenbay.query.get(flight_id)
+        if not flight:
+            raise ValueError(f"Không tìm thấy chuyến bay với mã {flight_id}")
+
+        # Get all tickets for the flight
+        tickets = Vechuyenbay.query.filter(
+            Vechuyenbay.Ma_chuyen_bay == flight_id
+        ).all()
+        
+        # Get flight details
+        flight_info = {
+            'Ma_chuyen_bay': flight.id,
+            'Ma_san_bay_di': flight.Ma_san_bay_di,
+            'Ma_san_bay_den': flight.Ma_san_bay_den,
+            'ngay_khoi_hanh': str(flight.ngay_khoi_hanh),
+            'gio_khoi_hanh': str(flight.gio_khoi_hanh)
+        }
+        
+        # Format the response
+        tickets_info = []
+        for ticket in tickets:
+            tickets_info.append({
+                'id': ticket.id,
+                'Ma_chuyen_bay': ticket.Ma_chuyen_bay,
+                'Ma_hanh_khach': ticket.Ma_hanh_khach,
+                'Ma_hang_ve': ticket.Ma_hang_ve,
+                'Ma_nhan_vien': ticket.Ma_nhan_vien,
+                'Ngay_dat_ve': str(ticket.Ngay_dat_ve) if ticket.Ngay_dat_ve else None,
+                'Tien_ve': ticket.Tien_ve,
+                'Tinh_trang': ticket.Tinh_trang,
+                'vi_tri': ticket.vi_tri
+            })
+            
+        return {
+            'flight_info': flight_info,
+            'tickets': tickets_info,
+            'total_tickets': len(tickets_info)
+        }
+    except ValueError as e:
+        raise ValueError(str(e))
+    except Exception as e:
+        raise ValueError(f"Lỗi khi lấy danh sách vé: {str(e)}")
+
+def get_tickets_by_flight_id_service(flight_id):
+    try:
+        # Get all tickets for the flight
+        tickets = Vechuyenbay.query.filter(
+            Vechuyenbay.Ma_chuyen_bay == flight_id
+        ).all()
+        
+        # Format the response
+        tickets_info = []
+        for ticket in tickets:
+            tickets_info.append({
+                'id': ticket.id,
+                'vi_tri': ticket.vi_tri,
+                'Ma_hang_ve': ticket.Ma_hang_ve,
+                'Ma_hanh_khach': ticket.Ma_hanh_khach,
+                'Ngay_dat_ve': str(ticket.Ngay_dat_ve) if ticket.Ngay_dat_ve else None,
+                'Tien_ve': ticket.Tien_ve,
+                'Tinh_trang': ticket.Tinh_trang
+            })
+            
+        return tickets_info
+    except Exception as e:
+        raise ValueError(f"Lỗi khi lấy danh sách vé: {str(e)}")
+
+def search_tickets_by_flight_id_service(flight_id):
+    try:
+        # Get all tickets for the flight
+        tickets = Vechuyenbay.query.filter(
+            Vechuyenbay.Ma_chuyen_bay == flight_id
+        ).all()
+        
+        # Format the response
+        tickets_info = []
+        for ticket in tickets:
+            tickets_info.append({
+                'id': ticket.id,
+                'vi_tri': ticket.vi_tri,
+                'Ma_hang_ve': ticket.Ma_hang_ve,
+                'Ma_hanh_khach': ticket.Ma_hanh_khach,
+                'Ngay_dat_ve': str(ticket.Ngay_dat_ve) if ticket.Ngay_dat_ve else None,
+                'Tien_ve': ticket.Tien_ve,
+                'Tinh_trang': ticket.Tinh_trang
+            })
+            
+        return tickets_info
+    except Exception as e:
+        raise ValueError(f"Lỗi khi tìm kiếm vé: {str(e)}")
