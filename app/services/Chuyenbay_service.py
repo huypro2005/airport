@@ -322,13 +322,20 @@ def update_chuyenbay_service(id, data):
 
         if 'gia_ve' in data:
             chuyenbay.gia_ve = data['gia_ve']
-            db.session.query(ChiTietHangVe).filter(
-                ChiTietHangVe.Ma_chuyen_bay == chuyenbay.id
-            ).update({
-                ChiTietHangVe.Gia_ve: data['gia_ve']*float(db.session.query(HangVe).filter(
-                    HangVe.id == ChiTietHangVe.Ma_hang_ve
+
+            # db.session.query(ChiTietHangVe).filter(
+            #     ChiTietHangVe.Ma_chuyen_bay == chuyenbay.id
+            # ).update({
+            #     ChiTietHangVe.Gia_ve: data['gia_ve']*float(db.session.query(HangVe).filter(
+            #         HangVe.id == ChiTietHangVe.Ma_hang_ve
+            #     ).first().Ti_le_don_gia)
+            # })
+            ctHangve = chuyenbay.chi_tiet_hang_ve
+            for ct in ctHangve:
+                ct.Gia_ve = data['gia_ve'] * float(db.session.query(HangVe).filter(
+                    HangVe.id == ct.Ma_hang_ve
                 ).first().Ti_le_don_gia)
-            })
+
         db.session.commit()
     except ValueError as e:
         db.session.rollback()
