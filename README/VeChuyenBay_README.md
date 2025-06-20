@@ -1,6 +1,6 @@
 D. Vé chuyến bay
 
-1. Thêm vé chuyến bay (CẦN ĐĂNG NHẬP)
+1. Thêm vé chuyến bay 
 # http://localhost:5000/api/vechuyenbay/add
 methods = POST
 body = {

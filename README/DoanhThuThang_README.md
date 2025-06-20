@@ -2,7 +2,7 @@ G. Doanh thu tháng
 
 
 1. Thêm doanh thu tháng   (CẦN ĐĂNG NHẬP)
-# # link api: http://localhost:5000/api/doanhthuthang/add_or_update?thang={year}&nam={month}
+# # link api: http://localhost:5000/api/doanhthuthang/add_or_update?thang={month}&nam={year}
 
 methods = POST
 

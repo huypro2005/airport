@@ -125,7 +125,7 @@ def get_ds_doanhthuthang_service(nam):
     try:
         ds_doanhthuthang = db.session.query(doanhThuThang).filter(
             doanhThuThang.year == nam
-        ).all()
+        ).order_by(doanhThuThang.month).all()
         return ds_doanhthuthang
     except ValueError as e:
         raise ValueError(f"Lỗi lấy doanh thu tháng: {e}")

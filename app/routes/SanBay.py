@@ -92,7 +92,7 @@ def get_sanbay_by_id(id):
 
 # link api: http://localhost:5000/api/sanbay/delete/<id>
 @SANBAY.route('/sanbay/delete/<string:id>', methods=['DELETE'])
-@jwt_required
+@jwt_required()
 def delete_sanbay(id):
     try:
         delete_sanbay_service(id)
