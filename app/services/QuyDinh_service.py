@@ -33,6 +33,9 @@ def update_quydinh_service(data):
         if not rule:
             raise ValueError("Không tìm thấy quy định")
         
+        if data['thoigiandungtoida'] < data['thoigiandungtoithieu']:
+            raise ValueError("Thời gian dừng tối đa không thể nhỏ hơn thời gian dừng tối thiểu")
+        
         # Cập nhật các trường trong quy định
         rule.Thoigianbaytoithieu = data['thoigianbaytoithieu']
         rule.Soluongsanbaytrunggian = data['soluongsanbaytrunggian']

@@ -66,13 +66,8 @@ def add_ChuyenBay_service(data):
     thoi_gian_bay = data['thoi_gian_bay']
     hangve = data.get('hangve', [])
     chitiet_list = data.get('chitiet', [])
-    for hang in hangve:
-        if not check_hangve_active(hang.get('Ma_hang_ve')):
-            raise ValueError(f"Hạng vé {hang.get('Ma_hang_ve')} không tồn tại hoặc đã bị xóa")
-    if not check_SanBay_Active(ma_san_bay_di):
-        raise ValueError(f"Sân bay đi {ma_san_bay_di} không tồn tại hoặc đã bị xóa")
-    if not check_SanBay_Active(ma_san_bay_den):
-        raise ValueError(f"Sân bay đến {ma_san_bay_den} không tồn tại hoặc đã bị xóa")
+    check_duplicate_sbtg = set()
+
     for chitiet in chitiet_list:
         if  chitiet.get('Ma_san_bay_trung_gian') == ma_san_bay_den or chitiet.get('Ma_san_bay_trung_gian') == ma_san_bay_di:
             raise ValueError("Sân bay trung gian không được trùng với sân bay đi hoặc đến")
@@ -80,7 +75,21 @@ def add_ChuyenBay_service(data):
             raise ValueError(f"Sân bay trung gian {chitiet.get('Ma_san_bay_trung_gian')} không tồn tại hoặc đã bị xóa")
         if chitiet.get('thoigian_dung') <= 0 or chitiet.get('thoigian_dung') > rule.Thoigiandungtoida:
             raise ValueError(f"Thời gian dừng phải lớn hơn {rule.Thoigiandungtoithieu} và nhỏ hơn hoặc bằng thời gian dừng tối đa quy định {rule.Thoigiandungtoida}")
+        if chitiet.get('Ma_san_bay_trung_gian') in check_duplicate_sbtg:
+            raise ValueError(f"Sân bay trung gian {chitiet.get('Ma_san_bay_trung_gian')} đã được thêm trước đó")
+        check_duplicate_sbtg.add(chitiet.get('Ma_san_bay_trung_gian'))
 
+
+    if len(chitiet_list) > rule.Soluongsanbaytrunggian:
+        raise ValueError(f"Số lượng sân bay trung gian không được vượt quá {rule.Soluongsanbaytrunggian}")
+    for hang in hangve:
+        if not check_hangve_active(hang.get('Ma_hang_ve')):
+            raise ValueError(f"Hạng vé {hang.get('Ma_hang_ve')} không tồn tại hoặc đã bị xóa")
+    if not check_SanBay_Active(ma_san_bay_di):
+        raise ValueError(f"Sân bay đi {ma_san_bay_di} không tồn tại hoặc đã bị xóa")
+    if not check_SanBay_Active(ma_san_bay_den):
+        raise ValueError(f"Sân bay đến {ma_san_bay_den} không tồn tại hoặc đã bị xóa")
+    
 
     cb = Chuyenbay.query.get(ma_chuyen_bay)
     if cb:
