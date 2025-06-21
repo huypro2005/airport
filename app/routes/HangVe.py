@@ -1,4 +1,9 @@
-from app.services.HangVe_service import add_hangve_service, get_ds_HangVe_service, update_hangve_service, delete_hangve_service
+from app.services.HangVe_service import (add_hangve_service, 
+                                         get_ds_HangVe_service, 
+                                         update_hangve_service, 
+                                         delete_hangve_service,
+                                         get_all_hangve_da_huy_service,
+                                         activate_hangve_service)
 from flask import Blueprint, request, jsonify
 from app.utils.auth import is_admin
 from flask_jwt_extended import jwt_required
@@ -83,6 +88,34 @@ def delete_hangve(id):
         # Call the service to delete the hang ve
         delete_hangve_service(id)
         return jsonify({'message': 'Xóa hạng vé thành công', "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi: {e}', "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/hangve/get_all_dahuy
+@HANGVE.route('/hangve/get_all_dahuy', methods=['GET'])
+@jwt_required()
+def get_all_hangve_dahuy():
+    try:
+        hangve_list = get_all_hangve_da_huy_service()
+        if not hangve_list:
+            return jsonify({"message": "Không có hạng vé nào đã bị hủy!", "status": "fail"}), 404
+        data = [hv.serialize() for hv in hangve_list]
+        return jsonify({"message": data, "status": "success"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e), "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/hangve/activate/<id>
+@HANGVE.route('/hangve/activate/<id>', methods=['PUT'])
+@jwt_required()
+def activate_hangve(id):
+    try:
+        # Call the service to activate the hang ve
+        activate_hangve_service(id)
+        return jsonify({'message': 'Kích hoạt hạng vé thành công', "status": "success"}), 200
     except ValueError as e:
         return jsonify({'message': str(e), "status": "fail"}), 400
     except Exception as e:

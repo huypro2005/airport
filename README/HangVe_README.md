@@ -106,3 +106,50 @@ dữ liệu trả về:
     "message": "Không tìm thấy hạng vé",
     "status": "fail"
 }
+
+
+
+
+5. Xem các hạng vé đã hủy
+# link api: http://localhost:5000/api/hangve/get_all_dahuy
+
+method = GET
+
+
+dữ liệu trả về: 
+- {
+    "message": [
+        {
+            "Ten_hang_ve": "hạng 444",
+            "Ti_le_don_gia": 1.05,
+            "id": 4
+        },
+        {
+            "Ten_hang_ve": "Hang 5",
+            "Ti_le_don_gia": 1.05,
+            "id": 5
+        }
+    ],
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}
+
+
+6. Kích hoạt lại hạng vé đã hủy
+# link api: http://localhost:5000/api/hangve/activate/<id>
+method = PUT
+
+ví dụ: http://localhost:5000/api/hangve/activate/5
+- {
+    "message": "Kích hoạt hạng vé thành công",
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}

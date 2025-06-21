@@ -96,3 +96,48 @@ Dữ liệu trả về:
     "message": "Sân bay không tồn tại",
     "status": "fail"
 }
+
+
+
+
+5. Xem danh sách sân bay đã hủy (CẦN ĐĂNG NHẬP)
+# link api: http://localhost:5000/api/sanbay/get_all_dahuy
+
+methods = GET
+
+
+Dữ liệu trả về :
+{
+    "message": [
+        {
+            "Ma_san_bay": "123",
+            "Ten_san_bay": "Phú Yên "
+        },
+        {
+            "Ma_san_bay": "AAA",
+            "Ten_san_bay": "aaa"
+        }
+    ],
+    "status": "success"
+}
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}
+
+
+6. Kích hoạt sân bay hoạt động lại   (CẦN ĐĂNG NHẬP)
+# link api: http://localhost:5000/api/sanbay/restore/<string:id>
+methods = PUT
+ 
+ví dụ:  http://localhost:8000/api/sanbay/restore/AAA
+
+- {
+    "message": "Sân bay đã được khôi phục thành công!",
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}

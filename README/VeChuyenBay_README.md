@@ -191,3 +191,21 @@ Dữ liệu trả về
     "message": "{Lỗi}",
     "status": "fail"
 }
+
+
+7. Xóa vé chuyến bay
+# link api: http://localhost:5000/api/vechuyenbay/delete/ticket/<int:ticket_id>
+
+method = DELETE
+
+ví dụ: http://localhost:8000/api/vechuyenbay/delete/ticket/96
+
+- {
+    "message": "Vé đã được hủy thành công",
+    "status": "success"
+}
+
+- {
+    "message": "{Lỗi}",
+    "status": "fail"
+}

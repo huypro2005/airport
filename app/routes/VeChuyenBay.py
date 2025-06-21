@@ -7,7 +7,8 @@ from app.services.VeChuyenBay_service import (add_veChuyenyBay_service,
                                                get_ds_veChuyenBay_by_HanhKhach_service,
                                                get_all_tickets_by_flight_id_service,
                                                get_tickets_by_flight_id_service,
-                                               search_tickets_by_flight_id_service)
+                                               search_tickets_by_flight_id_service,
+                                               delete_ticket_by_id_service)
 from flask_jwt_extended import jwt_required
 
 VECHUYENBAY = Blueprint('vechuyenbay', __name__)
@@ -195,6 +196,20 @@ def search_tickets_by_flight_id(flight_id):
             'tickets': tickets,
             'status': 'success'
         }), 200
+    except ValueError as e:
+        return jsonify({'message': str(e), 'status': 'fail'}), 400
+    except Exception as e:
+        return jsonify({'message': f'Lỗi server: {e}', 'status': 'fail'}), 500
+    
+
+
+
+# link api: http://localhost:5000/api/vechuyenbay/delete/ticket/<int:ticket_id>
+@VECHUYENBAY.route('/vechuyenbay/delete/ticket/<int:ticket_id>', methods=['DELETE'])
+def delete_ticket_by_id(ticket_id):
+    try:
+        result = delete_ticket_by_id_service(ticket_id)
+        return jsonify(result), 200 if result['status'] == 'success' else 400
     except ValueError as e:
         return jsonify({'message': str(e), 'status': 'fail'}), 400
     except Exception as e:

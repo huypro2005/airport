@@ -25,7 +25,8 @@ def update_quydinh_service(data):
         "thoigianbaytoithieu": 30,
         "thoigiandungtoida": 20,
         "thoigiandungtoithieu": 10,
-        "thoigianvechuyenbay": 1
+        "thoigianvechuyenbay": 1,
+        "ThoiGianHuyVeToiDa": 5
     }
     """
     try:
@@ -42,7 +43,8 @@ def update_quydinh_service(data):
         rule.Thoigiandungtoida = data['thoigiandungtoida']
         rule.Thoigiandungtoithieu = data['thoigiandungtoithieu']
         rule.ThoiGianDatVeToiThieu = data['thoigianvechuyenbay']
-        
+        rule.ThoiGianHuyVeToiDa = data['ThoiGianHuyVeToiDa']
+        # Lưu thay đổi vào cơ sở dữ liệu
         db.session.commit()
     except Exception as e:
         db.session.rollback()

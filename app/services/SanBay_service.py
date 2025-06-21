@@ -69,4 +69,17 @@ def update_sanbay_service(ma_san_bay, data):
 
 
 
+def get_all_sanbay_dahuy_service():
+    ds_sanbay = Sanbay.query.filter_by(is_deleted=True).all()
+    if not ds_sanbay:
+        raise ValueError("Không có sân bay nào đã bị hủy trong cơ sở dữ liệu")
+    return ds_sanbay
 
+
+def restore_sanbay_service(ma_san_bay):
+    sanbay = Sanbay.query.filter_by(id=ma_san_bay, is_deleted=True).first()
+    if sanbay:
+        sanbay.is_deleted = False
+        db.session.commit()
+    else:
+        raise ValueError("Sân bay không tồn tại hoặc chưa bị hủy")

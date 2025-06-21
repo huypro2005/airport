@@ -1,5 +1,11 @@
 from flask import Blueprint, request, jsonify
-from app.services.SanBay_service import add_SanBay_service, get_ds_sanbay_service, get_sanbay_by_id_service, delete_sanbay_service, update_sanbay_service
+from app.services.SanBay_service import (add_SanBay_service, 
+                                         get_ds_sanbay_service, 
+                                         get_sanbay_by_id_service, 
+                                         delete_sanbay_service, 
+                                         update_sanbay_service,
+                                         get_all_sanbay_dahuy_service,
+                                         restore_sanbay_service)
 from flask_jwt_extended import jwt_required
 from app.utils.auth import is_admin
 SANBAY = Blueprint('sanbay', __name__)
@@ -124,5 +130,36 @@ def update_sanbay(id):
     except Exception as e:
         return jsonify({"message": str(e), "status": "fail"}), 500
     
+
+# link api: http://localhost:5000/api/sanbay/get_all_dahuy
+@SANBAY.route('/sanbay/get_all_dahuy', methods=['GET'])
+@jwt_required() 
+def get_all_sanbay_dahuy():
+    try:
+        sanbay_list = get_all_sanbay_dahuy_service()
+        data = []
+        for sanbay in sanbay_list:
+            data.append({
+                'Ma_san_bay': sanbay.id,
+                'Ten_san_bay': sanbay.ten_san_bay
+            })
+        return jsonify({"message": data, "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({"message": str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500
+    
+
+# link api: http://localhost:5000/api/sanbay/restore/<string:id>http://localhost:5000/api/sanbay/restore/<string:id>
+@SANBAY.route('/sanbay/restore/<string:id>', methods=['PUT'])
+@jwt_required()
+def restore_sanbay(id):
+    try:
+        restore_sanbay_service(id)
+        return jsonify({"message": "Sân bay đã được khôi phục thành công!", "status": "success"}), 200
+    except ValueError as e:
+        return jsonify({"message": str(e), "status": "fail"}), 400
+    except Exception as e:
+        return jsonify({"message": str(e), "status": "fail"}), 500
 
 

@@ -11,7 +11,8 @@ class QuyDinh(db.Model):
     Thoigiandungtoithieu = db.Column(db.Integer, default = 10)
     Thoigiandungtoida = db.Column(db.Integer, default = 20)
     ThoiGianDatVeToiThieu = db.Column(db.Integer, default = 1) #Thoi gian dat ve muon nhat truoc luc chuyen bay khoi hanh, tinh theo gio
-  
+    ThoiGianHuyVeToiDa = db.Column(db.Integer, default = 1) #Thoi gian huy ve toi da truoc khi chuyen bay khoi hanh, tinh theo gio
+
         
     def __repr__(self):
         return f'{self.Thoigianbaytoithieu} - {self.Soluongsanbaytrunggian} - {self.Thoigiandungtoithieu} - {self.Thoigiandungtoida} - {self.ThoiGianDatVeToiThieu}'

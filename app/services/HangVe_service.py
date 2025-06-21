@@ -97,3 +97,37 @@ def delete_hangve_service(id):
     except Exception as e:
         db.session.rollback()
         raise ValueError(f"Lỗi không xác định: {e}")
+    
+
+def get_all_hangve_da_huy_service():
+    """
+    Lấy danh sách tất cả các hạng vé đã bị hủy.
+    :return: Danh sách các hạng vé đã bị hủy
+    """
+    try:
+        hang_ve_list = HangVe.query.filter_by(is_deleted=True).all()
+        if not hang_ve_list:
+            raise ValueError("Không có hạng vé nào đã bị hủy")
+        return hang_ve_list
+    except Exception as e:
+        raise ValueError(f"Lỗi khi lấy danh sách hạng vé đã bị hủy: {str(e)}")
+    
+def activate_hangve_service(id):
+    """
+    Kích hoạt lại một hạng vé đã bị hủy.
+    :param id: ID của hạng vé cần kích hoạt lại.
+    :return: None
+    """
+    try:
+        hangve = HangVe.query.filter_by(id=id, is_deleted=True).first()
+        if not hangve:
+            raise ValueError("Không tìm thấy hạng vé đã bị hủy")
+        
+        hangve.is_deleted = False
+        db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        raise ValueError(f"{e}")
+    except Exception as e:
+        db.session.rollback()
+        raise ValueError(f"Lỗi không xác định: {e}")
