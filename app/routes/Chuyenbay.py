@@ -6,6 +6,7 @@ from flask import Blueprint, request, jsonify
 from app.models.Chuyenbay import Chuyenbay
 from app.models.SanBay import Sanbay
 from flask_jwt_extended import jwt_required
+from datetime import datetime
 from app.utils.auth import is_admin
 CHUYENBAY = Blueprint('chuyennbay', __name__)
 
@@ -159,7 +160,10 @@ def get_chuyenbay_by_month():
 @CHUYENBAY.route('/chuyenbay/get/all', methods=['GET'])
 def get_all_chuyenbay_service():
     try:
-        chuyenbay = Chuyenbay.query.all()
+        # ngày lấy chuyến bay là ngày hiện tại
+        chuyenbay = Chuyenbay.query.filter(
+            Chuyenbay.ngay_khoi_hanh >= datetime.now().date()
+        ).order_by(Chuyenbay.ngay_khoi_hanh.asc()).all()
         if not chuyenbay:
             return jsonify({"message": "Không có chuyến bay nào", "status": "fail"}), 404
         return jsonify({"message": [cb.serialize() for cb in chuyenbay], "status": "success"}), 200

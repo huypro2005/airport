@@ -194,8 +194,8 @@ def get_ds_veChuyenBay_da_dat_hom_nay_service():
     today = datetime.now().date()
     ds_ve = Vechuyenbay.query.filter(
         Vechuyenbay.Ngay_dat_ve == today
-    ).all()
-    
+    ).order_by(Vechuyenbay.id.desc()).all()
+
     if ds_ve:
         return ds_ve
     else:

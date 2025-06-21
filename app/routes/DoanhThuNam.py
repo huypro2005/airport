@@ -23,7 +23,7 @@ def add_or_update_doanhthu_nam():
 
 # link api: http://localhost:5000/api/doanhthunam/update?nam=2025
 @DOANHTHUNAM.route('/doanhthunam/update', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def update_doanhthu_nam():
     try:
         nam = request.args.get('nam')

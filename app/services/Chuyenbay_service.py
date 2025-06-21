@@ -74,8 +74,13 @@ def add_ChuyenBay_service(data):
     if not check_SanBay_Active(ma_san_bay_den):
         raise ValueError(f"Sân bay đến {ma_san_bay_den} không tồn tại hoặc đã bị xóa")
     for chitiet in chitiet_list:
+        if  chitiet.get('Ma_san_bay_trung_gian') == ma_san_bay_den or chitiet.get('Ma_san_bay_trung_gian') == ma_san_bay_di:
+            raise ValueError("Sân bay trung gian không được trùng với sân bay đi hoặc đến")
         if not check_SanBay_Active(chitiet.get('Ma_san_bay_trung_gian')):
             raise ValueError(f"Sân bay trung gian {chitiet.get('Ma_san_bay_trung_gian')} không tồn tại hoặc đã bị xóa")
+        if chitiet.get('thoigian_dung') <= 0 or chitiet.get('thoigian_dung') > rule.Thoigiandungtoida:
+            raise ValueError(f"Thời gian dừng phải lớn hơn {rule.Thoigiandungtoithieu} và nhỏ hơn hoặc bằng thời gian dừng tối đa quy định {rule.Thoigiandungtoida}")
+
 
     cb = Chuyenbay.query.get(ma_chuyen_bay)
     if cb:
