@@ -16,3 +16,9 @@ CORS_SUPPORTS_CREDENTIALS = True
 # cho phép tất cả các nguồn gốc truy cập
 CORS_ORIGINS = ['*']  
 CORS_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']  # Các phương thức HTTP được phép
+SQLALCHEMY_ENGINE_OPTIONS = {
+    'pool_size': 20,         # số connection giữ sẵn
+    'max_overflow': 0,       # số connection vượt quá pool_size
+    'pool_timeout': 30,      # giây chờ connection nếu hết pool
+    'pool_recycle': 1800     # recyle connection sau 30p tránh timeout
+}
