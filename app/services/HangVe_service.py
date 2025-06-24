@@ -1,6 +1,7 @@
 from app.models.ChiTietHangVe import ChiTietHangVe
 from app.models.Chuyenbay import Chuyenbay
 from app.models.HangVe import HangVe
+from app.models.VeChuyenBay import Vechuyenbay
 from library import *
 
 def check_hangve_active(id):
@@ -88,7 +89,9 @@ def delete_hangve_service(id):
         hangve = HangVe.query.filter_by(id=id, is_deleted=False).first()
         if not hangve:
             raise ValueError("Không tìm thấy hạng vé")
-
+        vecb = Vechuyenbay.query.filter_by(Ma_hang_ve=id, Tinh_trang=True).first()
+        if vecb:
+            raise ValueError("Không thể xóa hạng vé đang được sử dụng trong vé chuyến bay")
         hangve.is_deleted = True
         db.session.commit()
     except ValueError as e:

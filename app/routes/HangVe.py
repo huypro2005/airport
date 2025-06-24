@@ -82,7 +82,7 @@ def update_hangve(id):
 
 # link api: http://localhost:5000/api/hangve/delete/<id>
 @HANGVE.route('/hangve/delete/<id>', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def delete_hangve(id):
     try:
         # Call the service to delete the hang ve
