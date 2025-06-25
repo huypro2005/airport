@@ -22,5 +22,6 @@ class QuyDinh(db.Model):
             'soluongsanbaytrunggian': self.Soluongsanbaytrunggian,
             'thoigiandungtoithieu': self.Thoigiandungtoithieu,
             'thoigiandungtoida': self.Thoigiandungtoida,
-            'thoigiandatvetoithieu': self.ThoiGianDatVeToiThieu
+            'thoigiandatvetoithieu': self.ThoiGianDatVeToiThieu,
+            'thoigianhuyvetoida': self.ThoiGianHuyVeToiDa
         }
