@@ -11,7 +11,8 @@ dữ liệu trả về:
         "thoigianbaytoithieu": 10,
         "thoigiandatvetoithieu": 1,
         "thoigiandungtoida": 25,
-        "thoigiandungtoithieu": 15
+        "thoigiandungtoithieu": 15,
+        "thoigianhuyvetoida": 1
     },
     "message": "Lấy quy định thành công",
     "status": "success"
