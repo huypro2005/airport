@@ -17,7 +17,6 @@ def create_all_doanhthu_thang_service(year):
 
 
 def create_or_update_doanhthu_nam_service(nam):
-    create_all_doanhthu_thang_service(nam)
     try:
         doanhthunam = DoanhThuNam.query.filter(
             DoanhThuNam.year == nam

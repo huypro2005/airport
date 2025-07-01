@@ -17,11 +17,18 @@ from .routes.QuyDinh import QUYDINH
 from .routes.ChiTiet_BCDTThang import CHITIETDOANHHTHUTHANG
 from .routes.DoanhThuNam import DOANHTHUNAM
 from .routes.auth import AUTH
+from .services import SchedulerService
 
 def create_app(file_config = 'config.py'):
     app = Flask(__name__)
     app.config.from_pyfile(file_config)
     create_db(app)
+
+    with app.app_context():
+        scheduler_service = SchedulerService()
+        scheduler_service.run_daily()
+        scheduler_service.start()
+
     jwt.init_app(app)
     migrate.init_app(app, db)
     cors.init_app(app)

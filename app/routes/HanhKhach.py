@@ -29,7 +29,7 @@ def add_hanh_khach_route():
 
 # link api: http://localhost:5000/api/hanhkhach/get/<int:id>
 @HANHKHACH.route('/hanhkhach/get/<int:id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_hanh_khach(id):
     try:
         hanh_khach = get_hanh_khach_by_id(id)

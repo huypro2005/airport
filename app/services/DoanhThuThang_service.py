@@ -27,7 +27,6 @@ def create_or_update_doanhthu_thang_service(thang, nam):
     # if check_doanhthu_thang_service(thang, nam) == True:
     #     raise ValueError("Doanh thu tháng đã tồn tại")
 
-    create_or_update_chitietdoanhthuThang_service_bymonth(thang, nam)
     # find doanhthuthang if exist update, else create
     try:
         doanhthuthang = doanhThuThang.query.filter(
