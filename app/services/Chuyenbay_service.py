@@ -220,10 +220,10 @@ def get_dsChuyenBay_follow_time_service(start_time, end_time, sanbay_di, sanbay_
             temp = chuyenbay.serialize()
             chitiet_hangve = chuyenbay.chi_tiet_hang_ve
             chitiet_sanbay_trung_gian = chuyenbay.chi_tiet_san_bay_trung_gian
-            # Serialize từng phần tử trong collection
-            temp['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve if check_hangve_active(hv.Ma_hang_ve)]
-            # Lọc các sân bay trung gian còn hoạt động
-            temp['chitiet_sanbay_trung_gian'] = [sb.serialize() for sb in chitiet_sanbay_trung_gian]
+            # # Serialize từng phần tử trong collection
+            # temp['chitiet_hangve'] = [hv.serialize() for hv in chitiet_hangve if check_hangve_active(hv.Ma_hang_ve)]
+            # # Lọc các sân bay trung gian còn hoạt động
+            # temp['chitiet_sanbay_trung_gian'] = [sb.serialize() for sb in chitiet_sanbay_trung_gian]
             res.append(temp)
 
       
